@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모터원 고양 - 5 STAR GIFT 증정 컬렉션</title>
+<style>
+  :root{
+    --black:#0a0a0c;
+    --black-2:#151517;
+    --black-3:#1f1f22;
+    --white:#ffffff;
+    --off-white:#f7f7f5;
+    --silver:#c9cbce;
+    --silver-2:#9a9ca0;
+    --gold:#c9a35b;
+    --gold-2:#a8823f;
+    --text:#1c1c1e;
+    --muted:#6b6b70;
+    --line:#e6e5e2;
+    --radius:14px;
+    --radius-sm:8px;
+    --shadow:0 10px 30px rgba(0,0,0,.10);
+    --shadow-lg:0 20px 60px rgba(0,0,0,.35);
+    --shadow-hover:0 22px 44px rgba(10,10,12,.14);
+    --ease:cubic-bezier(.22,1,.36,1);
+    --maxw:1240px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Malgun Gothic","Apple SD Gothic Neo",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{
+    margin:0;
+    background:var(--off-white);
+    color:var(--text);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    overflow-x:hidden;
+    width:100%;
+  }
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;}
+  button{font-family:inherit;cursor:pointer;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+
+  /* ---------- Header ---------- */
+  header.site-header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(10,10,12,.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .header-inner{
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:nowrap;gap:10px;
+    padding:16px 24px;max-width:var(--maxw);margin:0 auto;
+  }
+  .brand{
+    display:flex;align-items:center;gap:10px;min-width:0;
+    color:var(--white);text-decoration:none;
+  }
+  .brand-mark{
+    width:34px;height:34px;border-radius:50%;
+    border:1.5px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;overflow:hidden;background:#fff;
+  }
+  .brand-mark img{width:100%;height:100%;object-fit:cover;display:block;}
+  .brand-text{display:flex;flex-direction:column;line-height:1.15;min-width:0;overflow:hidden;}
+  .brand-text strong{font-size:14px;letter-spacing:2.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .brand-text span{font-size:10px;color:var(--silver-2);letter-spacing:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  nav.site-nav{display:flex;gap:30px;flex-shrink:0;}
+  nav.site-nav a{
+    position:relative;
+    display:inline-flex;align-items:center;
+    color:var(--silver);text-decoration:none;font-size:13px;letter-spacing:1.2px;font-weight:400;
+    padding:9px 2px 3px;margin:0 -2px;
+    transition:color .2s;
+    white-space:nowrap;
+  }
+  nav.site-nav a::after{
+    content:"";position:absolute;left:2px;right:calc(100% - 2px);bottom:0;height:1px;background:var(--gold);
+    transition:right .25s var(--ease);
+  }
+  nav.site-nav a:hover{color:var(--white);}
+  nav.site-nav a:hover::after{right:2px;}
+  .header-right{display:flex;align-items:center;gap:22px;min-width:0;}
+  .header-call{
+    display:inline-flex;align-items:center;gap:6px;flex-shrink:0;
+    color:var(--gold);text-decoration:none;font-size:12px;font-weight:600;letter-spacing:.2px;
+    border:1px solid rgba(201,163,91,.4);padding:8px 14px;border-radius:999px;white-space:nowrap;
+    transition:background .2s var(--ease),border-color .2s var(--ease),box-shadow .2s var(--ease),transform .2s var(--ease);
+    animation:callRing 2.6s ease-in-out infinite;
+  }
+  .header-call .call-text{white-space:nowrap;}
+  .header-call:hover{
+    background:rgba(201,163,91,.12);border-color:var(--gold);
+    box-shadow:0 6px 16px rgba(201,163,91,.22);transform:translateY(-1px);
+    animation-play-state:paused;
+  }
+  @keyframes callRing{
+    0%{box-shadow:0 0 0 0 rgba(201,163,91,0);}
+    78%{box-shadow:0 0 0 0 rgba(201,163,91,0);}
+    88%{box-shadow:0 0 0 5px rgba(201,163,91,.18);}
+    100%{box-shadow:0 0 0 0 rgba(201,163,91,0);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .header-call{animation:none;}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(201,163,91,.14), transparent 55%),
+      linear-gradient(160deg,#0a0a0c 0%,#161618 55%,#0a0a0c 100%);
+    color:var(--white);
+    padding:150px 24px 96px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;
+    background-image:repeating-linear-gradient(115deg, rgba(255,255,255,.035) 0 1px, transparent 1px 90px);
+    pointer-events:none;
+  }
+  .hero-inner{max-width:var(--maxw);margin:0 auto;position:relative;z-index:1;}
+  .hero-top-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:28px;}
+  .hero-eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:11px;letter-spacing:4px;font-weight:500;color:var(--gold);
+    border:1px solid rgba(201,163,91,.4);
+    padding:7px 16px;border-radius:999px;margin-bottom:0;
+  }
+  .gift-note-badge{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:10.5px;letter-spacing:.2px;font-weight:500;color:var(--silver-2);
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);
+    padding:7px 14px;border-radius:999px;max-width:100%;
+  }
+  .hero h1{
+    font-size:clamp(34px,5.4vw,58px);
+    font-weight:300;letter-spacing:-.8px;line-height:1.18;margin:0 0 22px;max-width:780px;
+  }
+  .hero h1 em{
+    font-style:normal;color:var(--gold);font-weight:500;
+  }
+  .hero p.lead{
+    font-size:17px;font-weight:300;color:var(--silver);max-width:600px;margin:0 0 40px;line-height:1.7;
+  }
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:72px;}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:14px 28px;border-radius:999px;font-size:13.5px;font-weight:600;
+    letter-spacing:.8px;border:1px solid transparent;text-decoration:none;
+    transition:transform .22s var(--ease), box-shadow .22s var(--ease), background .22s var(--ease), border-color .22s var(--ease);
+  }
+  .btn-primary{background:var(--gold);color:#1a1305;}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(201,163,91,.35);}
+  .btn-outline{background:transparent;border-color:rgba(255,255,255,.35);color:var(--white);}
+  .btn-outline:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.6);}
+  .btn-dark{background:var(--black);color:var(--white);}
+  .btn-dark:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(0,0,0,.35);}
+  .btn-call{background:transparent;border-color:var(--gold);color:var(--gold);}
+  .btn-call:hover{
+    background:rgba(201,163,91,.12);transform:translateY(-2px);
+    box-shadow:0 12px 28px rgba(201,163,91,.22);border-color:var(--gold);
+  }
+
+  /* ---------- Section heading (generic) ---------- */
+  .section-head{max-width:var(--maxw);margin:0 auto;padding:88px 24px 10px;}
+  .section-head::before{
+    content:"";display:block;width:44px;height:2px;background:var(--gold);margin-bottom:20px;
+  }
+  .section-head h2{font-size:30px;font-weight:300;margin:0 0 10px;letter-spacing:-.4px;}
+  .section-head p{color:var(--muted);margin:0;font-size:14.5px;max-width:560px;line-height:1.7;}
+
+  /* ---------- Sticky filter / tabs ---------- */
+  .filter-bar{
+    position:sticky;top:67px;z-index:40;
+    background:rgba(246,246,244,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .filter-inner{
+    max-width:var(--maxw);margin:0 auto;padding:16px 24px;
+    display:flex;gap:14px;align-items:center;
+  }
+  .tabs{
+    display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin;
+    padding-bottom:2px;flex:1;min-width:0;
+    -webkit-overflow-scrolling:touch;
+    mask-image:linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+    -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+  }
+  .tabs::-webkit-scrollbar{height:5px;}
+  .tabs::-webkit-scrollbar-thumb{background:var(--silver);border-radius:4px;}
+  .tab-btn{
+    flex-shrink:0;
+    background:var(--white);border:1px solid var(--line);
+    padding:9px 17px;border-radius:999px;font-size:13px;color:var(--text);letter-spacing:.2px;
+    white-space:nowrap;transition:border-color .18s var(--ease),background .18s var(--ease),color .18s var(--ease),box-shadow .18s var(--ease);
+    display:flex;align-items:center;gap:6px;
+  }
+  .tab-btn .cnt{color:var(--muted);font-size:11.5px;}
+  .tab-btn:hover{border-color:var(--gold);box-shadow:0 4px 12px rgba(0,0,0,.06);}
+  .tab-btn.active{
+    background:var(--black);border-color:var(--black);color:var(--white);
+    box-shadow:inset 0 -2px 0 var(--gold);
+  }
+  .tab-btn.active .cnt{color:var(--gold);}
+  .search-box{
+    flex-shrink:0;position:relative;
+  }
+  .search-box input{
+    width:220px;max-width:40vw;
+    padding:10px 14px 10px 34px;border-radius:999px;border:1px solid var(--line);
+    font-size:16px;background:var(--white);transition:border-color .18s var(--ease),box-shadow .18s var(--ease);
+    overflow:hidden;text-overflow:ellipsis;
+  }
+  .search-box input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,163,91,.16);}
+  .search-box::before{
+    content:"⚲";position:absolute;left:13px;top:50%;transform:translateY(-50%) rotate(90deg);
+    color:var(--muted);font-size:13px;
+  }
+
+  /* ---------- Product sections ---------- */
+  #catalog{max-width:var(--maxw);margin:0 auto;padding:40px 24px 24px;}
+  .cat-section{margin-bottom:52px;padding-top:6px;border-top:1px solid var(--line);}
+  .cat-section:first-child{border-top:none;padding-top:0;}
+  .cat-section-head{
+    display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+    margin-bottom:20px;flex-wrap:wrap;
+  }
+  .cat-title{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:600;letter-spacing:.1px;}
+  .cat-title .icon-chip{
+    width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:15px;color:#fff;flex-shrink:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);
+  }
+  .cat-title .count{font-weight:400;color:var(--muted);font-size:13.5px;}
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+    gap:18px;
+  }
+  .tile{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;cursor:pointer;text-align:left;padding:0;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease);
+    display:flex;flex-direction:column;
+  }
+  .tile:hover{transform:translateY(-6px);box-shadow:var(--shadow-hover);border-color:transparent;}
+  .tile:hover .tile-thumb .emoji{transform:scale(1.08);}
+  .tile:hover .tile-thumb img{transform:scale(1.05);}
+  .tile:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+  .tile-thumb{
+    aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;
+  }
+  .tile-thumb::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(160deg, rgba(255,255,255,.10), transparent 55%);
+    pointer-events:none;
+  }
+  .tile-thumb img{
+    width:100%;height:100%;object-fit:contain;object-position:center;
+    padding:10px;transition:transform .3s var(--ease);
+  }
+  .tile-thumb .emoji{font-size:32px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.25));transition:transform .3s var(--ease);}
+  .tile-thumb .gift-badge{
+    position:absolute;top:8px;right:8px;
+    background:var(--gold);color:#1a1305;
+    font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:999px;letter-spacing:.4px;
+    box-shadow:0 3px 8px rgba(0,0,0,.2);
+  }
+  .tile-info{padding:13px 14px 15px;}
+  .tile-info .p-name{
+    font-size:12.5px;font-weight:600;margin:0 0 6px;letter-spacing:.1px;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+    min-height:33px;line-height:1.35;
+  }
+  .tile-info .p-part{font-size:10px;color:var(--muted);margin-top:2px;letter-spacing:.3px;}
+
+  .more-btn-row{display:flex;justify-content:center;margin-top:22px;}
+  .more-btn{
+    background:var(--white);border:1px solid var(--line);border-radius:999px;
+    padding:10px 26px;font-size:12.5px;font-weight:600;letter-spacing:.6px;color:var(--text);
+    transition:border-color .2s var(--ease),color .2s var(--ease),box-shadow .2s var(--ease);
+  }
+  .more-btn:hover{border-color:var(--black);box-shadow:0 6px 16px rgba(0,0,0,.08);}
+
+  .empty-note{
+    text-align:center;color:var(--muted);padding:60px 20px;font-size:14.5px;
+  }
+
+  /* ---------- Modal ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(10,10,12,.7);backdrop-filter:blur(4px);
+    display:flex;align-items:center;justify-content:center;padding:20px;
+    z-index:200;opacity:0;pointer-events:none;transition:opacity .28s var(--ease);
+  }
+  .modal-overlay.open{opacity:1;pointer-events:auto;}
+  .modal-card{
+    background:var(--white);border-radius:20px;max-width:420px;width:100%;
+    overflow:hidden;box-shadow:var(--shadow-lg);
+    transform:translateY(18px) scale(.96);transition:transform .32s var(--ease);
+    max-height:90vh;overflow-y:auto;
+  }
+  .modal-overlay.open .modal-card{transform:translateY(0) scale(1);}
+  .modal-thumb{
+    aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;position:relative;
+  }
+  .modal-thumb img{
+    width:100%;height:100%;object-fit:contain;object-position:center;padding:16px;
+  }
+  .modal-thumb .emoji{font-size:60px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.3));}
+  .modal-thumb .gift-badge-lg{
+    position:absolute;top:14px;left:14px;
+    background:var(--gold);color:#1a1305;
+    font-size:11px;font-weight:700;padding:6px 14px;border-radius:999px;letter-spacing:.6px;
+    box-shadow:0 3px 10px rgba(0,0,0,.25);
+  }
+  .modal-close{
+    position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;
+    background:rgba(0,0,0,.35);color:#fff;border:none;font-size:17px;
+    display:flex;align-items:center;justify-content:center;line-height:1;
+    transition:background .15s,transform .15s;
+  }
+  .modal-close:hover{background:rgba(0,0,0,.55);transform:rotate(90deg);}
+  .modal-body{padding:26px 28px 28px;}
+  .modal-cat-label{
+    font-size:11px;letter-spacing:2px;color:var(--gold-2);font-weight:700;margin-bottom:8px;text-transform:uppercase;
+  }
+  .modal-body h3{font-size:21px;font-weight:600;margin:0 0 20px;letter-spacing:-.2px;line-height:1.35;}
+  .modal-note{
+    font-size:11.5px;color:var(--muted);margin:-6px 0 20px;letter-spacing:.2px;
+    display:flex;align-items:center;gap:6px;
+    background:var(--off-white);border:1px solid var(--line);
+    padding:8px 12px;border-radius:8px;
+  }
+  .modal-table{width:100%;border-collapse:collapse;font-size:14px;}
+  .modal-table tr{border-top:1px solid var(--line);}
+  .modal-table tr:first-child{border-top:none;}
+  .modal-table th{
+    text-align:left;color:var(--muted);font-weight:500;font-size:12.5px;letter-spacing:.4px;padding:13px 0;width:38%;
+    vertical-align:top;
+  }
+  .modal-table td{padding:13px 0;font-weight:600;text-align:right;word-break:break-word;}
+  .modal-table tr.modal-subrow{border-top:none;}
+  .modal-subrow th,.modal-subrow td{font-size:11px;color:var(--muted);font-weight:400;padding-top:6px;padding-bottom:10px;}
+  .modal-subrow th::before{content:"↳ ";}
+  .modal-foot{margin-top:22px;display:flex;gap:10px;}
+  .modal-foot .btn{flex:1;padding:13px;font-size:13px;letter-spacing:.6px;}
+
+  /* ---------- Footer ---------- */
+  footer.site-footer{
+    background:var(--black-2);color:rgba(255,255,255,.55);padding:44px 24px 32px;
+    font-size:12.5px;
+  }
+  .footer-inner{max-width:var(--maxw);margin:0 auto;}
+  .footer-inner .f-brand{color:var(--white);font-weight:500;letter-spacing:2px;margin-bottom:12px;font-size:13px;}
+  .footer-inner p{margin:4px 0;line-height:1.7;}
+  .footer-inner .disclaimer{
+    margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08);
+    color:rgba(255,255,255,.35);
+  }
+  .footer-inner .f-contact{color:rgba(255,255,255,.85);font-size:13.5px;font-weight:500;margin-top:10px;}
+  .footer-inner .f-contact a{
+    color:var(--gold);text-decoration:underline;text-underline-offset:3px;font-weight:600;
+    transition:color .2s var(--ease);
+  }
+  .footer-inner .f-contact a:hover{color:var(--white);}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:900px){
+    .hero{padding:100px 20px 64px;}
+    .section-head{padding:64px 20px 8px;}
+    .header-right{gap:14px;}
+    nav.site-nav{gap:16px;}
+    nav.site-nav a{font-size:12px;letter-spacing:.6px;}
+  }
+  @media (max-width:560px){
+    .header-inner{padding:13px 16px;}
+    .filter-bar{top:60px;}
+    .wrap,.section-head,#catalog,.filter-inner{padding-left:16px;padding-right:16px;}
+    .brand-text span{display:none;}
+    .header-right{gap:10px;}
+    nav.site-nav{gap:12px;}
+    nav.site-nav a{font-size:11.5px;letter-spacing:.3px;}
+    .header-call{padding:7px 11px;font-size:11px;gap:5px;}
+    .hero{padding:84px 16px 52px;}
+    .hero-top-row{gap:8px;margin-bottom:22px;}
+    .gift-note-badge{font-size:10px;padding:6px 12px;}
+    .hero h1{font-size:30px;letter-spacing:-.4px;}
+    .hero p.lead{font-size:15.5px;}
+    .hero-cta{margin-bottom:52px;flex-direction:column;align-items:stretch;}
+    .hero-cta .btn{width:100%;}
+    .section-head{padding:48px 16px 6px;}
+    .section-head h2{font-size:24px;}
+    .filter-inner{flex-wrap:wrap;}
+    .search-box{order:1;flex:1 1 100%;}
+    .search-box input{width:100%;max-width:100%;}
+    .tabs{order:2;flex:1 1 100%;}
+    .tab-btn{padding:11px 16px;}
+    .more-btn{padding:12px 24px;}
+    .grid{grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px;}
+    .cat-section{margin-bottom:40px;}
+    .tile-info{padding:10px 11px 12px;}
+    .tile-info .p-name{font-size:12px;min-height:32px;}
+    .modal-body{padding:22px 20px 24px;}
+    .brand-text strong{font-size:13px;letter-spacing:1.4px;}
+  }
+  @media (max-width:380px){
+    .filter-bar{top:62px;}
+    .header-call .call-text{display:none;}
+    .header-call{
+      padding:0;gap:0;width:36px;height:36px;justify-content:center;
+      font-size:14px;flex-shrink:0;
+    }
+    .brand-text strong{font-size:12px;letter-spacing:1px;}
+    nav.site-nav{gap:10px;}
+    nav.site-nav a{font-size:11px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark"><img src="benz.JPG" alt="Mercedes-Benz" loading="lazy"></span>
+      <span class="brand-text">
+        <strong>모터원 고양</strong>
+        <span>5 STAR GIFT</span>
+      </span>
+    </a>
+    <div class="header-right">
+      <nav class="site-nav">
+        <a href="index.html">전체 컬렉션</a>
+        <a href="#catalog">증정품 보기</a>
+        <a href="tel:010-4781-1886">문의하기</a>
+      </nav>
+      <a href="tel:010-4781-1886" class="header-call" aria-label="전화 상담 010-4781-1886">
+        <span aria-hidden="true">📞</span><span class="call-text">010-4781-1886</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div class="hero-top-row">
+      <span class="hero-eyebrow">MOTOR ONE GOYANG · 5 STAR GIFT</span>
+      <span class="gift-note-badge">🎁 매장 문의 시 증정 조건 안내</span>
+    </div>
+    <h1>5 STAR GIFT<br><em>고객 감사 증정</em> 컬렉션</h1>
+    <p class="lead">모터원 고양을 찾아주신 고객님께 감사의 마음을 담아 준비했습니다.
+      키링, 가방, 캠핑 용품부터 향수, 골프 파우치까지 — 준비된 증정품을 살펴보시고
+      자세한 증정 조건은 매장으로 문의해주세요.</p>
+    <div class="hero-cta">
+      <a href="#catalog" class="btn btn-primary">증정품 둘러보기</a>
+      <a href="tel:010-4781-1886" class="btn btn-call">📞 증정 조건 문의</a>
+    </div>
+  </div>
+</section>
+
+<div class="section-head">
+  <h2>증정품 컬렉션</h2>
+  <p>카테고리를 선택하거나 검색해서 원하는 아이템을 빠르게 찾아보세요. 상품을 클릭하면 상세 정보를 확인할 수 있습니다.</p>
+</div>
+
+<div class="filter-bar">
+  <div class="filter-inner">
+    <div class="tabs" id="tabs"></div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="상품명 / 부품번호 검색">
+    </div>
+  </div>
+</div>
+
+<main id="catalog"></main>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-thumb" id="modalThumb">
+      <span class="gift-badge-lg">🎁 GIFT</span>
+      <button class="modal-close" id="modalCloseBtn" aria-label="닫기">✕</button>
+      <img id="modalPhoto" alt="" style="display:none;">
+      <span class="emoji" id="modalEmoji">🎁</span>
+    </div>
+    <div class="modal-body">
+      <div class="modal-cat-label" id="modalCatLabel">카테고리</div>
+      <h3 id="modalTitle">상품명</h3>
+      <p class="modal-note">📍 실물은 매장에서 직접 확인하실 수 있으며, 증정 조건은 매장 문의로 안내드립니다.</p>
+      <table class="modal-table">
+        <tbody>
+          <tr>
+            <th>부품번호</th>
+            <td id="modalPart">-</td>
+          </tr>
+          <tr class="modal-subrow">
+            <th>원본 코드</th>
+            <td id="modalName">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="modal-foot">
+        <a class="btn btn-dark" id="modalInquireBtn" href="tel:010-4781-1886">📞 전화로 문의하기</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="f-brand">5 STAR GIFT · 증정 컬렉션</div>
+    <p style="color:rgba(255,255,255,.75);font-weight:500;">모터원(Motor One) 벤츠 공식 딜러 액세서리센터</p>
+    <p>본 페이지의 상품은 판매용이 아닌 증정품이며, 증정 조건 및 재고는 매장 문의를 통해 확인하실 수 있습니다.</p>
+    <p class="f-contact">담당: 샵매니저 윤준희 &nbsp;|&nbsp; <a href="tel:010-4781-1886">010-4781-1886</a> &nbsp;|&nbsp; <a href="mailto:jun-hee.yoon@motorone.co.kr">jun-hee.yoon@motorone.co.kr</a></p>
+    <div class="disclaimer">
+      <p>* 본 페이지는 모터원(Motor One) 벤츠 공식 딜러 액세서리센터에서 운영하는 페이지입니다. 상품 이미지는 참고용이며, 실물은 매장에서 직접 확인하실 수 있습니다.</p>
+      <p>* 증정 조건, 수량, 대상은 매장 사정에 따라 사전 고지 없이 변경될 수 있습니다.</p>
+      <p>* 공식 브랜드 로고·엠블럼 이미지는 사용하지 않았습니다.</p>
+      <p>© 2026 모터원 고양. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ================= GIFT DATA (curated from 5 STAR GIFT 구글시트, 65 items) ================= */
+const GIFTS = [{"part":"MB6 6 04 1523","name":"KEY RING","category":"키링","image":"images/MB6-6-04-1523.png"},{"part":"MB6 6 04 1524","name":"KEY RING","category":"키링","image":"images/MB6-6-04-1524.png"},{"part":"MB6 6 95 3744","name":"KEY RINGS","category":"키링","image":"images/MB6-6-95-3744.png"},{"part":"MB6 6 95 3307","name":"KEY RING","category":"키링","image":"images/MB6-6-95-3307.png"},{"part":"MB6 6 95 9846","name":"KEY RINGS","category":"키링","image":"images/MB6-6-95-9846.png"},{"part":"MB6 7 87 1175","name":"KEY RINGS","category":"키링","image":"images/MB6-7-87-1175.png"},{"part":"MB6 6 95 9725","name":"KEY RING","category":"키링","image":"images/MB6-6-95-9725.png"},{"part":"MB6 6 95 9728","name":"KEY RING","category":"키링","image":"images/MB6-6-95-9728.png"},{"part":"MB6 6 95 9376","name":"KEY RINGS","category":"키링","image":"images/MB6-6-95-9376.png"},{"part":"MB6 6 95 9377","name":"KEY RINGS","category":"키링","image":"images/MB6-6-95-9377.png"},{"part":"MB6 7 99 7018","name":"KEY RINGS","category":"키링","image":"images/MB6-7-99-7018.png"},{"part":"MB6 6 95 9352","name":"KEY RINGS","category":"키링","image":"images/MB6-6-95-9352.png"},{"part":"MB6 6 95 9341","name":"SLEEVE IPOD 3","category":"악세사리","image":"images/MB6-6-95-9341.png"},{"part":"MB6 6 95 9821","name":"FITNESS BAND","category":"악세사리","image":"images/MB6-6-95-9821.png"},{"part":"MB6 6 96 0576","name":"KEY COVER BLACK","category":"키링","image":"images/MB6-6-96-0576.png"},{"part":"MB6 6 95 9924","name":"KEY COVER CARBON","category":"키링","image":"images/MB6-6-95-9924.png"},{"part":"MB6 6 95 8404","name":"KEY WALLET","category":"키링","image":"images/MB6-6-95-8404.png"},{"part":"MB6 6 95 3714","name":"SHOPPER GLAM MB","category":"가방","image":"images/MB6-6-95-3714.png"},{"part":"MB6 6 95 3713","name":"SHOPPER GLAM MB","category":"가방","image":"images/MB6-6-95-3713.png"},{"part":"MB6 6 95 3358","name":"MUG","category":"텀블러","image":"images/MB6-6-95-3358.png"},{"part":"MB6 6 95 9715","name":"AMG COFFEE CUP","category":"텀블러","image":"images/MB6-6-95-9715.png"},{"part":"MB6 7 87 2867","name":"FLASK EMSA","category":"텀블러","image":"images/MB6-7-87-2867.png"},{"part":"MB6 6 04 2026","name":"INSULATED MUG","category":"텀블러","image":"images/MB6-6-04-2026.png"},{"part":"MB6 6 95 5083","name":"TO GO CUP 0,35L","category":"텀블러","image":"images/MB6-6-95-5083.png"},{"part":"MB6 6 95 5015","name":"WATER BOTTLE","category":"텀블러","image":"images/MB6-6-95-5015.png"},{"part":"MQALKRBV9591501","name":"M/Bottle Holder_BK","category":"텀블러","image":"images/MQALKRBV9591501.png"},{"part":"MB6 6 95 9654","name":"CULTURE BAG","category":"가방","image":"images/MB6-6-95-9654.png"},{"part":"MA177 810 81 03","name":"ASHTRAY INSERT","category":"악세사리","image":"images/MA177-810-81-03.png"},{"part":"MB6 6 45 0405","name":"GOLF SET SMALL","category":"골프","image":"images/MB6-6-45-0405.png"},{"part":"MQALKRBN9782401","name":"TM DAILY BALL POUCH BK","category":"골프","image":"images/MQALKRBN9782401.png"},{"part":"MQALKRBN9782801","name":"CITY TECH BALL POUCH BG","category":"골프","image":"images/MQALKRBN9782801.png"},{"part":"MQALKRBM1390201","name":"GRAPHIC T LITE BALL POUCH","category":"가방","image":"images/MQALKRBM1390201.png"},{"part":"MQALKRBN9786201","name":"TM UTILITY POUCH BK","category":"가방","image":"images/MQALKRBN9786201.png"},{"part":"MNBU3125 601","name":"M/BALL POUCH_BK","category":"골프","image":"images/MNBU3125-601.png"},{"part":"MQALKRBU2643201","name":"WILSHIER ACC POUCH SAX","category":"가방","image":"images/MQALKRBU2643201.png"},{"part":"MB6 6 95 5770","name":"RUCKSACK GIRL SMALL","category":"가방","image":"images/MB6-6-95-5770.png"},{"part":"MB6 6 95 9442","name":"RUNNING BELT","category":"가방","image":"images/MB6-6-95-9442.png"},{"part":"MQALKRB81201134","name":"Name Tag_Carbon look","category":"네임택","image":"images/MQALKRB81201134.png"},{"part":"MNBV9403 101","name":"ALL/Clutch_BK","category":"가방","image":"images/MNBV9403-101.png"},{"part":"MNBV9403 001","name":"ALL/Clutch_WH","category":"가방","image":"images/MNBV9403-001.png"},{"part":"MB6 6 45 0461","name":"SHOE BAG","category":"가방","image":"images/MB6-6-45-0461.png"},{"part":"MB6 6 95 4769","name":"CREDIT CARD WALLET","category":"지갑","image":"images/MB6-6-95-4769.png"},{"part":"MB6 7 87 2008","name":"BRIEFCASE","category":"볼펜","image":"images/MB6-7-87-2008.png"},{"part":"MB6 6 95 9385","name":"MINI WALLET","category":"지갑","image":"images/MB6-6-95-9385.png"},{"part":"MB6 6 95 3636/64","name":"LANYBOOK A6","category":"볼펜","image":"images/MB6-6-95-3636-64.png"},{"part":"MB6 6 47 2005","name":"VALVE CAP","category":"휠캡","image":"images/MB6-6-47-2005.png"},{"part":"MB6 6 95 9925","name":"PICTURE BOOK","category":"악세사리","image":"images/MB6-6-95-9925.png"},{"part":"MB6 6 04 1558","name":"MAGNET","category":"자석","image":"images/MB6-6-04-1558.png"},{"part":"MB6 6 95 4774","name":"FOUNTAIN PEN","category":"볼펜","image":"images/MB6-6-95-4774.png"},{"part":"MQALKRB81202037","name":"MB MOVE EDT 100ML","category":"방향제","image":"images/MQALKRB81202037.png"},{"part":"MQALKRB81202039","name":"MB MOVE EXPRESS EDT 100ML","category":"방향제","image":"images/MQALKRB81202039.png"},{"part":"MQALKRB81202041","name":"MB MOVE MOMENT EDP 100ML","category":"방향제","image":"images/MQALKRB81202041.png"},{"part":"MB6 6 95 3230","name":"USB STICK","category":"악세사리","image":"images/MB6-6-95-3230.png"},{"part":"MB6 6 95 4738","name":"USB STICK 32 GB","category":"악세사리","image":"images/MB6-6-95-4738.png"},{"part":"MB6 6 95 3148","name":"USB STICK 8 GB","category":"악세사리","image":"images/MB6-6-95-3148.png"},{"part":"MB6 6 95 3409","name":"PENKNIFE","category":"캠핑","image":"images/MB6-6-95-3409.png"},{"part":"MB6 7 87 1618","name":"FLEECE BLANKET","category":"캠핑","image":"images/MB6-7-87-1618.png"},{"part":"MB6 6 04 1563","name":"PICNIC BLANKET","category":"캠핑","image":"images/MB6-6-04-1563.png"},{"part":"MQALKRB81201164","name":"CAMPING LANTERN","category":"캠핑","image":"images/MQALKRB81201164.png"},{"part":"MB6 6 95 3317","name":"TORCH","category":"캠핑","image":"images/MB6-6-95-3317.png"},{"part":"MB6 6 95 3318","name":"TORCH","category":"캠핑","image":"images/MB6-6-95-3318.png"},{"part":"MQALKRBB1613101","name":"TM Golf Gift Set","category":"골프","image":"images/MQALKRBB1613101.png"},{"part":"MB6 6 95 9789","name":"GOLFBALL","category":"골프","image":"images/MB6-6-95-9789.png"},{"part":"MQALKRB81201188","name":"CAMPING WAGON","category":"캠핑","image":"images/MQALKRB81201188.png"},{"part":"MQALKRB81201163","name":"CAMPING TABLE","category":"캠핑","image":"images/MQALKRB81201163.png"}];
+
+  /* ================= CATEGORY META ================= */
+  const CATEGORY_MERGE_MAP = {
+    "네임택": "악세사리",
+    "자석": "악세사리"
+  };
+  function normalizeCategory(cat){
+    return CATEGORY_MERGE_MAP[cat] || cat;
+  }
+
+  const CATEGORY_ORDER = ["키링","가방","캠핑","악세사리","텀블러","골프","방향제","볼펜","지갑","휠캡"];
+
+  const CATEGORY_ICON = {
+    "가방":"👜","키링":"🔑","모자":"🧢","악세사리":"💎","방향제":"🌸",
+    "모델카":"🚗","골프":"⛳","캠핑":"🏕️","지갑":"👛","텀블러":"🥤","볼펜":"🖋️",
+    "우산":"☂️","휠캡":"⚙️"
+  };
+
+  const PALETTE = ["#161618","#2b2b2f","#3a3a40","#c9a35b","#4b4b52","#8a8d91","#a8823f","#55555e","#6e6e76","#b08d46"];
+  const CATEGORY_COLOR = {};
+  CATEGORY_ORDER.forEach(function(c,i){ CATEGORY_COLOR[c] = PALETTE[i % PALETTE.length]; });
+
+  const INITIAL_SHOW = 8;
+
+  /* ================= STATE ================= */
+  let currentFilter = "all";
+  let currentSearch = "";
+  const expanded = new Set();
+
+  /* ================= GROUP BY CATEGORY ================= */
+  const grouped = {};
+  GIFTS.forEach(function(p, idx){
+    p._idx = idx;
+    p._cat = normalizeCategory(p.category);
+    if(!grouped[p._cat]) grouped[p._cat] = [];
+    grouped[p._cat].push(p);
+  });
+  Object.keys(grouped).forEach(function(c){
+    if(CATEGORY_ORDER.indexOf(c) === -1) CATEGORY_ORDER.push(c);
+  });
+
+  /* ================= HELPERS ================= */
+  function iconFor(cat){ return CATEGORY_ICON[cat] || "🎁"; }
+  function colorFor(cat){ return CATEGORY_COLOR[cat] || "#3a3a40"; }
+  const IMAGE_BG = "#f0efeb";
+  function buildEmojiSpan(cat){
+    const span = document.createElement("span");
+    span.className = "emoji";
+    span.setAttribute("role", "img");
+    span.setAttribute("aria-label", cat);
+    span.textContent = iconFor(cat);
+    return span;
+  }
+  function buildThumbMedia(p, thumbEl){
+    if(p.image){
+      thumbEl.style.background = IMAGE_BG;
+      const img = document.createElement("img");
+      img.src = p.image;
+      img.alt = formatPartName(p.name);
+      img.loading = "lazy";
+      img.addEventListener("error", function(){
+        if(!img.isConnected) return;
+        const emoji = buildEmojiSpan(p._cat);
+        img.replaceWith(emoji);
+        thumbEl.style.background = colorFor(p._cat);
+      });
+      return img;
+    }
+    thumbEl.style.background = colorFor(p._cat);
+    return buildEmojiSpan(p._cat);
+  }
+  function escapeHtml(str){
+    return String(str).replace(/[&<>"']/g, function(ch){
+      return ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[ch];
+    });
+  }
+  function formatPartName(raw){
+    if(!raw) return "-";
+    let s = String(raw);
+    s = s.replace(/\((\d{1,3})\)/g, function(_, num){ return ", 사이즈 " + num; });
+    s = s.replace(/[_/]/g, " ");
+    s = s.replace(/\s{2,}/g, " ").trim();
+    s = s.replace(/(\d),(\d)/g, "$1\x01$2");
+    s = s.replace(/\s*,\s*/g, ", ");
+    s = s.replace(/\x01/g, ",");
+    return s;
+  }
+
+  /* ================= TABS ================= */
+  const tabsEl = document.getElementById("tabs");
+  function buildTabs(){
+    let html = '<button class="tab-btn active" data-cat="all">전체 <span class="cnt">(' + GIFTS.length + ')</span></button>';
+    CATEGORY_ORDER.forEach(function(cat){
+      const items = grouped[cat];
+      if(!items || !items.length) return;
+      html += '<button class="tab-btn" data-cat="' + escapeHtml(cat) + '">' +
+        iconFor(cat) + ' ' + escapeHtml(cat) + ' <span class="cnt">(' + items.length + ')</span></button>';
+    });
+    tabsEl.innerHTML = html;
+  }
+  buildTabs();
+
+  tabsEl.addEventListener("click", function(e){
+    const btn = e.target.closest(".tab-btn");
+    if(!btn) return;
+    currentFilter = btn.getAttribute("data-cat");
+    Array.prototype.forEach.call(tabsEl.querySelectorAll(".tab-btn"), function(b){
+      b.classList.toggle("active", b === btn);
+    });
+    renderCatalog();
+  });
+
+  /* ================= SEARCH ================= */
+  const searchInput = document.getElementById("searchInput");
+  let searchTimer = null;
+  searchInput.addEventListener("input", function(){
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(function(){
+      currentSearch = searchInput.value.trim().toLowerCase();
+      renderCatalog();
+    }, 120);
+  });
+
+  /* ================= RENDER CATALOG ================= */
+  const catalogEl = document.getElementById("catalog");
+
+  function buildTile(p){
+    const div = document.createElement("button");
+    div.className = "tile";
+    div.type = "button";
+    div.setAttribute("data-idx", p._idx);
+    div.setAttribute("aria-label", formatPartName(p.name) + " 상세보기");
+
+    const thumb = document.createElement("div");
+    thumb.className = "tile-thumb";
+    thumb.appendChild(buildThumbMedia(p, thumb));
+    const badge = document.createElement("span");
+    badge.className = "gift-badge";
+    badge.textContent = "GIFT";
+    thumb.appendChild(badge);
+
+    const info = document.createElement("div");
+    info.className = "tile-info";
+    info.innerHTML =
+      '<p class="p-name">' + escapeHtml(formatPartName(p.name)) + '</p>' +
+      '<div class="p-part">' + escapeHtml(p.part) + '</div>';
+
+    div.appendChild(thumb);
+    div.appendChild(info);
+    div.addEventListener("click", function(){ openModal(p._idx); });
+    return div;
+  }
+
+  function buildSection(cat, items){
+    const section = document.createElement("section");
+    section.className = "cat-section";
+    section.id = "cat-" + encodeURIComponent(cat);
+
+    const head = document.createElement("div");
+    head.className = "cat-section-head";
+    head.innerHTML =
+      '<div class="cat-title">' +
+        '<span class="icon-chip" style="background:' + colorFor(cat) + ';">' + iconFor(cat) + '</span>' +
+        escapeHtml(cat) + ' <span class="count">(' + items.length + ')</span>' +
+      '</div>';
+    section.appendChild(head);
+
+    const grid = document.createElement("div");
+    grid.className = "grid";
+    const isExpanded = expanded.has(cat);
+    const showItems = isExpanded ? items : items.slice(0, INITIAL_SHOW);
+    showItems.forEach(function(p){ grid.appendChild(buildTile(p)); });
+    section.appendChild(grid);
+
+    if(items.length > INITIAL_SHOW){
+      const row = document.createElement("div");
+      row.className = "more-btn-row";
+      const btn = document.createElement("button");
+      btn.className = "more-btn";
+      btn.type = "button";
+      btn.textContent = isExpanded ? "접기" : "더보기 (+" + (items.length - INITIAL_SHOW) + ")";
+      btn.addEventListener("click", function(){
+        if(isExpanded) expanded.delete(cat); else expanded.add(cat);
+        renderCatalog();
+      });
+      row.appendChild(btn);
+      section.appendChild(row);
+    }
+
+    return section;
+  }
+
+  function renderCatalog(){
+    catalogEl.innerHTML = "";
+    let anyVisible = false;
+
+    CATEGORY_ORDER.forEach(function(cat){
+      const items = grouped[cat];
+      if(!items || !items.length) return;
+      if(currentFilter !== "all" && currentFilter !== cat) return;
+
+      let filtered = items;
+      if(currentSearch){
+        filtered = items.filter(function(p){
+          return p.name.toLowerCase().indexOf(currentSearch) !== -1 ||
+                 p.part.toLowerCase().indexOf(currentSearch) !== -1;
+        });
+      }
+      if(!filtered.length) return;
+
+      anyVisible = true;
+      catalogEl.appendChild(buildSection(cat, filtered));
+    });
+
+    if(!anyVisible){
+      catalogEl.innerHTML = '<p class="empty-note">검색 결과가 없습니다. 다른 키워드로 검색하거나 카테고리를 변경해보세요.</p>';
+    }
+  }
+
+  renderCatalog();
+
+  /* ================= MODAL ================= */
+  const modalOverlay = document.getElementById("modalOverlay");
+  const modalEmoji = document.getElementById("modalEmoji");
+  const modalPhoto = document.getElementById("modalPhoto");
+  const modalThumb = document.getElementById("modalThumb");
+  const modalCatLabel = document.getElementById("modalCatLabel");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalPart = document.getElementById("modalPart");
+  const modalName = document.getElementById("modalName");
+  const modalCloseBtn = document.getElementById("modalCloseBtn");
+
+  let lastFocused = null;
+
+  function setModalThumb(p){
+    modalPhoto.onerror = null;
+    if(p.image){
+      modalThumb.style.background = IMAGE_BG;
+      modalPhoto.src = p.image;
+      modalPhoto.alt = formatPartName(p.name);
+      modalPhoto.style.display = "";
+      modalEmoji.style.display = "none";
+      modalPhoto.onerror = function(){
+        modalPhoto.style.display = "none";
+        modalPhoto.removeAttribute("src");
+        modalEmoji.style.display = "";
+        modalEmoji.textContent = iconFor(p._cat);
+        modalThumb.style.background = colorFor(p._cat);
+      };
+    } else {
+      modalPhoto.style.display = "none";
+      modalPhoto.removeAttribute("src");
+      modalEmoji.style.display = "";
+      modalEmoji.textContent = iconFor(p._cat);
+      modalThumb.style.background = colorFor(p._cat);
+    }
+  }
+
+  function openModal(idx){
+    const p = GIFTS[idx];
+    if(!p) return;
+    setModalThumb(p);
+    modalCatLabel.textContent = p._cat;
+    modalTitle.textContent = formatPartName(p.name);
+    modalPart.textContent = p.part;
+    modalName.textContent = p.name;
+
+    lastFocused = document.activeElement;
+    modalOverlay.classList.add("open");
+    modalOverlay.setAttribute("aria-hidden", "false");
+    modalCloseBtn.focus();
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal(){
+    modalOverlay.classList.remove("open");
+    modalOverlay.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    if(lastFocused) lastFocused.focus();
+  }
+
+  modalCloseBtn.addEventListener("click", closeModal);
+  modalOverlay.addEventListener("click", function(e){
+    if(e.target === modalOverlay) closeModal();
+  });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape" && modalOverlay.classList.contains("open")) closeModal();
+  });
+
+})();
+</script>
+</body>
+</html>
