@@ -10,6 +10,24 @@ $ProjDir    = "c:\Users\ADMIN\Desktop\Js\클로드코워크\벤츠ACC"
 $ImgDir     = Join-Path $ProjDir "images"
 $TmpDir     = Join-Path $env:TEMP "acc_sync_tmp"
 $LogFile    = Join-Path $ProjDir "sync_log.txt"
+$GiftPath   = Join-Path $ProjDir "gift.html"
+
+# 5 STAR GIFT 증정 후보 부품번호 (구글시트 "5star A&C LIST" 탭에서 큐레이션, 2026-08-12 기준).
+# 이 목록 자체는 매일 바뀌지 않음 - 실제 증정 페이지 노출 여부는 아래에서
+# "메인 컬렉션(products.json)에 남아있고 재고(qty)가 0보다 큰가"로 매번 재판정한다.
+# 메인 컬렉션에서 품목이 사라지거나 재고가 0이 되면 증정 페이지에서도 자동으로 사라진다.
+$GIFT_PART_NUMBERS = @(
+    "MB6 6 04 1523","MB6 6 04 1524","MB6 6 95 3744","MB6 6 95 3307","MB6 6 95 9846","MB6 7 87 1175","MB6 6 95 9725",
+    "MB6 6 95 9728","MB6 6 95 9376","MB6 6 95 9377","MB6 7 99 7018","MB6 6 95 9352","MB6 6 95 9341","MB6 6 95 9821",
+    "MB6 6 96 0576","MB6 6 95 9924","MB6 6 95 8404","MB6 6 95 3714","MB6 6 95 3713","MB6 6 95 3358","MB6 6 95 9715",
+    "MB6 7 87 2867","MB6 6 04 2026","MB6 6 95 5083","MB6 6 95 5015","MQALKRBV9591501","MB6 6 95 9654","MA177 810 81 03",
+    "MB6 6 45 0405","MQALKRBN9782401","MQALKRBN9782801","MQALKRBM1390201","MQALKRBN9786201","MNBU3125 601","MQALKRBU2643201",
+    "MB6 6 95 5770","MB6 6 95 9442","MQALKRB81201134","MNBV9403 101","MNBV9403 001","MB6 6 45 0461","MB6 6 95 4769",
+    "MB6 7 87 2008","MB6 6 95 9385","MB6 6 95 3636/64","MB6 6 47 2005","MB6 6 95 9925","MB6 6 04 1558","MB6 6 95 4774",
+    "MQALKRB81202037","MQALKRB81202039","MQALKRB81202041","MB6 6 95 3230","MB6 6 95 4738","MB6 6 95 3148","MB6 6 95 3409",
+    "MB6 7 87 1618","MB6 6 04 1563","MQALKRB81201164","MB6 6 95 3317","MB6 6 95 3318","MQALKRBB1613101","MB6 6 95 9789",
+    "MQALKRB81201188","MQALKRB81201163"
+)
 
 function Write-Log($msg) {
     $line = "[{0}] {1}" -f (Get-Date -Format "yyyy-MM-dd HH:mm:ss"), $msg
@@ -219,6 +237,41 @@ try {
     Set-Content -LiteralPath $indexPath -Value $htmlLines -Encoding utf8
     Write-Log "index.html 갱신 완료 (동기화 시각: $syncTimeText)"
     Write-Log "동기화 성공: 총 $($newProducts.Count)개 상품, 이미지 $matched 개"
+
+    # 6.5) gift.html 갱신 (GIFTS 배열) - 5 STAR GIFT 후보 중 메인 컬렉션에 남아있고
+    #      재고(qty)가 0보다 큰 항목만 노출. 메인 컬렉션에서 빠지거나 품절되면 자동으로 사라짐.
+    $productByPart = @{}
+    foreach ($p in $newProducts) { $productByPart[$p.part.Trim()] = $p }
+
+    $giftProducts = @()
+    $giftExcluded = 0
+    foreach ($gp in $GIFT_PART_NUMBERS) {
+        if ($productByPart.ContainsKey($gp) -and $productByPart[$gp].qty -gt 0) {
+            $mp = $productByPart[$gp]
+            $giftProducts += [PSCustomObject]@{ part = $mp.part; name = $mp.name; category = $mp.category; image = $mp.image }
+        } else {
+            $giftExcluded++
+        }
+    }
+
+    if (Test-Path $GiftPath) {
+        $giftLines = Get-Content -LiteralPath $GiftPath -Encoding UTF8
+        $giftCompactJson = ($giftProducts | ConvertTo-Json -Depth 3 -Compress)
+
+        $giftsLineIdx = -1
+        for ($i = 0; $i -lt $giftLines.Count; $i++) {
+            if ($giftLines[$i] -match 'const\s+GIFTS\s*=') { $giftsLineIdx = $i; break }
+        }
+        if ($giftsLineIdx -lt 0) {
+            Write-Log "gift.html에서 'const GIFTS =' 라인을 찾을 수 없어 증정 페이지는 갱신하지 않았습니다"
+        } else {
+            $giftLines[$giftsLineIdx] = "const GIFTS = $giftCompactJson;"
+            Set-Content -LiteralPath $GiftPath -Value $giftLines -Encoding utf8
+            Write-Log "gift.html 갱신 완료: 증정 후보 $($GIFT_PART_NUMBERS.Count)개 중 $($giftProducts.Count)개 노출 (메인 컬렉션에 없거나 품절되어 제외 $giftExcluded 개)"
+        }
+    } else {
+        Write-Log "gift.html이 없어 증정 페이지는 갱신하지 않았습니다"
+    }
 
     # 7) GitHub Pages(모바일용 실제 배포 사이트)에 반영
     try {
