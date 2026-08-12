@@ -273,22 +273,25 @@ try {
         Write-Log "gift.html이 없어 증정 페이지는 갱신하지 않았습니다"
     }
 
-    # 7) GitHub Pages(모바일용 실제 배포 사이트)에 반영
+    # 7) GitHub Pages / Vercel(모바일용 실제 배포 사이트)에 반영
     try {
         Push-Location $ProjDir
-        $env:PATH += ";C:\Program Files\GitHub CLI"
+        $env:PATH += ";C:\Program Files\GitHub CLI;C:\Program Files\nodejs;$env:APPDATA\npm"
         git add -A 2>&1 | Out-Null
         $changed = git status --porcelain
         if ($changed) {
             git commit -m "자동 동기화: $syncTimeText" 2>&1 | Out-Null
             git push origin master 2>&1 | Out-Null
             Write-Log "GitHub Pages에 배포 완료"
+
+            vercel --yes --prod 2>&1 | Out-Null
+            Write-Log "Vercel에 배포 완료"
         } else {
-            Write-Log "GitHub에 반영할 변경사항 없음"
+            Write-Log "반영할 변경사항 없음 (GitHub/Vercel 재배포 생략)"
         }
         Pop-Location
     } catch {
-        Write-Log "GitHub 배포 실패(로컬 파일은 정상 갱신됨): $($_.Exception.Message)"
+        Write-Log "배포 실패(로컬 파일은 정상 갱신됨): $($_.Exception.Message)"
         Pop-Location
     }
 }
