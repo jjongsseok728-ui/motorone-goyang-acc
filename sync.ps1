@@ -219,6 +219,25 @@ try {
     Set-Content -LiteralPath $indexPath -Value $htmlLines -Encoding utf8
     Write-Log "index.html 갱신 완료 (동기화 시각: $syncTimeText)"
     Write-Log "동기화 성공: 총 $($newProducts.Count)개 상품, 이미지 $matched 개"
+
+    # 7) GitHub Pages(모바일용 실제 배포 사이트)에 반영
+    try {
+        Push-Location $ProjDir
+        $env:PATH += ";C:\Program Files\GitHub CLI"
+        git add -A 2>&1 | Out-Null
+        $changed = git status --porcelain
+        if ($changed) {
+            git commit -m "자동 동기화: $syncTimeText" 2>&1 | Out-Null
+            git push origin master 2>&1 | Out-Null
+            Write-Log "GitHub Pages에 배포 완료"
+        } else {
+            Write-Log "GitHub에 반영할 변경사항 없음"
+        }
+        Pop-Location
+    } catch {
+        Write-Log "GitHub 배포 실패(로컬 파일은 정상 갱신됨): $($_.Exception.Message)"
+        Pop-Location
+    }
 }
 catch {
     Write-Log "동기화 실패: $($_.Exception.Message)"
