@@ -274,17 +274,24 @@ try {
     }
 
     # 7) GitHub Pages / Vercel(모바일용 실제 배포 사이트)에 반영
+    # 주의: git/vercel은 성공 시에도 진행 메시지를 stderr로 출력하는 경우가 많음.
+    # ErrorActionPreference=Stop 상태에서 stderr를 그대로 파이프하면 성공한 호출도
+    # 예외로 오판될 수 있으므로, 이 블록에서는 Continue로 바꾸고 $LASTEXITCODE로만 판단한다.
+    $prevEAP = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
     try {
         Push-Location $ProjDir
         $env:PATH += ";C:\Program Files\GitHub CLI;C:\Program Files\nodejs;$env:APPDATA\npm"
-        git add -A 2>&1 | Out-Null
+        git add -A | Out-Null
         $changed = git status --porcelain
         if ($changed) {
-            git commit -m "자동 동기화: $syncTimeText" 2>&1 | Out-Null
-            git push origin master 2>&1 | Out-Null
+            git commit -m "자동 동기화: $syncTimeText" | Out-Null
+            git push origin master
+            if ($LASTEXITCODE -ne 0) { throw "git push 실패 (exit code $LASTEXITCODE)" }
             Write-Log "GitHub Pages에 배포 완료"
 
-            vercel --yes --prod 2>&1 | Out-Null
+            vercel --yes --prod
+            if ($LASTEXITCODE -ne 0) { throw "vercel 배포 실패 (exit code $LASTEXITCODE)" }
             Write-Log "Vercel에 배포 완료"
         } else {
             Write-Log "반영할 변경사항 없음 (GitHub/Vercel 재배포 생략)"
@@ -293,6 +300,8 @@ try {
     } catch {
         Write-Log "배포 실패(로컬 파일은 정상 갱신됨): $($_.Exception.Message)"
         Pop-Location
+    } finally {
+        $ErrorActionPreference = $prevEAP
     }
 }
 catch {
