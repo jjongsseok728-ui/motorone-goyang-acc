@@ -962,7 +962,7 @@
     {
         "part":  "MQALKRB81201181",
         "name":  "TROLLEY BAG",
-        "qty":  3,
+        "qty":  2,
         "price":  84700,
         "category":  "가방",
         "image":  "images/MQALKRB81201181.png"
@@ -1214,14 +1214,6 @@
         "price":  90200,
         "category":  "모델카",
         "image":  "images/MB6-6-96-0660.png"
-    },
-    {
-        "part":  "MB6 6 96 0661",
-        "name":  "EQG N465 1:43",
-        "qty":  1,
-        "price":  90200,
-        "category":  "모델카",
-        "image":  "images/MB6-6-96-0661.png"
     },
     {
         "part":  "MB6 6 96 0659",
