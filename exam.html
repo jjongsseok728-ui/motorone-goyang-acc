@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모터원 고양 - ACC 액세서리 교육 평가</title>
+<style>
+  :root{
+    --black:#0a0a0c;
+    --black-2:#151517;
+    --black-3:#1f1f22;
+    --white:#ffffff;
+    --off-white:#f7f7f5;
+    --silver:#c9cbce;
+    --silver-2:#9a9ca0;
+    --gold:#c9a35b;
+    --gold-2:#a8823f;
+    --text:#1c1c1e;
+    --muted:#6b6b70;
+    --line:#e6e5e2;
+    --radius:14px;
+    --radius-sm:8px;
+    --shadow:0 10px 30px rgba(0,0,0,.10);
+    --shadow-lg:0 20px 60px rgba(0,0,0,.35);
+    --ease:cubic-bezier(.22,1,.36,1);
+    --maxw:880px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Malgun Gothic","Apple SD Gothic Neo",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{
+    margin:0;background:var(--off-white);color:var(--text);line-height:1.6;
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    overflow-x:hidden;width:100%;padding-bottom:110px;
+  }
+  img{display:block;max-width:100%;}
+  a{color:inherit;}
+  button{font-family:inherit;cursor:pointer;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+
+  /* ---------- Header ---------- */
+  header.site-header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(10,10,12,.92);backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .header-inner{
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:nowrap;gap:10px;
+    padding:16px 24px;max-width:var(--maxw);margin:0 auto;
+  }
+  .brand{display:flex;align-items:center;gap:10px;min-width:0;color:var(--white);text-decoration:none;}
+  .brand-mark{
+    width:34px;height:34px;border-radius:50%;border:1.5px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;background:#fff;
+  }
+  .brand-mark img{width:100%;height:100%;object-fit:cover;display:block;}
+  .brand-text{display:flex;flex-direction:column;line-height:1.15;min-width:0;overflow:hidden;}
+  .brand-text strong{font-size:14px;letter-spacing:2.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .brand-text span{font-size:10px;color:var(--silver-2);letter-spacing:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .header-right a{
+    color:var(--silver);text-decoration:none;font-size:12.5px;letter-spacing:.8px;
+    border:1px solid rgba(255,255,255,.25);padding:8px 16px;border-radius:999px;
+    transition:color .2s,border-color .2s,background .2s;white-space:nowrap;
+  }
+  .header-right a:hover{color:var(--white);border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.06);}
+
+  /* ---------- Cover ---------- */
+  .cover{
+    background:radial-gradient(ellipse at 30% 20%, rgba(201,163,91,.14), transparent 55%),
+      linear-gradient(160deg,#0a0a0c 0%,#161618 55%,#0a0a0c 100%);
+    color:var(--white);padding:72px 24px 56px;position:relative;overflow:hidden;
+  }
+  .cover::after{
+    content:"";position:absolute;inset:0;
+    background-image:repeating-linear-gradient(115deg, rgba(255,255,255,.035) 0 1px, transparent 1px 90px);
+    pointer-events:none;
+  }
+  .cover-inner{max-width:var(--maxw);margin:0 auto;position:relative;z-index:1;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:11px;letter-spacing:4px;font-weight:500;color:var(--gold);
+    border:1px solid rgba(201,163,91,.4);padding:7px 16px;border-radius:999px;margin-bottom:22px;
+  }
+  .cover h1{font-size:clamp(28px,5vw,42px);font-weight:300;letter-spacing:-.6px;line-height:1.25;margin:0 0 14px;}
+  .cover h1 em{font-style:normal;color:var(--gold);font-weight:500;}
+  .cover p{font-size:15.5px;font-weight:300;color:var(--silver);max-width:560px;margin:0;line-height:1.75;}
+  .cover-meta{display:flex;gap:24px;flex-wrap:wrap;margin-top:28px;font-size:12.5px;color:var(--silver-2);letter-spacing:.4px;}
+  .cover-meta b{color:var(--gold);font-weight:600;}
+
+  /* ---------- Applicant card ---------- */
+  .applicant-card{
+    max-width:var(--maxw);margin:-30px auto 0;padding:0 24px;position:relative;z-index:2;
+  }
+  .applicant-box{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:22px 24px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;
+  }
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field label{font-size:11.5px;letter-spacing:1px;color:var(--muted);font-weight:600;text-transform:uppercase;}
+  .field input{
+    border:1px solid var(--line);border-radius:var(--radius-sm);padding:11px 12px;
+    font-size:14.5px;font-family:inherit;color:var(--text);background:var(--white);
+    transition:border-color .18s var(--ease),box-shadow .18s var(--ease);
+  }
+  .field input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,163,91,.16);}
+
+  /* ---------- Exam body ---------- */
+  .exam-wrap{max-width:var(--maxw);margin:0 auto;padding:36px 24px 10px;}
+  .q-card{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:24px 26px;margin-bottom:18px;
+  }
+  .q-head{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px;}
+  .q-num{
+    flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--black);color:var(--gold);
+    display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;letter-spacing:.2px;
+  }
+  .q-text{font-size:15.5px;font-weight:600;letter-spacing:-.1px;line-height:1.55;padding-top:4px;}
+  .q-body{padding-left:46px;}
+  .q-hint{font-size:12px;color:var(--muted);margin:-6px 0 12px;}
+
+  .opt-list{display:flex;flex-direction:column;gap:10px;}
+  .opt{
+    display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:var(--radius-sm);
+    padding:11px 14px;font-size:14px;transition:border-color .18s var(--ease),background .18s var(--ease);
+    cursor:pointer;
+  }
+  .opt:hover{border-color:var(--gold);}
+  .opt input{accent-color:var(--gold-2);width:16px;height:16px;flex-shrink:0;}
+  .opt.checked{border-color:var(--gold);background:rgba(201,163,91,.08);}
+
+  .ox-row{display:flex;gap:12px;}
+  .ox-btn{
+    flex:1;border:1px solid var(--line);border-radius:var(--radius-sm);padding:16px;text-align:center;
+    font-size:18px;font-weight:700;color:var(--muted);background:var(--white);
+    transition:border-color .18s var(--ease),color .18s var(--ease),background .18s var(--ease);
+  }
+  .ox-btn:hover{border-color:var(--gold);}
+  .ox-btn.selected-o{border-color:var(--gold-2);background:rgba(201,163,91,.12);color:var(--gold-2);}
+  .ox-btn.selected-x{border-color:var(--black-3);background:rgba(10,10,12,.06);color:var(--black-3);}
+
+  .ans-input{
+    width:100%;border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px 14px;
+    font-size:14.5px;font-family:inherit;color:var(--text);background:var(--white);
+    transition:border-color .18s var(--ease),box-shadow .18s var(--ease);
+  }
+  .ans-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,163,91,.16);}
+  textarea.ans-input{resize:vertical;min-height:88px;line-height:1.6;}
+
+  .q-card.locked .ans-input{background:var(--off-white);color:var(--muted);}
+  .q-card.locked .opt{cursor:default;}
+  .q-card.locked .opt:hover{border-color:var(--line);}
+  .q-card.locked .ox-btn{cursor:default;}
+
+  /* ---------- Sticky action bar ---------- */
+  .action-bar{
+    position:fixed;left:0;right:0;bottom:0;z-index:60;
+    background:rgba(10,10,12,.95);backdrop-filter:blur(10px);
+    border-top:1px solid rgba(255,255,255,.1);
+    padding:14px 24px;
+  }
+  .action-inner{
+    max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+  .save-status{font-size:11.5px;color:var(--silver-2);letter-spacing:.3px;display:flex;align-items:center;gap:6px;}
+  .save-status .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+  .action-btns{display:flex;gap:10px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:12px 22px;border-radius:999px;font-size:13px;font-weight:600;letter-spacing:.5px;
+    border:1px solid transparent;transition:transform .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease), border-color .2s var(--ease);
+  }
+  .btn-primary{background:var(--gold);color:#1a1305;}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(201,163,91,.35);}
+  .btn-outline{background:transparent;border-color:rgba(255,255,255,.3);color:var(--white);}
+  .btn-outline:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.55);}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none !important;box-shadow:none !important;}
+
+  /* ---------- Submitted banner ---------- */
+  .submitted-banner{
+    display:none;max-width:var(--maxw);margin:24px auto 0;padding:0 24px;
+  }
+  .submitted-banner.show{display:block;}
+  .submitted-box{
+    background:var(--black);color:var(--white);border-radius:var(--radius);padding:20px 24px;
+    display:flex;align-items:center;gap:14px;box-shadow:var(--shadow);
+  }
+  .submitted-box .check{
+    width:38px;height:38px;border-radius:50%;background:var(--gold);color:#1a1305;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;
+  }
+  .submitted-box strong{display:block;font-size:14.5px;letter-spacing:.2px;margin-bottom:3px;}
+  .submitted-box span{font-size:12.5px;color:var(--silver-2);}
+
+  /* ---------- Footer ---------- */
+  footer.site-footer{
+    background:var(--black-2);color:rgba(255,255,255,.55);padding:36px 24px 26px;font-size:12px;margin-top:40px;
+  }
+  .footer-inner{max-width:var(--maxw);margin:0 auto;}
+  .footer-inner .f-brand{color:var(--white);font-weight:500;letter-spacing:2px;margin-bottom:10px;font-size:12.5px;}
+  .footer-inner p{margin:4px 0;line-height:1.7;}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:640px){
+    .applicant-box{grid-template-columns:1fr;}
+    .cover{padding:60px 18px 46px;}
+    .exam-wrap{padding:28px 16px 6px;}
+    .q-card{padding:20px 16px;}
+    .q-body{padding-left:0;margin-top:2px;}
+    .header-inner{padding:13px 16px;}
+    .action-bar{padding:12px 16px;}
+    .action-inner{justify-content:center;}
+    .save-status{order:2;width:100%;justify-content:center;}
+  }
+
+  /* ---------- Print ---------- */
+  @media print{
+    header.site-header, .action-bar, footer.site-footer, .header-right{display:none !important;}
+    body{padding-bottom:0;background:#fff;}
+    .cover{background:#fff;color:#000;padding:20px 0;}
+    .cover::after{display:none;}
+    .cover p, .cover-meta{color:#333;}
+    .eyebrow{border-color:#999;color:#333;}
+    .applicant-card{margin-top:14px;}
+    .applicant-box, .q-card{box-shadow:none;border:1px solid #ccc;break-inside:avoid;}
+    .submitted-banner{margin-top:14px;}
+    .submitted-box{background:#fff;color:#000;border:1px solid #999;}
+    .submitted-box span{color:#444;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark"><img src="benz.JPG" alt="Mercedes-Benz" loading="lazy"></span>
+      <span class="brand-text">
+        <strong>모터원 고양</strong>
+        <span>STAFF TRAINING</span>
+      </span>
+    </a>
+    <div class="header-right">
+      <a href="index.html">매장 페이지로</a>
+    </div>
+  </div>
+</header>
+
+<section class="cover">
+  <div class="cover-inner">
+    <span class="eyebrow">MOTOR ONE GOYANG · ACC TRAINING</span>
+    <h1>ACC 액세서리<br><em>교육 평가</em> 시험지</h1>
+    <p>부품번호, 액세서리 구분, 보증 정책 등 ACC 액세서리 판매 업무에 필요한 내용을 점검하는 평가지입니다. 아래 문항에 답을 작성한 뒤 제출해주세요.</p>
+    <div class="cover-meta">
+      <span>총 <b>10문항</b></span>
+      <span>객관식 · O/X · 서술형 · 실습형 혼합</span>
+    </div>
+  </div>
+</section>
+
+<div class="applicant-card">
+  <div class="applicant-box">
+    <div class="field">
+      <label for="fName">이름 *</label>
+      <input type="text" id="fName" placeholder="응시자 이름">
+    </div>
+    <div class="field">
+      <label for="fRole">직급 / 소속</label>
+      <input type="text" id="fRole" placeholder="예: 사원 · 액세서리센터">
+    </div>
+    <div class="field">
+      <label for="fDate">응시일자</label>
+      <input type="date" id="fDate">
+    </div>
+  </div>
+</div>
+
+<form class="exam-wrap" id="examForm"></form>
+
+<div class="submitted-banner" id="submittedBanner">
+  <div class="submitted-box">
+    <span class="check">✓</span>
+    <div>
+      <strong>제출이 완료되었습니다.</strong>
+      <span id="submittedMeta">이 브라우저에 답안이 저장되었습니다.</span>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="f-brand">ACC ACCESSORY · TRAINING EXAM</div>
+    <p style="color:rgba(255,255,255,.75);font-weight:500;">모터원(Motor One) 벤츠 공식 딜러 액세서리센터</p>
+    <p>제출한 답안은 채점 없이 이 브라우저(로컬 저장소)에만 보관되며, 인쇄 또는 PDF로 저장해 담당자에게 전달할 수 있습니다.</p>
+  </div>
+</footer>
+
+<div class="action-bar">
+  <div class="action-inner">
+    <span class="save-status"><span class="dot"></span><span id="saveStatusText">작성 중 자동 저장됩니다</span></span>
+    <div class="action-btns">
+      <button type="button" class="btn btn-outline" id="resetBtn">초기화</button>
+      <button type="button" class="btn btn-outline" id="printBtn">인쇄 / PDF 저장</button>
+      <button type="button" class="btn btn-primary" id="submitBtn">제출하기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var QUESTIONS = [
+    {
+      id: 1, type: 'radio',
+      text: '아래 판매 코드 중 액세서리가 아닌 것은?',
+      options: ['1) 1OCO50', '2) 1PZ782', '3) 1PV349', '4) LPM006']
+    },
+    {
+      id: 2, type: 'ox',
+      text: 'A000 400 32 00 / 7756 : HUB CAP — 상기 부품은 액세서리 부품에 해당 될까?'
+    },
+    {
+      id: 3, type: 'text',
+      text: 'W1KUG8GBXLA573558 차대번호의 기본 발매트 부품번호를 적으시오.'
+    },
+    {
+      id: 4, type: 'text',
+      text: 'W1KUG8GBXLA573558 차대번호의 고무 매트(검정) 부품번호를 적으시오.'
+    },
+    {
+      id: 5, type: 'textarea',
+      text: 'A&C에서 A에 해당하는 제품을 적으시오. (3개 이상)'
+    },
+    {
+      id: 6, type: 'textarea',
+      text: 'A&C에서 C에 해당하는 제품을 적으시오. (3개 이상)'
+    },
+    {
+      id: 7, type: 'textarea',
+      text: 'FLACON 발향 조절 방법을 설명하시오.'
+    },
+    {
+      id: 8, type: 'text',
+      text: '시계 보증 기간은?'
+    },
+    {
+      id: 9, type: 'checkbox',
+      text: '제품 보증 처리 시 판매 이력에 대한 증빙을 위해 필요한 것은?',
+      hint: '해당하는 항목을 모두 선택하세요.',
+      options: ['없음', '서비스센터 방문 이력', '딜리버리노트', '영수증', '인보이스']
+    },
+    {
+      id: 10, type: 'textarea',
+      text: 'W18539 주문 취소 요청으로 반품 처리하는 절차를 설명하시오. (실습)'
+    }
+  ];
+
+  var DRAFT_KEY = 'accExam_draft_v1';
+  var SUBMISSIONS_KEY = 'accExam_submissions_v1';
+
+  var form = document.getElementById('examForm');
+  var fName = document.getElementById('fName');
+  var fRole = document.getElementById('fRole');
+  var fDate = document.getElementById('fDate');
+  var saveStatusText = document.getElementById('saveStatusText');
+  var submitBtn = document.getElementById('submitBtn');
+  var resetBtn = document.getElementById('resetBtn');
+  var printBtn = document.getElementById('printBtn');
+  var submittedBanner = document.getElementById('submittedBanner');
+  var submittedMeta = document.getElementById('submittedMeta');
+
+  var todayStr = new Date().toISOString().slice(0, 10);
+  fDate.value = todayStr;
+
+  function el(tag, attrs, children) {
+    var node = document.createElement(tag);
+    attrs = attrs || {};
+    Object.keys(attrs).forEach(function (k) {
+      if (k === 'class') node.className = attrs[k];
+      else if (k === 'html') node.innerHTML = attrs[k];
+      else node.setAttribute(k, attrs[k]);
+    });
+    (children || []).forEach(function (c) { if (c) node.appendChild(c); });
+    return node;
+  }
+
+  function renderQuestion(q) {
+    var card = el('div', { class: 'q-card', 'data-qid': q.id });
+    var head = el('div', { class: 'q-head' }, [
+      el('span', { class: 'q-num' }, [document.createTextNode(q.id)]),
+      el('div', { class: 'q-text' }, [document.createTextNode(q.text)])
+    ]);
+    card.appendChild(head);
+
+    var body = el('div', { class: 'q-body' });
+    if (q.hint) body.appendChild(el('div', { class: 'q-hint' }, [document.createTextNode(q.hint)]));
+
+    if (q.type === 'radio') {
+      var list = el('div', { class: 'opt-list' });
+      q.options.forEach(function (opt, i) {
+        var input = el('input', { type: 'radio', name: 'q' + q.id, value: opt });
+        var label = el('label', { class: 'opt' }, [input, document.createTextNode(opt)]);
+        input.addEventListener('change', function () {
+          list.querySelectorAll('.opt').forEach(function (o) { o.classList.remove('checked'); });
+          label.classList.add('checked');
+          saveDraft();
+        });
+        list.appendChild(label);
+      });
+      body.appendChild(list);
+    } else if (q.type === 'checkbox') {
+      var clist = el('div', { class: 'opt-list' });
+      q.options.forEach(function (opt) {
+        var input = el('input', { type: 'checkbox', name: 'q' + q.id, value: opt });
+        var label = el('label', { class: 'opt' }, [input, document.createTextNode(opt)]);
+        input.addEventListener('change', function () {
+          label.classList.toggle('checked', input.checked);
+          saveDraft();
+        });
+        clist.appendChild(label);
+      });
+      body.appendChild(clist);
+    } else if (q.type === 'ox') {
+      var row = el('div', { class: 'ox-row' });
+      ['O', 'X'].forEach(function (val) {
+        var btn = el('button', { type: 'button', class: 'ox-btn', 'data-val': val }, [document.createTextNode(val)]);
+        btn.addEventListener('click', function () {
+          if (btn.disabled) return;
+          row.querySelectorAll('.ox-btn').forEach(function (b) {
+            b.classList.remove('selected-o', 'selected-x');
+          });
+          btn.classList.add(val === 'O' ? 'selected-o' : 'selected-x');
+          row.setAttribute('data-selected', val);
+          saveDraft();
+        });
+        row.appendChild(btn);
+      });
+      body.appendChild(row);
+    } else if (q.type === 'text') {
+      var input2 = el('input', { type: 'text', class: 'ans-input', name: 'q' + q.id, placeholder: '답을 입력하세요' });
+      input2.addEventListener('input', saveDraft);
+      body.appendChild(input2);
+    } else if (q.type === 'textarea') {
+      var ta = el('textarea', { class: 'ans-input', name: 'q' + q.id, placeholder: '답을 입력하세요' });
+      ta.addEventListener('input', saveDraft);
+      body.appendChild(ta);
+    }
+
+    card.appendChild(body);
+    return card;
+  }
+
+  QUESTIONS.forEach(function (q) { form.appendChild(renderQuestion(q)); });
+
+  function collectAnswers() {
+    var answers = {};
+    QUESTIONS.forEach(function (q) {
+      var card = form.querySelector('[data-qid="' + q.id + '"]');
+      if (q.type === 'radio') {
+        var checked = card.querySelector('input[type="radio"]:checked');
+        answers[q.id] = checked ? checked.value : '';
+      } else if (q.type === 'checkbox') {
+        var checks = card.querySelectorAll('input[type="checkbox"]:checked');
+        answers[q.id] = Array.prototype.map.call(checks, function (c) { return c.value; });
+      } else if (q.type === 'ox') {
+        answers[q.id] = card.querySelector('.ox-row').getAttribute('data-selected') || '';
+      } else {
+        var field = card.querySelector('.ans-input');
+        answers[q.id] = field ? field.value : '';
+      }
+    });
+    return answers;
+  }
+
+  function applyAnswers(answers) {
+    if (!answers) return;
+    QUESTIONS.forEach(function (q) {
+      var card = form.querySelector('[data-qid="' + q.id + '"]');
+      var val = answers[q.id];
+      if (val === undefined) return;
+      if (q.type === 'radio') {
+        var radios = card.querySelectorAll('input[type="radio"]');
+        radios.forEach(function (r) {
+          r.checked = (r.value === val);
+          r.closest('.opt').classList.toggle('checked', r.checked);
+        });
+      } else if (q.type === 'checkbox') {
+        var boxes = card.querySelectorAll('input[type="checkbox"]');
+        boxes.forEach(function (b) {
+          b.checked = (val || []).indexOf(b.value) !== -1;
+          b.closest('.opt').classList.toggle('checked', b.checked);
+        });
+      } else if (q.type === 'ox') {
+        if (val) {
+          var row = card.querySelector('.ox-row');
+          row.setAttribute('data-selected', val);
+          row.querySelectorAll('.ox-btn').forEach(function (b) {
+            b.classList.toggle('selected-o', val === 'O' && b.getAttribute('data-val') === 'O');
+            b.classList.toggle('selected-x', val === 'X' && b.getAttribute('data-val') === 'X');
+          });
+        }
+      } else {
+        var field = card.querySelector('.ans-input');
+        if (field) field.value = val;
+      }
+    });
+  }
+
+  var saveTimer = null;
+  var isSubmitted = false;
+  function saveDraft() {
+    if (isSubmitted) return;
+    clearTimeout(saveTimer);
+    saveStatusText.textContent = '저장 중...';
+    saveTimer = setTimeout(function () {
+      var draft = {
+        name: fName.value,
+        role: fRole.value,
+        date: fDate.value,
+        answers: collectAnswers(),
+        savedAt: new Date().toISOString()
+      };
+      try {
+        localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+        saveStatusText.textContent = '자동 저장됨 · ' + new Date().toLocaleTimeString('ko-KR');
+      } catch (e) {
+        saveStatusText.textContent = '저장에 실패했습니다';
+      }
+    }, 400);
+  }
+
+  [fName, fRole, fDate].forEach(function (input) {
+    input.addEventListener('input', saveDraft);
+    input.addEventListener('change', saveDraft);
+  });
+
+  function loadDraft() {
+    try {
+      var raw = localStorage.getItem(DRAFT_KEY);
+      if (!raw) return;
+      var draft = JSON.parse(raw);
+      fName.value = draft.name || '';
+      fRole.value = draft.role || '';
+      fDate.value = draft.date || todayStr;
+      applyAnswers(draft.answers);
+      if (draft.savedAt) {
+        saveStatusText.textContent = '이전 작성 내용을 불러왔습니다';
+      }
+    } catch (e) { /* ignore corrupt draft */ }
+  }
+  loadDraft();
+
+  function setLocked(locked) {
+    form.querySelectorAll('.q-card').forEach(function (c) { c.classList.toggle('locked', locked); });
+    form.querySelectorAll('input, textarea, button').forEach(function (n) {
+      if (n.type === 'text' || n.tagName === 'TEXTAREA') n.readOnly = locked;
+      else if (n.type === 'radio' || n.type === 'checkbox' || n.classList.contains('ox-btn')) n.disabled = locked;
+    });
+    [fName, fRole, fDate].forEach(function (n) { n.readOnly = locked; n.disabled = false; });
+  }
+
+  submitBtn.addEventListener('click', function () {
+    if (!fName.value.trim()) {
+      alert('이름을 입력해주세요.');
+      fName.focus();
+      return;
+    }
+    clearTimeout(saveTimer);
+    isSubmitted = true;
+    var record = {
+      name: fName.value.trim(),
+      role: fRole.value.trim(),
+      date: fDate.value,
+      answers: collectAnswers(),
+      submittedAt: new Date().toISOString()
+    };
+    try {
+      var list = JSON.parse(localStorage.getItem(SUBMISSIONS_KEY) || '[]');
+      list.push(record);
+      localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify(list));
+      localStorage.removeItem(DRAFT_KEY);
+    } catch (e) { /* storage unavailable */ }
+
+    setLocked(true);
+    submitBtn.disabled = true;
+    resetBtn.textContent = '새 답안 작성하기';
+    submittedBanner.classList.add('show');
+    submittedMeta.textContent = record.name + ' · ' + new Date(record.submittedAt).toLocaleString('ko-KR') + ' 제출 · 이 브라우저에 저장되었습니다.';
+    saveStatusText.textContent = '제출 완료';
+    submittedBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  resetBtn.addEventListener('click', function () {
+    if (!confirm('작성 중인 답안을 모두 지우고 새로 시작할까요?')) return;
+    clearTimeout(saveTimer);
+    isSubmitted = false;
+    try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+    setLocked(false);
+    submitBtn.disabled = false;
+    resetBtn.textContent = '초기화';
+    submittedBanner.classList.remove('show');
+    fName.value = ''; fRole.value = ''; fDate.value = todayStr;
+    QUESTIONS.forEach(function (q) {
+      var card = form.querySelector('[data-qid="' + q.id + '"]');
+      card.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(function (i) {
+        i.checked = false; i.closest('.opt').classList.remove('checked');
+      });
+      var row = card.querySelector('.ox-row');
+      if (row) {
+        row.removeAttribute('data-selected');
+        row.querySelectorAll('.ox-btn').forEach(function (b) { b.classList.remove('selected-o', 'selected-x'); });
+      }
+      var field = card.querySelector('.ans-input');
+      if (field) field.value = '';
+    });
+    saveStatusText.textContent = '작성 중 자동 저장됩니다';
+  });
+
+  printBtn.addEventListener('click', function () { window.print(); });
+})();
+</script>
+
+</body>
+</html>
