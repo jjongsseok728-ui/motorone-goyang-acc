@@ -1,6 +1,11 @@
 ﻿# 벤츠ACC 랜딩페이지 - 구글시트 자동 동기화 스크립트
-# 매일 실행되어 products.json / images / index.html의 상품 데이터를 최신 시트 내용으로 갱신합니다.
+# 매일 17:00에 실행되어 products.json / images / index.html의 상품 데이터를 최신 시트 내용으로 갱신합니다.
 # 실패 시 기존 페이지 파일은 건드리지 않고 로그만 남깁니다.
+# CSV 행 수가 비정상적으로 적게 오는 경우(원인 불문, 예: 그 시각에 시트가 필터링/접근 제한된 상태)
+# 재시도 예약 파일을 남기고, 18:00에 BenzACC_RetrySync 작업이 -RetryCheck로 이 스크립트를 다시 호출한다.
+# 재시도 예약이 없으면 -RetryCheck 호출은 네트워크를 건드리지 않고 즉시 종료한다.
+
+param([switch]$RetryCheck)
 
 $ErrorActionPreference = "Stop"
 
@@ -11,6 +16,22 @@ $ImgDir     = Join-Path $ProjDir "images"
 $TmpDir     = Join-Path $env:TEMP "acc_sync_tmp"
 $LogFile    = Join-Path $ProjDir "sync_log.txt"
 $GiftPath   = Join-Path $ProjDir "gift.html"
+$RetryMarkerPath = Join-Path $ProjDir ".sync_retry_needed"
+
+function Write-Log($msg) {
+    $line = "[{0}] {1}" -f (Get-Date -Format "yyyy-MM-dd HH:mm:ss"), $msg
+    Add-Content -LiteralPath $LogFile -Value $line -Encoding utf8
+    Write-Host $line
+}
+
+if ($RetryCheck) {
+    if (-not (Test-Path $RetryMarkerPath)) {
+        Write-Log "18:00 재시도 확인: 재시도 예약 없음 (17:00 동기화 정상) - 종료"
+        exit 0
+    }
+    Write-Log "18:00 재시도 확인: 재시도 예약 발견 - 재동기화 시작"
+    Remove-Item -LiteralPath $RetryMarkerPath -Force
+}
 
 # 5 STAR GIFT 증정 후보 부품번호 (구글시트 "5star A&C LIST" 탭에서 큐레이션, 2026-08-12 기준).
 # 이 목록 자체는 매일 바뀌지 않음 - 실제 증정 페이지 노출 여부는 아래에서
@@ -28,12 +49,6 @@ $GIFT_PART_NUMBERS = @(
     "MB6 7 87 1618","MB6 6 04 1563","MQALKRB81201164","MB6 6 95 3317","MB6 6 95 3318","MQALKRBB1613101","MB6 6 95 9789",
     "MQALKRB81201188","MQALKRB81201163"
 )
-
-function Write-Log($msg) {
-    $line = "[{0}] {1}" -f (Get-Date -Format "yyyy-MM-dd HH:mm:ss"), $msg
-    Add-Content -LiteralPath $LogFile -Value $line -Encoding utf8
-    Write-Host $line
-}
 
 function Get-CellValue($cellNode, $ns, $sharedStrings) {
     if (-not $cellNode) { return $null }
@@ -64,7 +79,7 @@ try {
     Invoke-WebRequest -Uri $csvUrl -OutFile $csvPath -UseBasicParsing
 
     $rows = Import-Csv -LiteralPath $csvPath
-    if ($rows.Count -lt 100) { throw "CSV 데이터가 비정상적으로 적습니다 ($($rows.Count)행) - 시트 접근 실패 의심" }
+    if ($rows.Count -lt 100) { throw "CSV_ROWS_LOW: CSV 데이터가 비정상적으로 적습니다 ($($rows.Count)행) - 시트 접근 실패 의심" }
 
     $textByPart = @{}
     foreach ($r in $rows) {
@@ -306,6 +321,10 @@ try {
 }
 catch {
     Write-Log "동기화 실패: $($_.Exception.Message)"
+    if ($_.Exception.Message -like "CSV_ROWS_LOW:*") {
+        New-Item -ItemType File -Force -Path $RetryMarkerPath | Out-Null
+        Write-Log "CSV 행 수 부족으로 인한 실패 - 18:00에 재시도 예약됨"
+    }
     exit 1
 }
 finally {
