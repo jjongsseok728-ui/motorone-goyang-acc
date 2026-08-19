@@ -26,7 +26,7 @@
     {
         "part":  "MQALKRQ10023066",
         "name":  "MB UMBREALLA 105 CM",
-        "qty":  14,
+        "qty":  12,
         "price":  13750,
         "category":  "우산",
         "image":  "images/MQALKRQ10023066.png"
@@ -34,7 +34,7 @@
     {
         "part":  "MQALKRB81201143",
         "name":  "Bear Keyring_Pink",
-        "qty":  10,
+        "qty":  8,
         "price":  19800,
         "category":  "키링",
         "image":  "images/MQALKRB81201143.png"
@@ -130,7 +130,7 @@
     {
         "part":  "MQALKRB81201192",
         "name":  "KEY CASE GEN 6 BLUE",
-        "qty":  6,
+        "qty":  5,
         "price":  33000,
         "category":  "키링",
         "image":  "images/MQALKRB81201192.png"
@@ -202,7 +202,7 @@
     {
         "part":  "MQALKRB81201199",
         "name":  "KEY CASE GEN 8 ORANGE",
-        "qty":  5,
+        "qty":  4,
         "price":  33000,
         "category":  "키링",
         "image":  "images/MQALKRB81201199.png"
@@ -306,7 +306,7 @@
     {
         "part":  "MQALKRB81202037",
         "name":  "MB MOVE EDT 100ML",
-        "qty":  2,
+        "qty":  1,
         "price":  104500,
         "category":  "방향제",
         "image":  "images/MQALKRB81202037.png"
@@ -961,9 +961,9 @@
     },
     {
         "part":  "MQALKRB81201181",
-        "name":  "TROLLEY BAG",
-        "qty":  2,
-        "price":  84700,
+        "name":  "",
+        "qty":  0,
+        "price":  0,
         "category":  "가방",
         "image":  "images/MQALKRB81201181.png"
     },
