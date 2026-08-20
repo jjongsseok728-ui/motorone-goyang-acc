@@ -1,8 +1,8 @@
 ﻿# 벤츠ACC 랜딩페이지 - 구글시트 자동 동기화 스크립트
 # 매일 17:00에 실행되어 products.json / images / index.html의 상품 데이터를 최신 시트 내용으로 갱신합니다.
 # 실패 시 기존 페이지 파일은 건드리지 않고 로그만 남깁니다.
-# CSV 행 수가 비정상적으로 적게 오는 경우(원인 불문, 예: 그 시각에 시트가 필터링/접근 제한된 상태)
-# 재시도 예약 파일을 남기고, 18:00에 BenzACC_RetrySync 작업이 -RetryCheck로 이 스크립트를 다시 호출한다.
+# 시트에서 파싱된 상품 데이터가 비정상적으로 적게 나오는 경우(원인 불문) 재시도 예약 파일을
+# 남기고, 18:00에 BenzACC_RetrySync 작업이 -RetryCheck로 이 스크립트를 다시 호출한다.
 # 재시도 예약이 없으면 -RetryCheck 호출은 네트워크를 건드리지 않고 즉시 종료한다.
 
 param([switch]$RetryCheck)
@@ -50,6 +50,13 @@ $GIFT_PART_NUMBERS = @(
     "MQALKRB81201188","MQALKRB81201163"
 )
 
+# 증정 전용 재고 - 메인 컬렉션 리스트(index.html)에 노출하지 않을 부품번호.
+# 시트에는 그대로 남아있고 재고 수량도 정상 반영되지만, 판매용 리스트에는 나오지 않는다.
+# 우산 MB UMBRELLA 133CM / MB UMBREALLA 105 CM (2026-08-19 기준, 증정용으로 지정).
+$MAIN_LIST_EXCLUDE_PART_NUMBERS = @(
+    "MQALKRQ10023067","MQALKRQ10023066"
+)
+
 function Get-CellValue($cellNode, $ns, $sharedStrings) {
     if (-not $cellNode) { return $null }
     $t = $cellNode.GetAttribute("t")
@@ -73,31 +80,13 @@ try {
     New-Item -ItemType Directory -Force -Path $TmpDir | Out-Null
     Write-Log "동기화 시작"
 
-    # 1) CSV (텍스트 필드: 부품번호/부품명/수량/가격/카테고리) 다운로드
-    $csvUrl  = "https://docs.google.com/spreadsheets/d/$SHEET_ID/gviz/tq?tqx=out:csv&sheet=$([uri]::EscapeDataString($SHEET_NAME))"
-    $csvPath = Join-Path $TmpDir "collection_list.csv"
-    Invoke-WebRequest -Uri $csvUrl -OutFile $csvPath -UseBasicParsing
-
-    $rows = Import-Csv -LiteralPath $csvPath
-    if ($rows.Count -lt 100) { throw "CSV_ROWS_LOW: CSV 데이터가 비정상적으로 적습니다 ($($rows.Count)행) - 시트 접근 실패 의심" }
-
-    $textByPart = @{}
-    foreach ($r in $rows) {
-        $part = $r.PartNUMBER
-        if (-not $part) { continue }
-        $qty   = [int]($r.Quantity -replace '[^0-9\-]', '')
-        $price = [int]((($r.'판매가 vat포함') -replace '[^0-9]', ''))
-        $textByPart[$part] = [PSCustomObject]@{
-            part     = $part
-            name     = $r.Description.Trim()
-            qty      = $qty
-            price    = $price
-            category = $r.'종류'.Trim()
-        }
-    }
-    Write-Log "CSV 파싱 완료: $($textByPart.Count)개 상품 텍스트 데이터"
-
-    # 2) XLSX (이미지 매칭용) 다운로드
+    # 1) XLSX 다운로드 - 텍스트 데이터(부품번호/부품명/수량/가격/카테고리)와 이미지 매칭을
+    # 하나의 소스에서 함께 처리한다.
+    # 주의: gviz CSV 내보내기는 시트에 걸린 실시간 공유 필터(데이터 > 필터 만들기) 상태를
+    # 그대로 반영해서, 누군가 시트를 필터링해둔 동안에는 필터링된 일부 행만 내려온다
+    # (2026-08-20 확인: 우산 재고 반영 중 "키링" 필터가 걸려있어 305개 중 33개만 수신됨).
+    # 반면 XLSX 내보내기는 필터 상태와 무관하게 항상 전체 데이터를 담고 있어, 필터를
+    # 해제하지 않아도 안정적으로 동기화할 수 있다.
     $xlsxUrl  = "https://docs.google.com/spreadsheets/d/$SHEET_ID/export?format=xlsx"
     $xlsxPath = Join-Path $TmpDir "sheet.xlsx"
     Invoke-WebRequest -Uri $xlsxUrl -OutFile $xlsxPath -UseBasicParsing
@@ -131,19 +120,53 @@ try {
     [xml]$sheetXml = Read-ZipEntryText $zip $sheetFile
     $rowsXml = $sheetXml.SelectNodes("//s:sheetData/s:row", $ns)
 
-    $partToRow = @{}
+    # 헤더 행(1행)에서 컬럼명 -> 열 문자 매핑 (컬럼 순서가 바뀌어도 안전하게 동작)
+    $headerRow = $rowsXml | Where-Object { $_.GetAttribute("r") -eq "1" } | Select-Object -First 1
+    if (-not $headerRow) { throw "시트에서 헤더 행(1행)을 찾을 수 없습니다" }
+    $colByHeader = @{}
+    foreach ($c in $headerRow.SelectNodes("s:c", $ns)) {
+        $colLetter = ($c.GetAttribute("r") -replace '[0-9]+$', '')
+        $headerVal = Get-CellValue $c $ns $sharedStrings
+        if ($headerVal) { $colByHeader[$headerVal.Trim()] = $colLetter }
+    }
+    foreach ($need in @("PartNUMBER", "Description", "Quantity", "판매가 vat포함", "종류")) {
+        if (-not $colByHeader.ContainsKey($need)) { throw "시트에서 '$need' 컬럼을 찾을 수 없습니다" }
+    }
+
+    $textByPart = @{}
+    $partToRow  = @{}
+    $partOrder  = @()
     foreach ($row in $rowsXml) {
         $rNum = [int]$row.GetAttribute("r")
         if ($rNum -eq 1) { continue }
         if ($row.GetAttribute("hidden") -eq "1") { continue }
-        $aCell = $row.SelectSingleNode("s:c[@r='A$rNum']", $ns)
-        $aVal = Get-CellValue $aCell $ns $sharedStrings
-        if (-not $aVal) { continue }
-        $partToRow[$aVal] = $rNum
-    }
-    Write-Log "시트 노출 행: $($partToRow.Count)개"
 
-    # 해당 시트의 drawing 관계 찾기
+        $partCell = $row.SelectSingleNode("s:c[@r='$($colByHeader['PartNUMBER'])$rNum']", $ns)
+        $part = Get-CellValue $partCell $ns $sharedStrings
+        if (-not $part) { continue }
+
+        $nameCell  = $row.SelectSingleNode("s:c[@r='$($colByHeader['Description'])$rNum']", $ns)
+        $qtyCell   = $row.SelectSingleNode("s:c[@r='$($colByHeader['Quantity'])$rNum']", $ns)
+        $priceCell = $row.SelectSingleNode("s:c[@r='$($colByHeader['판매가 vat포함'])$rNum']", $ns)
+        $catCell   = $row.SelectSingleNode("s:c[@r='$($colByHeader['종류'])$rNum']", $ns)
+
+        $qtyRaw   = Get-CellValue $qtyCell $ns $sharedStrings
+        $priceRaw = Get-CellValue $priceCell $ns $sharedStrings
+
+        $textByPart[$part] = [PSCustomObject]@{
+            part     = $part
+            name     = ((Get-CellValue $nameCell $ns $sharedStrings) -replace '^\s+|\s+$', '')
+            qty      = [int]($qtyRaw -replace '[^0-9\-]', '')
+            price    = [int]($priceRaw -replace '[^0-9]', '')
+            category = ((Get-CellValue $catCell $ns $sharedStrings) -replace '^\s+|\s+$', '')
+        }
+        $partToRow[$part] = $rNum
+        $partOrder += $part
+    }
+    if ($textByPart.Count -lt 100) { throw "SHEET_ROWS_LOW: 시트에서 파싱된 상품 데이터가 비정상적으로 적습니다 ($($textByPart.Count)개) - 시트 접근 실패 의심" }
+    Write-Log "시트 파싱 완료: $($textByPart.Count)개 상품 텍스트 데이터, 노출 행 $($partToRow.Count)개"
+
+    # 2) 해당 시트의 drawing 관계 찾기
     $sheetBaseName = [System.IO.Path]::GetFileName($sheetFile)
     $sheetRelsPath = "xl/worksheets/_rels/$sheetBaseName.rels"
     [xml]$sheetRels = Read-ZipEntryText $zip $sheetRelsPath
@@ -178,6 +201,7 @@ try {
     $matched = 0
 
     foreach ($part in $textByPart.Keys) {
+        if ($MAIN_LIST_EXCLUDE_PART_NUMBERS -contains $part) { continue }
         $t = $textByPart[$part]
         $imgField = $null
         if ($partToRow.ContainsKey($part)) {
@@ -226,7 +250,7 @@ try {
     if ($removed -gt 0) { Write-Log "미사용 이미지 $removed 개 정리" }
 
     # 5) products.json 저장
-    $newProducts = $newProducts | Sort-Object { [array]::IndexOf(($rows.PartNUMBER), $_.part) }
+    $newProducts = $newProducts | Sort-Object { [array]::IndexOf($partOrder, $_.part) }
     $productsJsonPath = Join-Path $ProjDir "products.json"
     $newProducts | ConvertTo-Json -Depth 3 | Out-File -LiteralPath $productsJsonPath -Encoding utf8
 
@@ -321,9 +345,9 @@ try {
 }
 catch {
     Write-Log "동기화 실패: $($_.Exception.Message)"
-    if ($_.Exception.Message -like "CSV_ROWS_LOW:*") {
+    if ($_.Exception.Message -like "SHEET_ROWS_LOW:*") {
         New-Item -ItemType File -Force -Path $RetryMarkerPath | Out-Null
-        Write-Log "CSV 행 수 부족으로 인한 실패 - 18:00에 재시도 예약됨"
+        Write-Log "시트 파싱 데이터 부족으로 인한 실패 - 18:00에 재시도 예약됨"
     }
     exit 1
 }
