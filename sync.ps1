@@ -146,6 +146,10 @@ try {
         if (-not $part) { continue }
 
         $nameCell  = $row.SelectSingleNode("s:c[@r='$($colByHeader['Description'])$rNum']", $ns)
+        $name = ((Get-CellValue $nameCell $ns $sharedStrings) -replace '^\s+|\s+$', '')
+        # 부품번호만 채워지고 상품명이 비어있는 행은 아직 등록이 끝나지 않은 미완성 항목이므로 제외한다.
+        if (-not $name) { continue }
+
         $qtyCell   = $row.SelectSingleNode("s:c[@r='$($colByHeader['Quantity'])$rNum']", $ns)
         $priceCell = $row.SelectSingleNode("s:c[@r='$($colByHeader['판매가 vat포함'])$rNum']", $ns)
         $catCell   = $row.SelectSingleNode("s:c[@r='$($colByHeader['종류'])$rNum']", $ns)
@@ -155,7 +159,7 @@ try {
 
         $textByPart[$part] = [PSCustomObject]@{
             part     = $part
-            name     = ((Get-CellValue $nameCell $ns $sharedStrings) -replace '^\s+|\s+$', '')
+            name     = $name
             qty      = [int]($qtyRaw -replace '[^0-9\-]', '')
             price    = [int]($priceRaw -replace '[^0-9]', '')
             category = ((Get-CellValue $catCell $ns $sharedStrings) -replace '^\s+|\s+$', '')
