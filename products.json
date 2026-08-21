@@ -18,7 +18,7 @@
     {
         "part":  "MQALKRB81201143",
         "name":  "Bear Keyring_Pink",
-        "qty":  8,
+        "qty":  7,
         "price":  19800,
         "category":  "키링",
         "image":  "images/MQALKRB81201143.png"
@@ -98,7 +98,7 @@
     {
         "part":  "MQALKRB81201191",
         "name":  "KEY CASE GEN 6 PINK",
-        "qty":  7,
+        "qty":  6,
         "price":  33000,
         "category":  "키링",
         "image":  "images/MQALKRB81201191.png"
@@ -338,7 +338,7 @@
     {
         "part":  "MQALKRB81201188",
         "name":  "CAMPING WAGON",
-        "qty":  4,
+        "qty":  3,
         "price":  95700,
         "category":  "캠핑",
         "image":  "images/MQALKRB81201188.png"
@@ -936,6 +936,14 @@
         "image":  "images/MB6-6-95-8837.png"
     },
     {
+        "part":  "MQALKRB81201181",
+        "name":  "TROLLEY BAG",
+        "qty":  5,
+        "price":  84700,
+        "category":  "가방",
+        "image":  "images/MQALKRB81201181.png"
+    },
+    {
         "part":  "MB6 7 96 0181",
         "name":  "SHOPPER",
         "qty":  1,
@@ -1150,14 +1158,6 @@
         "price":  238700,
         "category":  "모델카",
         "image":  "images/MB6-6-04-0657.png"
-    },
-    {
-        "part":  "MB6 6 96 0656",
-        "name":  "F1 PETRONAS 1:43",
-        "qty":  1,
-        "price":  180400,
-        "category":  "모델카",
-        "image":  "images/MB6-6-96-0656.png"
     },
     {
         "part":  "MB6 6 96 0485",
@@ -2414,5 +2414,13 @@
         "price":  138600,
         "category":  "옷",
         "image":  "images/MB6-7-99-8508.png"
+    },
+    {
+        "part":  "MB6 7 99 8548",
+        "name":  "CAP",
+        "qty":  2,
+        "price":  95700,
+        "category":  "모자",
+        "image":  "images/MB6-7-99-8548.png"
     }
 ]
