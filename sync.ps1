@@ -57,6 +57,14 @@ $MAIN_LIST_EXCLUDE_PART_NUMBERS = @(
     "MQALKRQ10023067","MQALKRQ10023066"
 )
 
+# 카테고리 수동 보정 - 시트의 "구분" 값과 무관하게 이 부품번호는 지정한 카테고리로 표시.
+# MB MOVE 향수 3종이 시트에는 "방향제"로 분류돼 있어 "향수"로 보정 (2026-09-01 기준).
+$CATEGORY_OVERRIDES = @{
+    "MQALKRB81202037" = "향수"
+    "MQALKRB81202039" = "향수"
+    "MQALKRB81202041" = "향수"
+}
+
 function Get-CellValue($cellNode, $ns, $sharedStrings) {
     if (-not $cellNode) { return $null }
     $t = $cellNode.GetAttribute("t")
@@ -167,13 +175,15 @@ try {
 
         $qtyRaw   = Get-CellValue $qtyCell $ns $sharedStrings
         $priceRaw = Get-CellValue $priceCell $ns $sharedStrings
+        $category = ((Get-CellValue $catCell $ns $sharedStrings) -replace '^\s+|\s+$', '')
+        if ($CATEGORY_OVERRIDES.ContainsKey($part)) { $category = $CATEGORY_OVERRIDES[$part] }
 
         $textByPart[$part] = [PSCustomObject]@{
             part     = $part
             name     = $name
             qty      = [int]($qtyRaw -replace '[^0-9\-]', '')
             price    = [int]($priceRaw -replace '[^0-9]', '')
-            category = ((Get-CellValue $catCell $ns $sharedStrings) -replace '^\s+|\s+$', '')
+            category = $category
         }
         $partToRow[$part] = $rNum
         $partOrder += $part
