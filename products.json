@@ -106,7 +106,7 @@
     {
         "part":  "MQALKRB81201180",
         "name":  "MINI TRAVEL BAG BLUE",
-        "qty":  2,
+        "qty":  1,
         "price":  47300,
         "category":  "가방",
         "image":  "images/MQALKRB81201180.png"
@@ -286,14 +286,6 @@
         "price":  64900,
         "category":  "가방",
         "image":  "images/MB6-6-95-5770.png"
-    },
-    {
-        "part":  "MB6 6 95 9442",
-        "name":  "RUNNING BELT",
-        "qty":  1,
-        "price":  56100,
-        "category":  "가방",
-        "image":  "images/MB6-6-95-9442.png"
     },
     {
         "part":  "MB6 7 99 8382",
@@ -858,7 +850,7 @@
     {
         "part":  "MQALKRB81201151",
         "name":  "Car Air Freshener_Sea Breeze",
-        "qty":  7,
+        "qty":  6,
         "price":  9900,
         "category":  "방향제",
         "image":  "images/MQALKRB81201151.png"
@@ -866,7 +858,7 @@
     {
         "part":  "MQALKRB81201157",
         "name":  "Car Air Freshener_Green Tea",
-        "qty":  7,
+        "qty":  6,
         "price":  9900,
         "category":  "방향제",
         "image":  "images/MQALKRB81201157.png"
@@ -882,7 +874,7 @@
     {
         "part":  "MQALKRB81201156",
         "name":  "Car Air Freshener_Aqua Dive",
-        "qty":  5,
+        "qty":  4,
         "price":  9900,
         "category":  "방향제",
         "image":  "images/MQALKRB81201156.png"
@@ -956,7 +948,7 @@
         "name":  "MB LAND 100ML",
         "qty":  1,
         "price":  129800,
-        "category":  "방향제",
+        "category":  "향수",
         "image":  "images/MQALKRB81202046.png"
     },
     {
@@ -964,7 +956,7 @@
         "name":  "MB SEA 100ML",
         "qty":  1,
         "price":  129800,
-        "category":  "방향제",
+        "category":  "향수",
         "image":  "images/MQALKRB81202049.png"
     },
     {
@@ -972,7 +964,7 @@
         "name":  "MB AIR 100ML",
         "qty":  1,
         "price":  129800,
-        "category":  "방향제",
+        "category":  "향수",
         "image":  "images/MQALKRB81202052.png"
     },
     {
@@ -1906,7 +1898,7 @@
     {
         "part":  "MB6 6 95 9385",
         "name":  "MINI WALLET",
-        "qty":  2,
+        "qty":  1,
         "price":  128700,
         "category":  "지갑",
         "image":  "images/MB6-6-95-9385.png"
@@ -1962,7 +1954,7 @@
     {
         "part":  "MQALKRB81201188",
         "name":  "CAMPING WAGON",
-        "qty":  2,
+        "qty":  3,
         "price":  95700,
         "category":  "캠핑",
         "image":  "images/MQALKRB81201188.png"
@@ -1970,7 +1962,7 @@
     {
         "part":  "MQALKRB81201163",
         "name":  "CAMPING TABLE",
-        "qty":  1,
+        "qty":  3,
         "price":  77000,
         "category":  "캠핑",
         "image":  "images/MQALKRB81201163.png"
@@ -2042,7 +2034,7 @@
     {
         "part":  "MQALKRB81201142",
         "name":  "Bear Keyring_Mint",
-        "qty":  8,
+        "qty":  7,
         "price":  19800,
         "category":  "키링",
         "image":  "images/MQALKRB81201142.png"

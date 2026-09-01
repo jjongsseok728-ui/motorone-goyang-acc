@@ -59,10 +59,14 @@ $MAIN_LIST_EXCLUDE_PART_NUMBERS = @(
 
 # 카테고리 수동 보정 - 시트의 "구분" 값과 무관하게 이 부품번호는 지정한 카테고리로 표시.
 # MB MOVE 향수 3종이 시트에는 "방향제"로 분류돼 있어 "향수"로 보정 (2026-09-01 기준).
+# MB LAND / SEA / AIR 향수 3종도 동일하게 "향수"로 보정 (2026-09-01 기준).
 $CATEGORY_OVERRIDES = @{
     "MQALKRB81202037" = "향수"
     "MQALKRB81202039" = "향수"
     "MQALKRB81202041" = "향수"
+    "MQALKRB81202046" = "향수"
+    "MQALKRB81202049" = "향수"
+    "MQALKRB81202052" = "향수"
 }
 
 function Get-CellValue($cellNode, $ns, $sharedStrings) {
