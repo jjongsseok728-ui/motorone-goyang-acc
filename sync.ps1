@@ -74,6 +74,18 @@ function Get-CellValue($cellNode, $ns, $sharedStrings) {
     return $v.InnerText
 }
 
+# 수량/가격 셀은 VAT 자동계산 수식(예: 253636*1.1=278999.6) 때문에 소수점이 있는 값일 수 있다.
+# 문자열에서 숫자만 남기고 이어붙이면(278999.6 -> 2789996) 자릿수가 틀어지므로, 반드시
+# 숫자로 파싱한 뒤 반올림한다.
+function ConvertTo-RoundedInt($raw) {
+    if (-not $raw) { return 0 }
+    $num = 0.0
+    if ([double]::TryParse($raw, [System.Globalization.NumberStyles]::Float, [System.Globalization.CultureInfo]::InvariantCulture, [ref]$num)) {
+        return [int][math]::Round($num)
+    }
+    return [int]($raw -replace '[^0-9\-]', '')
+}
+
 function Read-ZipEntryText($zip, $entryName) {
     $entry = $zip.GetEntry($entryName)
     if (-not $entry) { return $null }
@@ -181,8 +193,8 @@ try {
         $textByPart[$part] = [PSCustomObject]@{
             part     = $part
             name     = $name
-            qty      = [int]($qtyRaw -replace '[^0-9\-]', '')
-            price    = [int]($priceRaw -replace '[^0-9]', '')
+            qty      = ConvertTo-RoundedInt $qtyRaw
+            price    = ConvertTo-RoundedInt $priceRaw
             category = $category
         }
         $partToRow[$part] = $rNum
