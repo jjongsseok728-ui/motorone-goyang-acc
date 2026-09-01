@@ -129,8 +129,19 @@ try {
         $headerVal = Get-CellValue $c $ns $sharedStrings
         if ($headerVal) { $colByHeader[$headerVal.Trim()] = $colLetter }
     }
-    foreach ($need in @("PartNUMBER", "Description", "Quantity", "판매가 vat포함", "종류")) {
-        if (-not $colByHeader.ContainsKey($need)) { throw "시트에서 '$need' 컬럼을 찾을 수 없습니다" }
+    # 헤더 이름이 바뀌어도(예: "종류" -> "구분") 깨지지 않도록 후보 이름 중 하나만 있으면 되게 처리.
+    $HEADER_ALIASES = @{
+        PART     = @("PartNUMBER")
+        NAME     = @("Description")
+        QTY      = @("Quantity")
+        PRICE    = @("판매가 vat포함")
+        CATEGORY = @("종류", "구분")
+    }
+    $col = @{}
+    foreach ($key in $HEADER_ALIASES.Keys) {
+        $found = $HEADER_ALIASES[$key] | Where-Object { $colByHeader.ContainsKey($_) } | Select-Object -First 1
+        if (-not $found) { throw "시트에서 '$key' 컬럼을 찾을 수 없습니다 (시도한 헤더명: $($HEADER_ALIASES[$key] -join ', '))" }
+        $col[$key] = $colByHeader[$found]
     }
 
     $textByPart = @{}
@@ -141,18 +152,18 @@ try {
         if ($rNum -eq 1) { continue }
         if ($row.GetAttribute("hidden") -eq "1") { continue }
 
-        $partCell = $row.SelectSingleNode("s:c[@r='$($colByHeader['PartNUMBER'])$rNum']", $ns)
+        $partCell = $row.SelectSingleNode("s:c[@r='$($col['PART'])$rNum']", $ns)
         $part = Get-CellValue $partCell $ns $sharedStrings
         if (-not $part) { continue }
 
-        $nameCell  = $row.SelectSingleNode("s:c[@r='$($colByHeader['Description'])$rNum']", $ns)
+        $nameCell  = $row.SelectSingleNode("s:c[@r='$($col['NAME'])$rNum']", $ns)
         $name = ((Get-CellValue $nameCell $ns $sharedStrings) -replace '^\s+|\s+$', '')
         # 부품번호만 채워지고 상품명이 비어있는 행은 아직 등록이 끝나지 않은 미완성 항목이므로 제외한다.
         if (-not $name) { continue }
 
-        $qtyCell   = $row.SelectSingleNode("s:c[@r='$($colByHeader['Quantity'])$rNum']", $ns)
-        $priceCell = $row.SelectSingleNode("s:c[@r='$($colByHeader['판매가 vat포함'])$rNum']", $ns)
-        $catCell   = $row.SelectSingleNode("s:c[@r='$($colByHeader['종류'])$rNum']", $ns)
+        $qtyCell   = $row.SelectSingleNode("s:c[@r='$($col['QTY'])$rNum']", $ns)
+        $priceCell = $row.SelectSingleNode("s:c[@r='$($col['PRICE'])$rNum']", $ns)
+        $catCell   = $row.SelectSingleNode("s:c[@r='$($col['CATEGORY'])$rNum']", $ns)
 
         $qtyRaw   = Get-CellValue $qtyCell $ns $sharedStrings
         $priceRaw = Get-CellValue $priceCell $ns $sharedStrings
