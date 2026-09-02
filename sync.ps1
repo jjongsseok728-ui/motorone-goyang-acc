@@ -17,6 +17,8 @@ $TmpDir     = Join-Path $env:TEMP "acc_sync_tmp"
 $LogFile    = Join-Path $ProjDir "sync_log.txt"
 $GiftPath   = Join-Path $ProjDir "gift.html"
 $RetryMarkerPath = Join-Path $ProjDir ".sync_retry_needed"
+# 구글 서비스 계정 키(읽기 전용, 시트에 "뷰어"로 공유됨). git에는 올리지 않음(.gitignore 참고).
+$ServiceAccountKeyPath = Join-Path $ProjDir "benz-acc-7db36ebe9574.json"
 
 function Write-Log($msg) {
     $line = "[{0}] {1}" -f (Get-Date -Format "yyyy-MM-dd HH:mm:ss"), $msg
@@ -69,25 +71,127 @@ $CATEGORY_OVERRIDES = @{
     "MQALKRB81202052" = "향수"
 }
 
-function Get-CellValue($cellNode, $ns, $sharedStrings) {
-    if (-not $cellNode) { return $null }
-    $t = $cellNode.GetAttribute("t")
-    $v = $cellNode.SelectSingleNode("s:v", $ns)
-    if (-not $v) { return $null }
-    if ($t -eq "s") { return $sharedStrings[[int]$v.InnerText] }
-    return $v.InnerText
-}
-
-# 수량/가격 셀은 VAT 자동계산 수식(예: 253636*1.1=278999.6) 때문에 소수점이 있는 값일 수 있다.
+# 수량/가격 값은 VAT 자동계산 수식(예: 253636*1.1=278999.6) 때문에 소수점이 있을 수 있다.
 # 문자열에서 숫자만 남기고 이어붙이면(278999.6 -> 2789996) 자릿수가 틀어지므로, 반드시
 # 숫자로 파싱한 뒤 반올림한다.
 function ConvertTo-RoundedInt($raw) {
-    if (-not $raw) { return 0 }
+    if ($null -eq $raw -or $raw -eq "") { return 0 }
+    if ($raw -is [double] -or $raw -is [int] -or $raw -is [long] -or $raw -is [decimal]) {
+        return [int][math]::Round([double]$raw)
+    }
     $num = 0.0
-    if ([double]::TryParse($raw, [System.Globalization.NumberStyles]::Float, [System.Globalization.CultureInfo]::InvariantCulture, [ref]$num)) {
+    if ([double]::TryParse([string]$raw, [System.Globalization.NumberStyles]::Float, [System.Globalization.CultureInfo]::InvariantCulture, [ref]$num)) {
         return [int][math]::Round($num)
     }
     return [int]($raw -replace '[^0-9\-]', '')
+}
+
+# --- 구글 서비스 계정 인증 (Sheets API v4) ---
+# Windows PowerShell 5.1(.NET Framework)에는 RSA.ImportFromPem이 없어서, PKCS#8 PEM 개인키를
+# 직접 DER 파싱해서 RSAParameters를 구성한 뒤 RS256으로 JWT에 서명한다.
+function Base64UrlEncode([byte[]]$bytes) {
+    [Convert]::ToBase64String($bytes) -replace '\+','-' -replace '/','_' -replace '=',''
+}
+
+function Read-DerLength([byte[]]$bytes, [ref]$pos) {
+    $b = $bytes[$pos.Value]; $pos.Value++
+    if ($b -lt 0x80) { return [int]$b }
+    $numBytes = $b -band 0x7F
+    $len = 0
+    for ($i = 0; $i -lt $numBytes; $i++) { $len = ($len -shl 8) -bor $bytes[$pos.Value]; $pos.Value++ }
+    return $len
+}
+
+function Read-DerElement([byte[]]$bytes, [ref]$pos) {
+    $tag = $bytes[$pos.Value]; $pos.Value++
+    $len = Read-DerLength $bytes $pos
+    $start = $pos.Value
+    $content = if ($len -gt 0) { $bytes[$start..($start + $len - 1)] } else { , @() }
+    $pos.Value = $start + $len
+    return [PSCustomObject]@{ Tag = $tag; Content = $content }
+}
+
+function Trim-LeadingZero([byte[]]$b) {
+    $i = 0
+    while ($i -lt ($b.Length - 1) -and $b[$i] -eq 0) { $i++ }
+    return $b[$i..($b.Length - 1)]
+}
+
+function Pad-Left([byte[]]$b, [int]$len) {
+    if ($b.Length -eq $len) { return $b }
+    if ($b.Length -gt $len) { return $b[($b.Length - $len)..($b.Length - 1)] }
+    $pad = New-Object byte[] ($len - $b.Length)
+    return , ($pad + $b)
+}
+
+function Get-RSAFromPkcs8Pem([string]$pem) {
+    $b64 = ($pem -replace '-----BEGIN PRIVATE KEY-----','' -replace '-----END PRIVATE KEY-----','' -replace '\s','')
+    $der = [Convert]::FromBase64String($b64)
+    $p = 0
+    $outer = Read-DerElement $der ([ref]$p)
+    $ip = 0
+    $inner = $outer.Content
+    $null = Read-DerElement $inner ([ref]$ip)          # version
+    $null = Read-DerElement $inner ([ref]$ip)          # algorithm identifier
+    $octet = Read-DerElement $inner ([ref]$ip)          # OCTET STRING(RSAPrivateKey DER)
+    $rp = 0
+    $rsaSeq = Read-DerElement $octet.Content ([ref]$rp)
+    $rInner = $rsaSeq.Content
+    $x = 0
+    $null    = Read-DerElement $rInner ([ref]$x)        # version
+    $mod     = Read-DerElement $rInner ([ref]$x)
+    $pubexp  = Read-DerElement $rInner ([ref]$x)
+    $privexp = Read-DerElement $rInner ([ref]$x)
+    $p1      = Read-DerElement $rInner ([ref]$x)
+    $p2      = Read-DerElement $rInner ([ref]$x)
+    $e1      = Read-DerElement $rInner ([ref]$x)
+    $e2      = Read-DerElement $rInner ([ref]$x)
+    $coeff   = Read-DerElement $rInner ([ref]$x)
+
+    $modulus = Trim-LeadingZero $mod.Content
+    $modLen  = $modulus.Length
+    $halfLen = [math]::Ceiling($modLen / 2)
+
+    $rsaParams = New-Object System.Security.Cryptography.RSAParameters
+    $rsaParams.Modulus  = $modulus
+    $rsaParams.Exponent = Trim-LeadingZero $pubexp.Content
+    $rsaParams.D        = Pad-Left (Trim-LeadingZero $privexp.Content) $modLen
+    $rsaParams.P        = Pad-Left (Trim-LeadingZero $p1.Content) $halfLen
+    $rsaParams.Q        = Pad-Left (Trim-LeadingZero $p2.Content) $halfLen
+    $rsaParams.DP       = Pad-Left (Trim-LeadingZero $e1.Content) $halfLen
+    $rsaParams.DQ       = Pad-Left (Trim-LeadingZero $e2.Content) $halfLen
+    $rsaParams.InverseQ = Pad-Left (Trim-LeadingZero $coeff.Content) $halfLen
+
+    $rsa = New-Object System.Security.Cryptography.RSACryptoServiceProvider
+    $rsa.ImportParameters($rsaParams)
+    return $rsa
+}
+
+function Get-GoogleAccessToken([string]$keyPath, [string]$scope) {
+    $key = Get-Content -Raw -LiteralPath $keyPath | ConvertFrom-Json
+    $now = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
+    $header = '{"alg":"RS256","typ":"JWT"}'
+    $claim = @{
+        iss   = $key.client_email
+        scope = $scope
+        aud   = $key.token_uri
+        exp   = $now + 3600
+        iat   = $now
+    } | ConvertTo-Json -Compress
+
+    $headerB64 = Base64UrlEncode([System.Text.Encoding]::UTF8.GetBytes($header))
+    $claimB64  = Base64UrlEncode([System.Text.Encoding]::UTF8.GetBytes($claim))
+    $unsigned  = "$headerB64.$claimB64"
+
+    $rsa = Get-RSAFromPkcs8Pem $key.private_key
+    $sig = $rsa.SignData([System.Text.Encoding]::UTF8.GetBytes($unsigned), [System.Security.Cryptography.HashAlgorithmName]::SHA256, [System.Security.Cryptography.RSASignaturePadding]::Pkcs1)
+    $jwt = "$unsigned." + (Base64UrlEncode($sig))
+
+    $resp = Invoke-RestMethod -Uri $key.token_uri -Method Post -Body @{
+        grant_type = "urn:ietf:params:oauth:grant-type:jwt-bearer"
+        assertion  = $jwt
+    }
+    return $resp.access_token
 }
 
 function Read-ZipEntryText($zip, $entryName) {
@@ -104,54 +208,24 @@ try {
     New-Item -ItemType Directory -Force -Path $TmpDir | Out-Null
     Write-Log "동기화 시작"
 
-    # 1) XLSX 다운로드 - 텍스트 데이터(부품번호/부품명/수량/가격/카테고리)와 이미지 매칭을
-    # 하나의 소스에서 함께 처리한다.
-    # 주의: gviz CSV 내보내기는 시트에 걸린 실시간 공유 필터(데이터 > 필터 만들기) 상태를
-    # 그대로 반영해서, 누군가 시트를 필터링해둔 동안에는 필터링된 일부 행만 내려온다
-    # (2026-08-20 확인: 우산 재고 반영 중 "키링" 필터가 걸려있어 305개 중 33개만 수신됨).
-    # 반면 XLSX 내보내기는 필터 상태와 무관하게 항상 전체 데이터를 담고 있어, 필터를
-    # 해제하지 않아도 안정적으로 동기화할 수 있다.
-    $xlsxUrl  = "https://docs.google.com/spreadsheets/d/$SHEET_ID/export?format=xlsx"
-    $xlsxPath = Join-Path $TmpDir "sheet.xlsx"
-    Invoke-WebRequest -Uri $xlsxUrl -OutFile $xlsxPath -UseBasicParsing
+    # 1) Sheets API v4로 시트 원본 값을 직접 읽는다 (서비스 계정 인증).
+    # 주의: gviz CSV 내보내기(실시간 공유 필터 반영)와 XLSX 내보내기(실제 "행 숨김" 반영)
+    # 둘 다, 누군가 시트를 열어 필터링/숨김 처리해둔 동안에는 일부 데이터만 내려주는 문제가
+    # 반복됐다 (2026-08-20, 2026-09-01 확인: 정상 305개 중 30~40개만 수신되는 등).
+    # Sheets API의 values.get은 필터/숨김 상태와 완전히 무관하게 항상 원본 그리드 값을
+    # 그대로 반환하므로 이 문제를 근본적으로 없앤다.
+    $token = Get-GoogleAccessToken -keyPath $ServiceAccountKeyPath -scope "https://www.googleapis.com/auth/spreadsheets.readonly"
+    $range = [uri]::EscapeDataString($SHEET_NAME)
+    $apiUrl = "https://sheets.googleapis.com/v4/spreadsheets/" + $SHEET_ID + "/values/" + $range + "?valueRenderOption=UNFORMATTED_VALUE"
+    $apiResult = Invoke-RestMethod -Uri $apiUrl -Headers @{ Authorization = "Bearer $token" }
+    $values = $apiResult.values
+    if (-not $values -or $values.Count -lt 2) { throw "SHEET_ROWS_LOW: Sheets API 응답 행 수가 비정상적으로 적습니다 ($($values.Count)행)" }
 
-    Add-Type -AssemblyName System.IO.Compression.FileSystem
-    $zip = [System.IO.Compression.ZipFile]::OpenRead($xlsxPath)
-
-    [xml]$ssXml = Read-ZipEntryText $zip "xl/sharedStrings.xml"
-    $ns = New-Object System.Xml.XmlNamespaceManager($ssXml.NameTable)
-    $ns.AddNamespace("s", "http://schemas.openxmlformats.org/spreadsheetml/2006/main")
-    $siNodes = $ssXml.SelectNodes("//s:si", $ns)
-    $sharedStrings = New-Object string[] $siNodes.Count
-    for ($i = 0; $i -lt $siNodes.Count; $i++) {
-        $texts = $siNodes[$i].SelectNodes(".//s:t", $ns) | ForEach-Object { $_.InnerText }
-        $sharedStrings[$i] = ($texts -join "")
-    }
-
-    # workbook.xml -> sheet name -> rId -> sheetN.xml
-    [xml]$wbXml = Read-ZipEntryText $zip "xl/workbook.xml"
-    $nsWb = New-Object System.Xml.XmlNamespaceManager($wbXml.NameTable)
-    $nsWb.AddNamespace("s", "http://schemas.openxmlformats.org/spreadsheetml/2006/main")
-    $nsWb.AddNamespace("r", "http://schemas.openxmlformats.org/officeDocument/2006/relationships")
-    $sheetNode = $wbXml.SelectSingleNode("//s:sheets/s:sheet[@name='$SHEET_NAME']", $nsWb)
-    if (-not $sheetNode) { throw "워크북에서 '$SHEET_NAME' 시트를 찾을 수 없습니다" }
-    $rId = $sheetNode.GetAttribute("id", "http://schemas.openxmlformats.org/officeDocument/2006/relationships")
-
-    [xml]$wbRels = Read-ZipEntryText $zip "xl/_rels/workbook.xml.rels"
-    $relTarget = ($wbRels.Relationships.Relationship | Where-Object { $_.Id -eq $rId }).Target
-    $sheetFile = "xl/" + $relTarget
-
-    [xml]$sheetXml = Read-ZipEntryText $zip $sheetFile
-    $rowsXml = $sheetXml.SelectNodes("//s:sheetData/s:row", $ns)
-
-    # 헤더 행(1행)에서 컬럼명 -> 열 문자 매핑 (컬럼 순서가 바뀌어도 안전하게 동작)
-    $headerRow = $rowsXml | Where-Object { $_.GetAttribute("r") -eq "1" } | Select-Object -First 1
-    if (-not $headerRow) { throw "시트에서 헤더 행(1행)을 찾을 수 없습니다" }
-    $colByHeader = @{}
-    foreach ($c in $headerRow.SelectNodes("s:c", $ns)) {
-        $colLetter = ($c.GetAttribute("r") -replace '[0-9]+$', '')
-        $headerVal = Get-CellValue $c $ns $sharedStrings
-        if ($headerVal) { $colByHeader[$headerVal.Trim()] = $colLetter }
+    $headerRowValues = $values[0]
+    $colIndexByHeader = @{}
+    for ($i = 0; $i -lt $headerRowValues.Count; $i++) {
+        $h = ("$($headerRowValues[$i])").Trim()
+        if ($h) { $colIndexByHeader[$h] = $i }
     }
     # 헤더 이름이 바뀌어도(예: "종류" -> "구분") 깨지지 않도록 후보 이름 중 하나만 있으면 되게 처리.
     $HEADER_ALIASES = @{
@@ -163,35 +237,33 @@ try {
     }
     $col = @{}
     foreach ($key in $HEADER_ALIASES.Keys) {
-        $found = $HEADER_ALIASES[$key] | Where-Object { $colByHeader.ContainsKey($_) } | Select-Object -First 1
+        $found = $HEADER_ALIASES[$key] | Where-Object { $colIndexByHeader.ContainsKey($_) } | Select-Object -First 1
         if (-not $found) { throw "시트에서 '$key' 컬럼을 찾을 수 없습니다 (시도한 헤더명: $($HEADER_ALIASES[$key] -join ', '))" }
-        $col[$key] = $colByHeader[$found]
+        $col[$key] = $colIndexByHeader[$found]
+    }
+
+    function Get-RowValue($rowArray, $idx) {
+        if ($idx -ge $rowArray.Count) { return $null }
+        return $rowArray[$idx]
     }
 
     $textByPart = @{}
     $partToRow  = @{}
     $partOrder  = @()
-    foreach ($row in $rowsXml) {
-        $rNum = [int]$row.GetAttribute("r")
-        if ($rNum -eq 1) { continue }
-        if ($row.GetAttribute("hidden") -eq "1") { continue }
+    for ($i = 1; $i -lt $values.Count; $i++) {
+        $rowArray = $values[$i]
+        $rNum = $i + 1   # values[0]=1행(헤더), values[1]=2행, ...
 
-        $partCell = $row.SelectSingleNode("s:c[@r='$($col['PART'])$rNum']", $ns)
-        $part = Get-CellValue $partCell $ns $sharedStrings
+        $part = ("$(Get-RowValue $rowArray $col['PART'])").Trim()
         if (-not $part) { continue }
 
-        $nameCell  = $row.SelectSingleNode("s:c[@r='$($col['NAME'])$rNum']", $ns)
-        $name = ((Get-CellValue $nameCell $ns $sharedStrings) -replace '^\s+|\s+$', '')
+        $name = ("$(Get-RowValue $rowArray $col['NAME'])").Trim()
         # 부품번호만 채워지고 상품명이 비어있는 행은 아직 등록이 끝나지 않은 미완성 항목이므로 제외한다.
         if (-not $name) { continue }
 
-        $qtyCell   = $row.SelectSingleNode("s:c[@r='$($col['QTY'])$rNum']", $ns)
-        $priceCell = $row.SelectSingleNode("s:c[@r='$($col['PRICE'])$rNum']", $ns)
-        $catCell   = $row.SelectSingleNode("s:c[@r='$($col['CATEGORY'])$rNum']", $ns)
-
-        $qtyRaw   = Get-CellValue $qtyCell $ns $sharedStrings
-        $priceRaw = Get-CellValue $priceCell $ns $sharedStrings
-        $category = ((Get-CellValue $catCell $ns $sharedStrings) -replace '^\s+|\s+$', '')
+        $qtyRaw   = Get-RowValue $rowArray $col['QTY']
+        $priceRaw = Get-RowValue $rowArray $col['PRICE']
+        $category = ("$(Get-RowValue $rowArray $col['CATEGORY'])").Trim()
         if ($CATEGORY_OVERRIDES.ContainsKey($part)) { $category = $CATEGORY_OVERRIDES[$part] }
 
         $textByPart[$part] = [PSCustomObject]@{
@@ -205,9 +277,32 @@ try {
         $partOrder += $part
     }
     if ($textByPart.Count -lt 100) { throw "SHEET_ROWS_LOW: 시트에서 파싱된 상품 데이터가 비정상적으로 적습니다 ($($textByPart.Count)개) - 시트 접근 실패 의심" }
-    Write-Log "시트 파싱 완료: $($textByPart.Count)개 상품 텍스트 데이터, 노출 행 $($partToRow.Count)개"
+    Write-Log "시트 파싱 완료: $($textByPart.Count)개 상품 텍스트 데이터"
 
-    # 2) 해당 시트의 drawing 관계 찾기
+    # 2) 이미지 매칭용 XLSX 다운로드. Sheets API는 셀에 삽입된 이미지를 값으로 주지 않으므로
+    # 이미지 추출에는 여전히 XLSX 내보내기가 필요하다 (텍스트 데이터는 위 API로 이미 확보했으니
+    # 여기서는 workbook 구조 파악 + drawing/media 추출 용도로만 사용한다).
+    $xlsxUrl  = "https://docs.google.com/spreadsheets/d/$SHEET_ID/export?format=xlsx"
+    $xlsxPath = Join-Path $TmpDir "sheet.xlsx"
+    Invoke-WebRequest -Uri $xlsxUrl -OutFile $xlsxPath -UseBasicParsing
+
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    $zip = [System.IO.Compression.ZipFile]::OpenRead($xlsxPath)
+
+    # workbook.xml -> sheet name -> rId -> sheetN.xml (drawing 관계를 찾기 위한 파일명만 필요)
+    [xml]$wbXml = Read-ZipEntryText $zip "xl/workbook.xml"
+    $ns = New-Object System.Xml.XmlNamespaceManager($wbXml.NameTable)
+    $ns.AddNamespace("s", "http://schemas.openxmlformats.org/spreadsheetml/2006/main")
+    $ns.AddNamespace("r", "http://schemas.openxmlformats.org/officeDocument/2006/relationships")
+    $sheetNode = $wbXml.SelectSingleNode("//s:sheets/s:sheet[@name='$SHEET_NAME']", $ns)
+    if (-not $sheetNode) { throw "워크북에서 '$SHEET_NAME' 시트를 찾을 수 없습니다" }
+    $rId = $sheetNode.GetAttribute("id", "http://schemas.openxmlformats.org/officeDocument/2006/relationships")
+
+    [xml]$wbRels = Read-ZipEntryText $zip "xl/_rels/workbook.xml.rels"
+    $relTarget = ($wbRels.Relationships.Relationship | Where-Object { $_.Id -eq $rId }).Target
+    $sheetFile = "xl/" + $relTarget
+
+    # 3) 해당 시트의 drawing 관계 찾기
     $sheetBaseName = [System.IO.Path]::GetFileName($sheetFile)
     $sheetRelsPath = "xl/worksheets/_rels/$sheetBaseName.rels"
     [xml]$sheetRels = Read-ZipEntryText $zip $sheetRelsPath
@@ -235,7 +330,7 @@ try {
 
     $mediaDirInZip = "xl/media"
 
-    # 3) 텍스트 + 이미지 결합, 새 이미지 파일로 추출
+    # 4) 텍스트 + 이미지 결합, 새 이미지 파일로 추출
     New-Item -ItemType Directory -Force -Path $ImgDir | Out-Null
     $newProducts = @()
     $usedImageFiles = New-Object System.Collections.Generic.HashSet[string]
@@ -279,7 +374,7 @@ try {
     $zip.Dispose()
     Write-Log "이미지 매칭: $matched / $($newProducts.Count)"
 
-    # 4) 더 이상 쓰이지 않는 이미지 파일 정리
+    # 5) 더 이상 쓰이지 않는 이미지 파일 정리
     $existingFiles = Get-ChildItem -LiteralPath $ImgDir -File
     $removed = 0
     foreach ($f in $existingFiles) {
@@ -290,12 +385,12 @@ try {
     }
     if ($removed -gt 0) { Write-Log "미사용 이미지 $removed 개 정리" }
 
-    # 5) products.json 저장
+    # 6) products.json 저장
     $newProducts = $newProducts | Sort-Object { [array]::IndexOf($partOrder, $_.part) }
     $productsJsonPath = Join-Path $ProjDir "products.json"
     $newProducts | ConvertTo-Json -Depth 3 | Out-File -LiteralPath $productsJsonPath -Encoding utf8
 
-    # 6) index.html 갱신 (PRODUCTS 배열 + 동기화 배지)
+    # 7) index.html 갱신 (PRODUCTS 배열 + 동기화 배지)
     $indexPath = Join-Path $ProjDir "index.html"
     $htmlLines = Get-Content -LiteralPath $indexPath -Encoding UTF8
     $compactJson = ($newProducts | ConvertTo-Json -Depth 3 -Compress)
@@ -318,7 +413,7 @@ try {
     Write-Log "index.html 갱신 완료 (동기화 시각: $syncTimeText)"
     Write-Log "동기화 성공: 총 $($newProducts.Count)개 상품, 이미지 $matched 개"
 
-    # 6.5) gift.html 갱신 (GIFTS 배열) - 5 STAR GIFT 후보 중 메인 컬렉션에 남아있고
+    # 7.5) gift.html 갱신 (GIFTS 배열) - 5 STAR GIFT 후보 중 메인 컬렉션에 남아있고
     #      재고(qty)가 0보다 큰 항목만 노출. 메인 컬렉션에서 빠지거나 품절되면 자동으로 사라짐.
     $productByPart = @{}
     foreach ($p in $newProducts) { $productByPart[$p.part.Trim()] = $p }
@@ -353,7 +448,7 @@ try {
         Write-Log "gift.html이 없어 증정 페이지는 갱신하지 않았습니다"
     }
 
-    # 7) GitHub Pages / Vercel(모바일용 실제 배포 사이트)에 반영
+    # 8) GitHub Pages / Vercel(모바일용 실제 배포 사이트)에 반영
     # 주의: git/vercel은 성공 시에도 진행 메시지를 stderr로 출력하는 경우가 많음.
     # ErrorActionPreference=Stop 상태에서 stderr를 그대로 파이프하면 성공한 호출도
     # 예외로 오판될 수 있으므로, 이 블록에서는 Continue로 바꾸고 $LASTEXITCODE로만 판단한다.
