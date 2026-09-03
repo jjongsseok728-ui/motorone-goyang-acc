@@ -231,19 +231,29 @@ try {
         $h = ("$($headerRowValues[$i])").Trim()
         if ($h) { $colIndexByHeader[$h] = $i }
     }
-    # 헤더 이름이 바뀌어도(예: "종류" -> "구분") 깨지지 않도록 후보 이름 중 하나만 있으면 되게 처리.
+    # 헤더 이름이 바뀌어도(예: "종류" -> "구분" -> "품목") 깨지지 않도록 후보 이름 중 하나만 있으면 되게 처리.
     $HEADER_ALIASES = @{
         PART     = @("PartNUMBER")
         NAME     = @("Description")
         QTY      = @("Quantity")
         PRICE    = @("판매가 vat포함")
-        CATEGORY = @("종류", "구분")
+        CATEGORY = @("종류", "구분", "품목")
     }
+    # CATEGORY 헤더는 여러 번 이름이 바뀐 이력이 있어(종류/구분/품목), 이름 후보가 전부
+    # 안 맞아도 항상 I열(0-based 8, 시트상 9번째 컬럼)에 있었다는 사실로 최후 보정한다.
+    $HEADER_POSITION_FALLBACK = @{ CATEGORY = 8 }
+
     $col = @{}
     foreach ($key in $HEADER_ALIASES.Keys) {
         $found = $HEADER_ALIASES[$key] | Where-Object { $colIndexByHeader.ContainsKey($_) } | Select-Object -First 1
-        if (-not $found) { throw "시트에서 '$key' 컬럼을 찾을 수 없습니다 (시도한 헤더명: $($HEADER_ALIASES[$key] -join ', '))" }
-        $col[$key] = $colIndexByHeader[$found]
+        if ($found) {
+            $col[$key] = $colIndexByHeader[$found]
+        } elseif ($HEADER_POSITION_FALLBACK.ContainsKey($key) -and $HEADER_POSITION_FALLBACK[$key] -lt $headerRowValues.Count) {
+            $col[$key] = $HEADER_POSITION_FALLBACK[$key]
+            Write-Log "'$key' 컬럼명을 못 찾아 위치(열 $($HEADER_POSITION_FALLBACK[$key]))로 대체 사용 (실제 헤더: '$($headerRowValues[$HEADER_POSITION_FALLBACK[$key]])', 시도한 이름: $($HEADER_ALIASES[$key] -join ', '))"
+        } else {
+            throw "시트에서 '$key' 컬럼을 찾을 수 없습니다 (시도한 헤더명: $($HEADER_ALIASES[$key] -join ', '))"
+        }
     }
 
     function Get-RowValue($rowArray, $idx) {
@@ -485,10 +495,10 @@ try {
 }
 catch {
     Write-Log "동기화 실패: $($_.Exception.Message)"
-    if ($_.Exception.Message -like "SHEET_ROWS_LOW:*") {
-        New-Item -ItemType File -Force -Path $RetryMarkerPath | Out-Null
-        Write-Log "시트 파싱 데이터 부족으로 인한 실패 - 18:00에 재시도 예약됨"
-    }
+    # 원인 불문하고(행 수 부족, 헤더명 변경, 네트워크 오류 등) 18:00에 한 번 더 시도한다.
+    # 재시도도 실패하면 로그에 남고 다음날 17:00 정기 실행 때 다시 시도된다.
+    New-Item -ItemType File -Force -Path $RetryMarkerPath | Out-Null
+    Write-Log "18:00에 재시도 예약됨"
     exit 1
 }
 finally {

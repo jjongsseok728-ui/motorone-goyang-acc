@@ -866,7 +866,7 @@
     {
         "part":  "MQALKRB81201160",
         "name":  "AIR FRESHENER GREEN TEA",
-        "qty":  5,
+        "qty":  4,
         "price":  24200,
         "category":  "방향제",
         "image":  "images/MQALKRB81201160.png"
@@ -914,7 +914,7 @@
     {
         "part":  "MQALKRB81201150",
         "name":  "AIR FRESHENER SEA BREEZE",
-        "qty":  2,
+        "qty":  1,
         "price":  24200,
         "category":  "방향제",
         "image":  "images/MQALKRB81201150.png"
@@ -1114,7 +1114,7 @@
     {
         "part":  "MB6 6 95 3080",
         "name":  "PIN",
-        "qty":  9,
+        "qty":  5,
         "price":  22000,
         "category":  "악세사리",
         "image":  "images/MB6-6-95-3080.png"
@@ -1954,7 +1954,7 @@
     {
         "part":  "MQALKRB81201188",
         "name":  "CAMPING WAGON",
-        "qty":  3,
+        "qty":  5,
         "price":  95700,
         "category":  "캠핑",
         "image":  "images/MQALKRB81201188.png"
@@ -1962,7 +1962,7 @@
     {
         "part":  "MQALKRB81201163",
         "name":  "CAMPING TABLE",
-        "qty":  3,
+        "qty":  4,
         "price":  77000,
         "category":  "캠핑",
         "image":  "images/MQALKRB81201163.png"
@@ -2026,7 +2026,7 @@
     {
         "part":  "MQALKRB81201143",
         "name":  "Bear Keyring_Pink",
-        "qty":  7,
+        "qty":  12,
         "price":  19800,
         "category":  "키링",
         "image":  "images/MQALKRB81201143.png"
@@ -2114,7 +2114,7 @@
     {
         "part":  "MB6 6 95 3307",
         "name":  "KEY RING",
-        "qty":  3,
+        "qty":  2,
         "price":  64900,
         "category":  "키링",
         "image":  "images/MB6-6-95-3307.png"
@@ -2322,7 +2322,7 @@
     {
         "part":  "MQALKRB81201170",
         "name":  "STEEL TUMBLER BK",
-        "qty":  2,
+        "qty":  4,
         "price":  19800,
         "category":  "텀블러",
         "image":  "images/MQALKRB81201170.png"
@@ -2370,7 +2370,7 @@
     {
         "part":  "MB6 6 47 2002",
         "name":  "VALVE CAP",
-        "qty":  15,
+        "qty":  14,
         "price":  52800,
         "category":  "휠캡",
         "image":  "images/MB6-6-47-2002.png"
