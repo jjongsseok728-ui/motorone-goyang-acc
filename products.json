@@ -242,7 +242,7 @@
     {
         "part":  "MQALKRB81201181",
         "name":  "TROLLEY BAG",
-        "qty":  3,
+        "qty":  1,
         "price":  84700,
         "category":  "가방",
         "image":  "images/MQALKRB81201181.png"
@@ -858,7 +858,7 @@
     {
         "part":  "MQALKRB81201157",
         "name":  "Car Air Freshener_Green Tea",
-        "qty":  6,
+        "qty":  5,
         "price":  9900,
         "category":  "방향제",
         "image":  "images/MQALKRB81201157.png"
@@ -866,7 +866,7 @@
     {
         "part":  "MQALKRB81201160",
         "name":  "AIR FRESHENER GREEN TEA",
-        "qty":  4,
+        "qty":  3,
         "price":  24200,
         "category":  "방향제",
         "image":  "images/MQALKRB81201160.png"
@@ -2426,7 +2426,7 @@
     {
         "part":  "MB6 7 99 6890",
         "name":  "CAGOULE XL",
-        "qty":  2,
+        "qty":  1,
         "price":  317900,
         "category":  "옷",
         "image":  "images/MB6-7-99-6890.png"
