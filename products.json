@@ -64,14 +64,6 @@
         "image":  "images/MB6-6-95-9618.png"
     },
     {
-        "part":  "MB6 6 04 5751",
-        "name":  "WEEKEND BAG",
-        "qty":  2,
-        "price":  564300,
-        "category":  "가방",
-        "image":  "images/MB6-6-04-5751.png"
-    },
-    {
         "part":  "MB6 6 95 6785",
         "name":  "RUCKSACK",
         "qty":  2,
@@ -744,14 +736,6 @@
         "image":  "images/MQALKRBM2069901.png"
     },
     {
-        "part":  "MB6 6 95 9837",
-        "name":  "CAP",
-        "qty":  1,
-        "price":  79200,
-        "category":  "모자",
-        "image":  "images/MB6-6-95-9837.png"
-    },
-    {
         "part":  "MB6 7 96 0038",
         "name":  "CAP",
         "qty":  1,
@@ -1026,7 +1010,7 @@
     {
         "part":  "MA000 899 59 00",
         "name":  "FLACON",
-        "qty":  2,
+        "qty":  1,
         "price":  134200,
         "category":  "방향제",
         "image":  "images/MA000-899-59-00.png"
@@ -1954,7 +1938,7 @@
     {
         "part":  "MQALKRB81201188",
         "name":  "CAMPING WAGON",
-        "qty":  5,
+        "qty":  8,
         "price":  95700,
         "category":  "캠핑",
         "image":  "images/MQALKRB81201188.png"
@@ -2194,7 +2178,7 @@
     {
         "part":  "MQALKRB81201178",
         "name":  "KEY CASE GEN 8 MINT",
-        "qty":  2,
+        "qty":  1,
         "price":  33000,
         "category":  "키링",
         "image":  "images/MQALKRB81201178.png"
@@ -2410,7 +2394,7 @@
     {
         "part":  "MB6 7 99 6888",
         "name":  "CAGOULE M",
-        "qty":  2,
+        "qty":  1,
         "price":  317900,
         "category":  "옷",
         "image":  "images/MB6-7-99-6888.png"
@@ -2430,5 +2414,13 @@
         "price":  317900,
         "category":  "옷",
         "image":  "images/MB6-7-99-6890.png"
+    },
+    {
+        "part":  "MB6 7 96 0059",
+        "name":  "SUITCASE G CLASS",
+        "qty":  3,
+        "price":  699600,
+        "category":  "가방",
+        "image":  "images/MB6-7-96-0059.png"
     }
 ]
