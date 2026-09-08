@@ -2422,5 +2422,13 @@
         "price":  699600,
         "category":  "가방",
         "image":  "images/MB6-7-96-0059.png"
+    },
+    {
+        "part":  "MQALKRB82962401",
+        "name":  "MINI TRAVEL BAG 2026 WHITE",
+        "qty":  28,
+        "price":  47300,
+        "category":  "가방",
+        "image":  "images/MQALKRB82962401.png"
     }
 ]
