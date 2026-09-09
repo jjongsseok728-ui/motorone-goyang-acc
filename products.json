@@ -234,7 +234,7 @@
     {
         "part":  "MQALKRB81201181",
         "name":  "TROLLEY BAG",
-        "qty":  1,
+        "qty":  4,
         "price":  84700,
         "category":  "가방",
         "image":  "images/MQALKRB81201181.png"
@@ -2426,9 +2426,17 @@
     {
         "part":  "MQALKRB82962401",
         "name":  "MINI TRAVEL BAG 2026 WHITE",
-        "qty":  28,
+        "qty":  27,
         "price":  47300,
         "category":  "가방",
         "image":  "images/MQALKRB82962401.png"
+    },
+    {
+        "part":  "MQALKRB82962402",
+        "name":  "MINI TRAVEL BAG 2026 BLACK",
+        "qty":  10,
+        "price":  47300,
+        "category":  "가방",
+        "image":  "images/MQALKRB82962402.png"
     }
 ]
