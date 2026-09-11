@@ -834,7 +834,7 @@
     {
         "part":  "MQALKRB81201151",
         "name":  "Car Air Freshener_Sea Breeze",
-        "qty":  6,
+        "qty":  5,
         "price":  9900,
         "category":  "방향제",
         "image":  "images/MQALKRB81201151.png"
@@ -2010,7 +2010,7 @@
     {
         "part":  "MQALKRB81201143",
         "name":  "Bear Keyring_Pink",
-        "qty":  12,
+        "qty":  11,
         "price":  19800,
         "category":  "키링",
         "image":  "images/MQALKRB81201143.png"
@@ -2106,7 +2106,7 @@
     {
         "part":  "MQALKRB81201196",
         "name":  "KEY CASE GEN 8 PINK",
-        "qty":  3,
+        "qty":  2,
         "price":  33000,
         "category":  "키링",
         "image":  "images/MQALKRB81201196.png"
@@ -2354,7 +2354,7 @@
     {
         "part":  "MB6 6 47 2002",
         "name":  "VALVE CAP",
-        "qty":  14,
+        "qty":  13,
         "price":  52800,
         "category":  "휠캡",
         "image":  "images/MB6-6-47-2002.png"
@@ -2394,7 +2394,7 @@
     {
         "part":  "MB6 7 99 6888",
         "name":  "CAGOULE M",
-        "qty":  1,
+        "qty":  2,
         "price":  317900,
         "category":  "옷",
         "image":  "images/MB6-7-99-6888.png"
@@ -2410,7 +2410,7 @@
     {
         "part":  "MB6 7 99 6890",
         "name":  "CAGOULE XL",
-        "qty":  1,
+        "qty":  2,
         "price":  317900,
         "category":  "옷",
         "image":  "images/MB6-7-99-6890.png"
@@ -2426,7 +2426,7 @@
     {
         "part":  "MQALKRB82962401",
         "name":  "MINI TRAVEL BAG 2026 WHITE",
-        "qty":  27,
+        "qty":  25,
         "price":  47300,
         "category":  "가방",
         "image":  "images/MQALKRB82962401.png"
@@ -2438,5 +2438,21 @@
         "price":  47300,
         "category":  "가방",
         "image":  "images/MQALKRB82962402.png"
+    },
+    {
+        "part":  "MQALKRBU2626301",
+        "name":  "TRAVEL POUCH",
+        "qty":  2,
+        "price":  99000,
+        "category":  "가방",
+        "image":  "images/MQALKRBU2626301.png"
+    },
+    {
+        "part":  "MB6 7 96 0273",
+        "name":  "FANNY PACK",
+        "qty":  2,
+        "price":  73700,
+        "category":  "가방",
+        "image":  "images/MB6-7-96-0273.png"
     }
 ]
