@@ -2,7 +2,7 @@
     {
         "part":  "MB6 6 95 9213",
         "name":  "SHOPPER",
-        "qty":  2,
+        "qty":  1,
         "price":  89100,
         "category":  "가방",
         "image":  "images/MB6-6-95-9213.png"
@@ -234,7 +234,7 @@
     {
         "part":  "MQALKRB81201181",
         "name":  "TROLLEY BAG",
-        "qty":  4,
+        "qty":  3,
         "price":  84700,
         "category":  "가방",
         "image":  "images/MQALKRB81201181.png"
@@ -326,14 +326,6 @@
         "price":  33000,
         "category":  "골프",
         "image":  "images/MQALKRBN9782401.png"
-    },
-    {
-        "part":  "MQALKRBN8700201",
-        "name":  "Premium Classic Cart Bag_BK",
-        "qty":  1,
-        "price":  590000,
-        "category":  "골프",
-        "image":  "images/MQALKRBN8700201.png"
     },
     {
         "part":  "MQALKRBM2069601",
@@ -1010,7 +1002,7 @@
     {
         "part":  "MA000 899 59 00",
         "name":  "FLACON",
-        "qty":  1,
+        "qty":  3,
         "price":  134200,
         "category":  "방향제",
         "image":  "images/MA000-899-59-00.png"
@@ -2000,14 +1992,6 @@
         "image":  "images/MB6-7-87-1618.png"
     },
     {
-        "part":  "MA203 840 00 20",
-        "name":  "LUGGAGE BOX",
-        "qty":  1,
-        "price":  24200,
-        "category":  "캠핑",
-        "image":  "images/MA203-840-00-20.png"
-    },
-    {
         "part":  "MQALKRB81201143",
         "name":  "Bear Keyring_Pink",
         "qty":  11,
@@ -2026,7 +2010,7 @@
     {
         "part":  "MQALKRB81201191",
         "name":  "KEY CASE GEN 6 PINK",
-        "qty":  6,
+        "qty":  4,
         "price":  33000,
         "category":  "키링",
         "image":  "images/MQALKRB81201191.png"
@@ -2426,7 +2410,7 @@
     {
         "part":  "MQALKRB82962401",
         "name":  "MINI TRAVEL BAG 2026 WHITE",
-        "qty":  25,
+        "qty":  24,
         "price":  47300,
         "category":  "가방",
         "image":  "images/MQALKRB82962401.png"
