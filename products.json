@@ -234,7 +234,7 @@
     {
         "part":  "MQALKRB81201181",
         "name":  "TROLLEY BAG",
-        "qty":  3,
+        "qty":  2,
         "price":  84700,
         "category":  "가방",
         "image":  "images/MQALKRB81201181.png"
@@ -414,22 +414,6 @@
         "price":  19800,
         "category":  "골프",
         "image":  "images/MQALKRBM2474721.png"
-    },
-    {
-        "part":  "MQALKRBM2474823",
-        "name":  "DURABLE GRIP KOREA BK 24",
-        "qty":  1,
-        "price":  19800,
-        "category":  "골프",
-        "image":  "images/MQALKRBM2474823.png"
-    },
-    {
-        "part":  "MQALKRBU2641101",
-        "name":  "WILSHIER CART BAG WH",
-        "qty":  1,
-        "price":  498300,
-        "category":  "골프",
-        "image":  "images/MQALKRBU2641101.png"
     },
     {
         "part":  "MQALKRB81201134",
@@ -626,7 +610,7 @@
     {
         "part":  "MB6 6 95 9836",
         "name":  "FLATBRIM CAP",
-        "qty":  2,
+        "qty":  1,
         "price":  79200,
         "category":  "모자",
         "image":  "images/MB6-6-95-9836.png"
@@ -968,14 +952,6 @@
         "image":  "images/MA000-899-09-00.png"
     },
     {
-        "part":  "MA222 899 06 00",
-        "name":  "FLACON",
-        "qty":  1,
-        "price":  134200,
-        "category":  "방향제",
-        "image":  "images/MA222-899-06-00.png"
-    },
-    {
         "part":  "MQALKRB81202039",
         "name":  "MB MOVE EXPRESS EDT 100ML",
         "qty":  1,
@@ -1150,14 +1126,6 @@
         "price":  256300,
         "category":  "악세사리",
         "image":  "images/MA205-820-64-03.png"
-    },
-    {
-        "part":  "MB6 6 95 8988",
-        "name":  "BELT",
-        "qty":  1,
-        "price":  212300,
-        "category":  "악세사리",
-        "image":  "images/MB6-6-95-8988.png"
     },
     {
         "part":  "MA213 680 35 05/658U20",
@@ -1792,14 +1760,6 @@
         "image":  "images/MB6-6-04-3226.png"
     },
     {
-        "part":  "MB6 6 04 1941",
-        "name":  "COMPACT UMBRELLA",
-        "qty":  1,
-        "price":  84700,
-        "category":  "우산",
-        "image":  "images/MB6-6-04-1941.png"
-    },
-    {
         "part":  "MB6 6 95 9790",
         "name":  "UMBRELLA",
         "qty":  1,
@@ -1866,7 +1826,7 @@
     {
         "part":  "MB6 6 04 2014",
         "name":  "WALLET",
-        "qty":  2,
+        "qty":  1,
         "price":  209000,
         "category":  "지갑",
         "image":  "images/MB6-6-04-2014.png"
@@ -1938,7 +1898,7 @@
     {
         "part":  "MQALKRB81201163",
         "name":  "CAMPING TABLE",
-        "qty":  4,
+        "qty":  3,
         "price":  77000,
         "category":  "캠핑",
         "image":  "images/MQALKRB81201163.png"
@@ -1954,7 +1914,7 @@
     {
         "part":  "MB6 6 04 1563",
         "name":  "PICNIC BLANKET",
-        "qty":  2,
+        "qty":  1,
         "price":  104500,
         "category":  "캠핑",
         "image":  "images/MB6-6-04-1563.png"
@@ -1984,17 +1944,9 @@
         "image":  "images/MB6-6-95-3317.png"
     },
     {
-        "part":  "MB6 7 87 1618",
-        "name":  "FLEECE BLANKET",
-        "qty":  1,
-        "price":  69300,
-        "category":  "캠핑",
-        "image":  "images/MB6-7-87-1618.png"
-    },
-    {
         "part":  "MQALKRB81201143",
         "name":  "Bear Keyring_Pink",
-        "qty":  11,
+        "qty":  10,
         "price":  19800,
         "category":  "키링",
         "image":  "images/MQALKRB81201143.png"
@@ -2002,7 +1954,7 @@
     {
         "part":  "MQALKRB81201142",
         "name":  "Bear Keyring_Mint",
-        "qty":  7,
+        "qty":  6,
         "price":  19800,
         "category":  "키링",
         "image":  "images/MQALKRB81201142.png"
@@ -2066,7 +2018,7 @@
     {
         "part":  "MQALKRB81201194",
         "name":  "KEY CASE GEN 6 ORANGE",
-        "qty":  4,
+        "qty":  2,
         "price":  33000,
         "category":  "키링",
         "image":  "images/MQALKRB81201194.png"
@@ -2410,7 +2362,7 @@
     {
         "part":  "MQALKRB82962401",
         "name":  "MINI TRAVEL BAG 2026 WHITE",
-        "qty":  24,
+        "qty":  23,
         "price":  47300,
         "category":  "가방",
         "image":  "images/MQALKRB82962401.png"
@@ -2418,7 +2370,7 @@
     {
         "part":  "MQALKRB82962402",
         "name":  "MINI TRAVEL BAG 2026 BLACK",
-        "qty":  10,
+        "qty":  5,
         "price":  47300,
         "category":  "가방",
         "image":  "images/MQALKRB82962402.png"
@@ -2438,5 +2390,45 @@
         "price":  73700,
         "category":  "가방",
         "image":  "images/MB6-7-96-0273.png"
+    },
+    {
+        "part":  "MB6 7 96 0196",
+        "name":  "SWEAT JACKET M",
+        "qty":  2,
+        "price":  268400,
+        "category":  "옷",
+        "image":  "images/MB6-7-96-0196.png"
+    },
+    {
+        "part":  "MB6 7 96 0197",
+        "name":  "SWEAT JACKET L",
+        "qty":  2,
+        "price":  268400,
+        "category":  "옷",
+        "image":  "images/MB6-7-96-0197.png"
+    },
+    {
+        "part":  "MB6 6 95 9659",
+        "name":  "CREDIT CARD WALLET",
+        "qty":  2,
+        "price":  89100,
+        "category":  "지갑",
+        "image":  "images/MB6-6-95-9659.png"
+    },
+    {
+        "part":  "MB6 6 04 1762",
+        "name":  "KEY RINGS",
+        "qty":  2,
+        "price":  110000,
+        "category":  "키링",
+        "image":  "images/MB6-6-04-1762.png"
+    },
+    {
+        "part":  "MB6 6 04 1763",
+        "name":  "KEY RINGS",
+        "qty":  2,
+        "price":  110000,
+        "category":  "키링",
+        "image":  "images/MB6-6-04-1763.png"
     }
 ]
