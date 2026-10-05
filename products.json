@@ -130,7 +130,7 @@
     {
         "part":  "MQALKRB81201143",
         "name":  "Bear Keyring_Pink",
-        "qty":  13,
+        "qty":  12,
         "price":  19800,
         "category":  "키링",
         "image":  "images/MQALKRB81201143.png"
@@ -146,7 +146,7 @@
     {
         "part":  "MQALKRB81201171",
         "name":  "STEEL TUMBLER NY",
-        "qty":  3,
+        "qty":  1,
         "price":  19800,
         "category":  "텀블러",
         "image":  "images/MQALKRB81201171.png"
@@ -154,7 +154,7 @@
     {
         "part":  "MQALKRB81201170",
         "name":  "STEEL TUMBLER BK",
-        "qty":  4,
+        "qty":  2,
         "price":  19800,
         "category":  "텀블러",
         "image":  "images/MQALKRB81201170.png"
@@ -682,7 +682,7 @@
     {
         "part":  "MQALKRB82962401",
         "name":  "MINI TRAVEL BAG 2026 WHITE",
-        "qty":  22,
+        "qty":  21,
         "price":  47300,
         "category":  "가방",
         "image":  "images/MQALKRB82962401.png"
@@ -1082,7 +1082,7 @@
     {
         "part":  "MQALKRB81201163",
         "name":  "CAMPING TABLE",
-        "qty":  5,
+        "qty":  4,
         "price":  77000,
         "category":  "캠핑",
         "image":  "images/MQALKRB81201163.png"
@@ -1282,7 +1282,7 @@
     {
         "part":  "MQALKRB81201188",
         "name":  "CAMPING WAGON",
-        "qty":  3,
+        "qty":  2,
         "price":  95700,
         "category":  "캠핑",
         "image":  "images/MQALKRB81201188.png"
