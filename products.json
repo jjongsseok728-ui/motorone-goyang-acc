@@ -130,7 +130,7 @@
     {
         "part":  "MQALKRB81201143",
         "name":  "Bear Keyring_Pink",
-        "qty":  12,
+        "qty":  11,
         "price":  19800,
         "category":  "키링",
         "image":  "images/MQALKRB81201143.png"
@@ -424,14 +424,6 @@
         "image":  "images/MB6-6-95-3358.png"
     },
     {
-        "part":  "MB6 6 95 2989",
-        "name":  "SHOPPER",
-        "qty":  1,
-        "price":  42900,
-        "category":  "가방",
-        "image":  "images/MB6-6-95-2989.png"
-    },
-    {
         "part":  "MB6 6 95 3636/64",
         "name":  "LANYBOOK A6",
         "qty":  1,
@@ -682,7 +674,7 @@
     {
         "part":  "MQALKRB82962401",
         "name":  "MINI TRAVEL BAG 2026 WHITE",
-        "qty":  21,
+        "qty":  20,
         "price":  47300,
         "category":  "가방",
         "image":  "images/MQALKRB82962401.png"
@@ -1082,7 +1074,7 @@
     {
         "part":  "MQALKRB81201163",
         "name":  "CAMPING TABLE",
-        "qty":  4,
+        "qty":  3,
         "price":  77000,
         "category":  "캠핑",
         "image":  "images/MQALKRB81201163.png"
@@ -1282,7 +1274,7 @@
     {
         "part":  "MQALKRB81201188",
         "name":  "CAMPING WAGON",
-        "qty":  2,
+        "qty":  1,
         "price":  95700,
         "category":  "캠핑",
         "image":  "images/MQALKRB81201188.png"
@@ -2018,7 +2010,7 @@
     {
         "part":  "MB6 7 96 0197",
         "name":  "SWEAT JACKET L",
-        "qty":  2,
+        "qty":  1,
         "price":  268400,
         "category":  "옷",
         "image":  "images/MB6-7-96-0197.png"
@@ -2414,5 +2406,13 @@
         "price":  1556500,
         "category":  "휠",
         "image":  "images/MB6-6-03-1103.png"
+    },
+    {
+        "part":  "MQALKRBM2474301",
+        "name":  "ESSENTIAL PRO CART BAG NV",
+        "qty":  1,
+        "price":  437800,
+        "category":  "골프",
+        "image":  "images/MQALKRBM2474301.png"
     }
 ]
