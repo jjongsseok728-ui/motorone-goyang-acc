@@ -146,7 +146,7 @@
     {
         "part":  "MQALKRB81201171",
         "name":  "STEEL TUMBLER NY",
-        "qty":  1,
+        "qty":  5,
         "price":  19800,
         "category":  "텀블러",
         "image":  "images/MQALKRB81201171.png"
@@ -154,7 +154,7 @@
     {
         "part":  "MQALKRB81201170",
         "name":  "STEEL TUMBLER BK",
-        "qty":  2,
+        "qty":  5,
         "price":  19800,
         "category":  "텀블러",
         "image":  "images/MQALKRB81201170.png"
@@ -370,7 +370,7 @@
     {
         "part":  "MQALKRB81201177",
         "name":  "KEY CASE GEN 8 PINK",
-        "qty":  2,
+        "qty":  1,
         "price":  33000,
         "category":  "키링",
         "image":  "images/MQALKRB81201177.png"
@@ -674,7 +674,7 @@
     {
         "part":  "MQALKRB82962401",
         "name":  "MINI TRAVEL BAG 2026 WHITE",
-        "qty":  20,
+        "qty":  17,
         "price":  47300,
         "category":  "가방",
         "image":  "images/MQALKRB82962401.png"
@@ -1560,14 +1560,6 @@
         "image":  "images/MB6-7-99-7127.png"
     },
     {
-        "part":  "MA000 899 52 00",
-        "name":  "FLACON",
-        "qty":  1,
-        "price":  177100,
-        "category":  "방향제",
-        "image":  "images/MA000-899-52-00.png"
-    },
-    {
         "part":  "MQALKRBU2643601",
         "name":  "CL LITE BOSTON BAG BK",
         "qty":  1,
@@ -2338,7 +2330,7 @@
     {
         "part":  "MB6 7 96 0059",
         "name":  "SUITCASE G CLASS",
-        "qty":  3,
+        "qty":  2,
         "price":  699600,
         "category":  "가방",
         "image":  "images/MB6-7-96-0059.png"
