@@ -90,7 +90,7 @@
     {
         "part":  "MB6 6 95 3080",
         "name":  "PIN",
-        "qty":  3,
+        "qty":  1,
         "price":  22000,
         "category":  "악세사리",
         "image":  "images/MB6-6-95-3080.png"
@@ -130,7 +130,7 @@
     {
         "part":  "MQALKRB81201143",
         "name":  "Bear Keyring_Pink",
-        "qty":  11,
+        "qty":  9,
         "price":  19800,
         "category":  "키링",
         "image":  "images/MQALKRB81201143.png"
@@ -674,7 +674,7 @@
     {
         "part":  "MQALKRB82962401",
         "name":  "MINI TRAVEL BAG 2026 WHITE",
-        "qty":  17,
+        "qty":  7,
         "price":  47300,
         "category":  "가방",
         "image":  "images/MQALKRB82962401.png"
@@ -838,14 +838,6 @@
         "price":  96800,
         "category":  "모델카",
         "image":  "images/MB6-6-96-0399.png"
-    },
-    {
-        "part":  "MB6 6 04 1524",
-        "name":  "KEY RING",
-        "qty":  1,
-        "price":  77000,
-        "category":  "키링",
-        "image":  "images/MB6-6-04-1524.png"
     },
     {
         "part":  "MB6 6 95 9790",
@@ -1074,7 +1066,7 @@
     {
         "part":  "MQALKRB81201163",
         "name":  "CAMPING TABLE",
-        "qty":  3,
+        "qty":  6,
         "price":  77000,
         "category":  "캠핑",
         "image":  "images/MQALKRB81201163.png"
@@ -1170,7 +1162,7 @@
     {
         "part":  "MQALKRBN9786201",
         "name":  "TM UTILITY POUCH BK",
-        "qty":  2,
+        "qty":  1,
         "price":  88000,
         "category":  "가방",
         "image":  "images/MQALKRBN9786201.png"
@@ -1272,14 +1264,6 @@
         "image":  "images/MQALKRBU2641901.png"
     },
     {
-        "part":  "MQALKRB81201188",
-        "name":  "CAMPING WAGON",
-        "qty":  1,
-        "price":  95700,
-        "category":  "캠핑",
-        "image":  "images/MQALKRB81201188.png"
-    },
-    {
         "part":  "MA167 899 21 00",
         "name":  "FLACON",
         "qty":  1,
@@ -1298,7 +1282,7 @@
     {
         "part":  "MQALKRBU2626301",
         "name":  "TRAVEL POUCH",
-        "qty":  2,
+        "qty":  1,
         "price":  99000,
         "category":  "가방",
         "image":  "images/MQALKRBU2626301.png"
@@ -1366,14 +1350,6 @@
         "price":  128700,
         "category":  "지갑",
         "image":  "images/MB6-6-95-9385.png"
-    },
-    {
-        "part":  "MA223 899 02 00",
-        "name":  "FLACON",
-        "qty":  1,
-        "price":  134200,
-        "category":  "방향제",
-        "image":  "images/MA223-899-02-00.png"
     },
     {
         "part":  "MB6 6 95 9319",
@@ -2016,14 +1992,6 @@
         "image":  "images/MB6-7-99-1672.png"
     },
     {
-        "part":  "MB6 6 95 9829",
-        "name":  "WEEKEND BAG",
-        "qty":  1,
-        "price":  276100,
-        "category":  "가방",
-        "image":  "images/MB6-6-95-9829.png"
-    },
-    {
         "part":  "MB6 6 96 1050",
         "name":  "AMG ONE C298 1:18",
         "qty":  1,
@@ -2074,7 +2042,7 @@
     {
         "part":  "MB6 7 99 6887",
         "name":  "CAGOULE S",
-        "qty":  2,
+        "qty":  1,
         "price":  317900,
         "category":  "옷",
         "image":  "images/MB6-7-99-6887.png"
