@@ -424,6 +424,14 @@
         "image":  "images/MB6-6-95-3358.png"
     },
     {
+        "part":  "MB6 6 95 2989",
+        "name":  "SHOPPER",
+        "qty":  6,
+        "price":  42900,
+        "category":  "가방",
+        "image":  "images/MB6-6-95-2989.png"
+    },
+    {
         "part":  "MB6 6 95 3636/64",
         "name":  "LANYBOOK A6",
         "qty":  1,
