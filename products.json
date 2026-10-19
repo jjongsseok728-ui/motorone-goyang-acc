@@ -442,7 +442,7 @@
     {
         "part":  "MB6 6 95 9414",
         "name":  "SHOPPING BAG",
-        "qty":  6,
+        "qty":  3,
         "price":  42900,
         "category":  "가방",
         "image":  "images/MB6-6-95-9414.png"
@@ -682,7 +682,7 @@
     {
         "part":  "MQALKRB82962401",
         "name":  "MINI TRAVEL BAG 2026 WHITE",
-        "qty":  7,
+        "qty":  6,
         "price":  47300,
         "category":  "가방",
         "image":  "images/MQALKRB82962401.png"
@@ -690,7 +690,7 @@
     {
         "part":  "MQALKRB82962402",
         "name":  "MINI TRAVEL BAG 2026 BLACK",
-        "qty":  5,
+        "qty":  4,
         "price":  47300,
         "category":  "가방",
         "image":  "images/MQALKRB82962402.png"
@@ -1074,7 +1074,7 @@
     {
         "part":  "MQALKRB81201163",
         "name":  "CAMPING TABLE",
-        "qty":  6,
+        "qty":  9,
         "price":  77000,
         "category":  "캠핑",
         "image":  "images/MQALKRB81201163.png"
@@ -1250,7 +1250,7 @@
     {
         "part":  "MQALKRB81201181",
         "name":  "TROLLEY BAG",
-        "qty":  2,
+        "qty":  1,
         "price":  84700,
         "category":  "가방",
         "image":  "images/MQALKRB81201181.png"
