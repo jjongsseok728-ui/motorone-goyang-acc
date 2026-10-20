@@ -282,7 +282,7 @@
     {
         "part":  "MQALKRB81201191",
         "name":  "KEY CASE GEN 6 PINK",
-        "qty":  4,
+        "qty":  2,
         "price":  33000,
         "category":  "키링",
         "image":  "images/MQALKRB81201191.png"
@@ -1248,14 +1248,6 @@
         "image":  "images/MB6-6-95-8295.png"
     },
     {
-        "part":  "MQALKRB81201181",
-        "name":  "TROLLEY BAG",
-        "qty":  1,
-        "price":  84700,
-        "category":  "가방",
-        "image":  "images/MQALKRB81201181.png"
-    },
-    {
         "part":  "MB6 6 95 5083",
         "name":  "TO GO CUP 0,35L",
         "qty":  1,
@@ -1794,7 +1786,7 @@
     {
         "part":  "MB6 6 95 9655",
         "name":  "SPORTS BAG",
-        "qty":  1,
+        "qty":  2,
         "price":  238700,
         "category":  "가방",
         "image":  "images/MB6-6-95-9655.png"
