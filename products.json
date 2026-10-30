@@ -34,7 +34,7 @@
     {
         "part":  "MQALKRB81201156",
         "name":  "Car Air Freshener_Aqua Dive",
-        "qty":  3,
+        "qty":  2,
         "price":  9900,
         "category":  "방향제",
         "image":  "images/MQALKRB81201156.png"
@@ -98,7 +98,7 @@
     {
         "part":  "MB6 6 95 3080",
         "name":  "PIN",
-        "qty":  1,
+        "qty":  11,
         "price":  22000,
         "category":  "악세사리",
         "image":  "images/MB6-6-95-3080.png"
@@ -290,7 +290,7 @@
     {
         "part":  "MQALKRB81201191",
         "name":  "KEY CASE GEN 6 PINK",
-        "qty":  2,
+        "qty":  1,
         "price":  33000,
         "category":  "키링",
         "image":  "images/MQALKRB81201191.png"
@@ -314,7 +314,7 @@
     {
         "part":  "MQALKRB81201197",
         "name":  "KEY CASE GEN 8 BLUE",
-        "qty":  6,
+        "qty":  5,
         "price":  33000,
         "category":  "키링",
         "image":  "images/MQALKRB81201197.png"
@@ -450,7 +450,7 @@
     {
         "part":  "MB6 6 95 9414",
         "name":  "SHOPPING BAG",
-        "qty":  3,
+        "qty":  2,
         "price":  42900,
         "category":  "가방",
         "image":  "images/MB6-6-95-9414.png"
@@ -650,7 +650,7 @@
     {
         "part":  "MB6 6 04 1540",
         "name":  "CAP",
-        "qty":  2,
+        "qty":  1,
         "price":  53900,
         "category":  "모자",
         "image":  "images/MB6-6-04-1540.png"
@@ -1680,14 +1680,6 @@
         "image":  "images/MNBV9463-401.png"
     },
     {
-        "part":  "MB6 6 04 1752",
-        "name":  "SHOPPER",
-        "qty":  1,
-        "price":  171600,
-        "category":  "가방",
-        "image":  "images/MB6-6-04-1752.png"
-    },
-    {
         "part":  "MA213 680 35 05/658U20",
         "name":  "FLOOR MAT",
         "qty":  1,
@@ -2010,7 +2002,7 @@
     {
         "part":  "MQALKRBN8700301",
         "name":  "Premium Classic Boston_BK",
-        "qty":  3,
+        "qty":  2,
         "price":  250000,
         "category":  "가방",
         "image":  "images/MQALKRBN8700301.png"
@@ -2224,14 +2216,6 @@
         "image":  "images/MB6-6-95-8858.png"
     },
     {
-        "part":  "MQALKRBM1389801",
-        "name":  "GRAPHIC T LITE CART NY",
-        "qty":  1,
-        "price":  352000,
-        "category":  "골프",
-        "image":  "images/MQALKRBM1389801.png"
-    },
-    {
         "part":  "MQALKRBN9785601",
         "name":  "WHEELED BOSTON BAG BG",
         "qty":  1,
@@ -2354,7 +2338,7 @@
     {
         "part":  "MA000 899 57 00",
         "name":  "FLACON",
-        "qty":  2,
+        "qty":  1,
         "price":  134200,
         "category":  "방향제",
         "image":  "images/MA000-899-57-00.png"
