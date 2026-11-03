@@ -35,27 +35,12 @@ if ($RetryCheck) {
     Remove-Item -LiteralPath $RetryMarkerPath -Force
 }
 
-# 5 STAR GIFT 증정 후보 부품번호 (구글시트 "5star A&C LIST" 탭에서 큐레이션, 2026-08-12 기준).
+# 5 STAR GIFT 증정 후보 부품번호는 gift_parts.json에서 관리한다 (관리자 페이지 admin.html에서 추가/삭제).
+# 관리자 페이지는 GitHub에 직접 커밋하므로, 동기화 시작 시 git pull로 최신 목록을 먼저 받아온다.
 # 이 목록 자체는 매일 바뀌지 않음 - 실제 증정 페이지 노출 여부는 아래에서
 # "메인 컬렉션(products.json)에 남아있고 재고(qty)가 0보다 큰가"로 매번 재판정한다.
 # 메인 컬렉션에서 품목이 사라지거나 재고가 0이 되면 증정 페이지에서도 자동으로 사라진다.
-$GIFT_PART_NUMBERS = @(
-    "MB6 6 04 1523","MB6 6 04 1524","MB6 6 95 3744","MB6 6 95 3307","MB6 6 95 9846","MB6 7 87 1175","MB6 6 95 9725",
-    "MB6 6 95 9728","MB6 6 95 9376","MB6 6 95 9377","MB6 7 99 7018","MB6 6 95 9352","MB6 6 95 9341","MB6 6 95 9821",
-    "MB6 6 96 0576","MB6 6 95 9924","MB6 6 95 8404","MB6 6 95 3714","MB6 6 95 3713","MB6 6 95 3358","MB6 6 95 9715",
-    "MB6 7 87 2867","MB6 6 04 2026","MB6 6 95 5083","MB6 6 95 5015","MQALKRBV9591501","MB6 6 95 9654","MA177 810 81 03",
-    "MB6 6 45 0405","MQALKRBN9782401","MQALKRBN9782801","MQALKRBM1390201","MQALKRBN9786201","MNBU3125 601","MQALKRBU2643201",
-    "MB6 6 95 5770","MB6 6 95 9442","MQALKRB81201134","MNBV9403 101","MNBV9403 001","MB6 6 45 0461","MB6 6 95 4769",
-    "MB6 7 87 2008","MB6 6 95 9385","MB6 6 95 3636/64","MB6 6 47 2005","MB6 6 95 9925","MB6 6 04 1558","MB6 6 95 4774",
-    "MQALKRB81202037","MQALKRB81202039","MQALKRB81202041","MB6 6 95 3230","MB6 6 95 4738","MB6 6 95 3148","MB6 6 95 3409",
-    "MB6 7 87 1618","MB6 6 04 1563","MQALKRB81201164","MB6 6 95 3317","MB6 6 95 3318","MQALKRBB1613101","MB6 6 95 9789",
-    "MQALKRB81201188","MQALKRB81201163",
-    "MB6 6 95 9414","MB6 6 95 2989","MB6 6 95 9213",
-    "MQALKRB81201143","MQALKRB81201142","MQALKRB81201191","MQALKRB81201198","MQALKRB81201199",
-    "MQALKRB81201190","MQALKRB81201193","MQALKRB81201194","MQALKRB81201192","MQALKRB81201197",
-    "MQALKRB81201196","MQALKRB81201176","MQALKRB81201178","MQALKRB81201177",
-    "MB6 7 96 0273"
-)
+$GiftPartsPath = Join-Path $ProjDir "gift_parts.json"
 
 # 증정 전용 재고 - 메인 컬렉션 리스트(index.html)에 노출하지 않을 부품번호.
 # 시트에는 그대로 남아있고 재고 수량도 정상 반영되지만, 판매용 리스트에는 나오지 않는다.
@@ -212,6 +197,16 @@ function Read-ZipEntryText($zip, $entryName) {
 try {
     New-Item -ItemType Directory -Force -Path $TmpDir | Out-Null
     Write-Log "동기화 시작"
+
+    # 0) 관리자 페이지에서 GitHub에 직접 올린 변경(gift_parts.json)을 먼저 받아온다.
+    #    실패해도 로컬 목록으로 계속 진행한다 (push 직전에 한 번 더 pull 함).
+    $prevEAP0 = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    Push-Location $ProjDir
+    git pull --rebase --autostash origin master 2>&1 | Out-Null
+    if ($LASTEXITCODE -ne 0) { Write-Log "git pull 실패 - 로컬 gift_parts.json으로 진행 (exit code $LASTEXITCODE)" }
+    Pop-Location
+    $ErrorActionPreference = $prevEAP0
 
     # 1) Sheets API v4로 시트 원본 값을 직접 읽는다 (서비스 계정 인증).
     # 주의: gviz CSV 내보내기(실시간 공유 필터 반영)와 XLSX 내보내기(실제 "행 숨김" 반영)
@@ -433,6 +428,7 @@ try {
     $productByPart = @{}
     foreach ($p in $newProducts) { $productByPart[$p.part.Trim()] = $p }
 
+    $GIFT_PART_NUMBERS = @((Get-Content -LiteralPath $GiftPartsPath -Raw -Encoding UTF8 | ConvertFrom-Json).parts)
     $giftProducts = @()
     $giftExcluded = 0
     foreach ($gp in $GIFT_PART_NUMBERS) {
@@ -476,6 +472,8 @@ try {
         $changed = git status --porcelain
         if ($changed) {
             git commit -m "자동 동기화: $syncTimeText" | Out-Null
+            # 동기화 도중 관리자 페이지에서 커밋이 올라왔을 수 있으므로 push 전에 한 번 더 합친다
+            git pull --rebase --autostash origin master 2>&1 | Out-Null
             git push origin master
             if ($LASTEXITCODE -ne 0) { throw "git push 실패 (exit code $LASTEXITCODE)" }
             Write-Log "GitHub Pages에 배포 완료"

@@ -520,16 +520,23 @@ const GIFTS = [{"part":"MB6 6 04 1523","name":"KEY RING","category":"키링","im
   const expanded = new Set();
 
   /* ================= GROUP BY CATEGORY ================= */
-  const grouped = {};
-  GIFTS.forEach(function(p, idx){
-    p._idx = idx;
-    p._cat = normalizeCategory(p.category);
-    if(!grouped[p._cat]) grouped[p._cat] = [];
-    grouped[p._cat].push(p);
-  });
-  Object.keys(grouped).forEach(function(c){
-    if(CATEGORY_ORDER.indexOf(c) === -1) CATEGORY_ORDER.push(c);
-  });
+  // giftList는 처음엔 sync.ps1이 박아둔 GIFTS로 그리고, 아래 LIVE REFRESH에서
+  // gift_parts.json(관리자 페이지에서 수정) + products.json으로 다시 계산해 교체한다.
+  let giftList = GIFTS;
+  let grouped = {};
+  function groupGifts(){
+    grouped = {};
+    giftList.forEach(function(p, idx){
+      p._idx = idx;
+      p._cat = normalizeCategory(p.category);
+      if(!grouped[p._cat]) grouped[p._cat] = [];
+      grouped[p._cat].push(p);
+    });
+    Object.keys(grouped).forEach(function(c){
+      if(CATEGORY_ORDER.indexOf(c) === -1) CATEGORY_ORDER.push(c);
+    });
+  }
+  groupGifts();
 
   /* ================= HELPERS ================= */
   function iconFor(cat){ return CATEGORY_ICON[cat] || "🎁"; }
@@ -581,11 +588,12 @@ const GIFTS = [{"part":"MB6 6 04 1523","name":"KEY RING","category":"키링","im
   /* ================= TABS ================= */
   const tabsEl = document.getElementById("tabs");
   function buildTabs(){
-    let html = '<button class="tab-btn active" data-cat="all">전체 <span class="cnt">(' + GIFTS.length + ')</span></button>';
+    if(currentFilter !== "all" && !grouped[currentFilter]) currentFilter = "all";
+    let html = '<button class="tab-btn' + (currentFilter === "all" ? ' active' : '') + '" data-cat="all">전체 <span class="cnt">(' + giftList.length + ')</span></button>';
     CATEGORY_ORDER.forEach(function(cat){
       const items = grouped[cat];
       if(!items || !items.length) return;
-      html += '<button class="tab-btn" data-cat="' + escapeHtml(cat) + '">' +
+      html += '<button class="tab-btn' + (currentFilter === cat ? ' active' : '') + '" data-cat="' + escapeHtml(cat) + '">' +
         iconFor(cat) + ' ' + escapeHtml(cat) + ' <span class="cnt">(' + items.length + ')</span></button>';
     });
     tabsEl.innerHTML = html;
@@ -749,7 +757,7 @@ const GIFTS = [{"part":"MB6 6 04 1523","name":"KEY RING","category":"키링","im
   }
 
   function openModal(idx){
-    const p = GIFTS[idx];
+    const p = giftList[idx];
     if(!p) return;
     setModalThumb(p);
     modalCatLabel.textContent = p._cat;
@@ -777,6 +785,34 @@ const GIFTS = [{"part":"MB6 6 04 1523","name":"KEY RING","category":"키링","im
   });
   document.addEventListener("keydown", function(e){
     if(e.key === "Escape" && modalOverlay.classList.contains("open")) closeModal();
+  });
+
+  /* ================= LIVE REFRESH ================= */
+  // 관리자 페이지에서 바꾼 목록이 다음 자동 동기화 전에도 바로 보이도록,
+  // 증정 후보(gift_parts.json) 중 메인 컬렉션(products.json)에 있고 재고가 남은 것만 다시 계산한다.
+  // 불러오기에 실패하면 위에 박혀 있는 GIFTS를 그대로 보여준다.
+  function fetchJson(url){
+    return fetch(url + "?t=" + Date.now(), {cache: "no-store"}).then(function(r){
+      if(!r.ok) throw new Error(url + " " + r.status);
+      return r.json();
+    });
+  }
+  Promise.all([fetchJson("products.json"), fetchJson("gift_parts.json")]).then(function(res){
+    const byPart = {};
+    [].concat(res[0]).forEach(function(p){ byPart[String(p.part).trim()] = p; });
+    const fresh = [];
+    (res[1].parts || []).forEach(function(part){
+      const mp = byPart[String(part).trim()];
+      if(mp && mp.qty > 0) fresh.push({part: mp.part, name: mp.name, category: mp.category, image: mp.image});
+    });
+    const sig = function(list){ return list.map(function(p){ return p.part; }).join("|"); };
+    if(sig(fresh) === sig(giftList)) return;
+    giftList = fresh;
+    groupGifts();
+    buildTabs();
+    renderCatalog();
+  }).catch(function(err){
+    console.warn("증정 목록 실시간 갱신 실패 - 기본 목록 사용", err);
   });
 
 })();

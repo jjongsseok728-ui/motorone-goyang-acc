@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>5 STAR GIFT 관리자</title>
+<style>
+  :root{
+    --black:#0a0a0c;
+    --black-3:#1f1f22;
+    --white:#ffffff;
+    --off-white:#f7f7f5;
+    --gold:#c9a35b;
+    --gold-2:#a8823f;
+    --text:#1c1c1e;
+    --muted:#6b6b70;
+    --line:#e6e5e2;
+    --ok:#2f7d4f;
+    --ok-bg:#e6f2ea;
+    --warn:#9a6a12;
+    --warn-bg:#f8efdc;
+    --bad:#b23a3a;
+    --bad-bg:#f8e5e5;
+    --radius:14px;
+    --radius-sm:8px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Malgun Gothic","Apple SD Gothic Neo",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--off-white);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased;}
+  button,input{font-family:inherit;font-size:inherit;}
+  button{cursor:pointer;}
+  img{display:block;max-width:100%;}
+
+  header{
+    position:sticky;top:0;z-index:20;background:rgba(10,10,12,.94);color:var(--white);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .header-inner{max-width:960px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .brand{display:flex;flex-direction:column;line-height:1.2;}
+  .brand strong{font-size:15px;letter-spacing:1.2px;}
+  .brand span{font-size:11px;color:var(--gold);letter-spacing:1.6px;}
+  .header-links{display:flex;gap:14px;align-items:center;font-size:13px;}
+  .header-links a{color:rgba(255,255,255,.8);text-decoration:none;}
+  .header-links a:hover{color:var(--white);}
+  .link-btn{background:none;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.85);border-radius:999px;padding:4px 12px;font-size:12px;}
+
+  main{max-width:960px;margin:0 auto;padding:24px 16px 80px;}
+  .card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:18px;}
+  .card h2{margin:0 0 4px;font-size:17px;}
+  .card .sub{margin:0 0 14px;color:var(--muted);font-size:13px;}
+
+  .row{display:flex;gap:8px;}
+  .row input{flex:1;min-width:0;}
+  input[type=text],input[type=password]{
+    padding:11px 14px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--white);color:var(--text);outline:none;
+  }
+  input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,163,91,.18);}
+  .btn{padding:11px 18px;border-radius:var(--radius-sm);border:none;font-weight:600;white-space:nowrap;}
+  .btn-dark{background:var(--black);color:var(--white);}
+  .btn-dark:hover{background:var(--black-3);}
+  .btn:disabled{opacity:.5;cursor:default;}
+
+  /* login */
+  .login{max-width:460px;margin:40px auto;}
+  .login ol{margin:10px 0 16px;padding-left:20px;color:var(--muted);font-size:13px;}
+  .login ol a{color:var(--gold-2);}
+  .msg{margin-top:10px;font-size:13px;min-height:1.2em;}
+  .msg.err{color:var(--bad);}
+  .msg.ok{color:var(--ok);}
+
+  /* add */
+  .add-wrap{position:relative;}
+  .suggest{
+    position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:10;background:var(--white);
+    border:1px solid var(--line);border-radius:var(--radius-sm);box-shadow:0 12px 30px rgba(0,0,0,.12);
+    max-height:360px;overflow:auto;display:none;
+  }
+  .suggest.open{display:block;}
+  .sg-item{display:flex;align-items:center;gap:10px;width:100%;padding:8px 12px;border:none;background:none;text-align:left;border-bottom:1px solid var(--line);}
+  .sg-item:last-child{border-bottom:none;}
+  .sg-item:hover,.sg-item.active{background:var(--off-white);}
+  .sg-item[disabled]{cursor:default;opacity:.55;}
+  .sg-item .nm{flex:1;min-width:0;}
+  .sg-item .nm b{display:block;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .sg-item .nm small{color:var(--muted);font-size:12px;}
+  .sg-empty{padding:12px;color:var(--muted);font-size:13px;}
+
+  /* list */
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:12px;}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .chip{border:1px solid var(--line);background:var(--white);border-radius:999px;padding:5px 12px;font-size:12px;color:var(--muted);}
+  .chip.active{background:var(--black);border-color:var(--black);color:var(--white);}
+  .toolbar input{flex:1;min-width:160px;max-width:260px;padding:8px 12px;font-size:13px;}
+
+  .list{display:flex;flex-direction:column;}
+  .item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);}
+  .item:last-child{border-bottom:none;}
+  .thumb{width:52px;height:52px;flex:none;border-radius:var(--radius-sm);background:#f0efeb;display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:20px;}
+  .thumb img{width:100%;height:100%;object-fit:contain;}
+  .item .info{flex:1;min-width:0;}
+  .item .info b{display:block;font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .item .info small{color:var(--muted);font-size:12px;}
+  .status{flex:none;font-size:11px;font-weight:600;border-radius:999px;padding:3px 9px;white-space:nowrap;}
+  .st-on{background:var(--ok-bg);color:var(--ok);}
+  .st-soldout{background:var(--warn-bg);color:var(--warn);}
+  .st-missing{background:var(--bad-bg);color:var(--bad);}
+  .del{flex:none;border:1px solid var(--line);background:var(--white);color:var(--muted);border-radius:var(--radius-sm);padding:6px 10px;font-size:12px;}
+  .del:hover{border-color:var(--bad);color:var(--bad);}
+  .empty{padding:24px 0;text-align:center;color:var(--muted);font-size:13px;}
+
+  .toast{
+    position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;
+    background:var(--black);color:var(--white);padding:11px 18px;border-radius:999px;font-size:13px;
+    transition:all .25s ease;pointer-events:none;max-width:calc(100% - 32px);text-align:center;z-index:50;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .toast.err{background:var(--bad);}
+  .hidden{display:none !important;}
+
+  @media (max-width:560px){
+    .card{padding:16px;}
+    .item{flex-wrap:wrap;}
+    .item .info{flex-basis:calc(100% - 64px);}
+    .item .status{margin-left:64px;}
+    .item .del{margin-left:auto;}
+    .toolbar input{max-width:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand"><strong>모터원 고양</strong><span>5 STAR GIFT 관리자</span></div>
+    <div class="header-links">
+      <a href="gift.html" target="_blank" rel="noopener">증정 페이지 ↗</a>
+      <button type="button" class="link-btn hidden" id="logoutBtn">로그아웃</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- 로그인: 저장소 쓰기 권한이 있는 GitHub 토큰이 있어야만 열린다 -->
+  <section class="card login" id="loginView">
+    <h2>관리자 로그인</h2>
+    <p class="sub">저장소에 쓰기 권한이 있는 GitHub 토큰으로만 들어올 수 있습니다. 토큰은 이 기기 브라우저에만 저장됩니다.</p>
+    <form id="loginForm">
+      <div class="row">
+        <input type="password" id="tokenInput" placeholder="github_pat_..." autocomplete="off" required>
+        <button class="btn btn-dark" type="submit" id="loginBtn">로그인</button>
+      </div>
+    </form>
+    <div class="msg" id="loginMsg"></div>
+    <ol>
+      <li><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub 토큰 만들기</a> (Fine-grained token)</li>
+      <li>Repository access: <b>Only select repositories</b> → motorone-goyang-acc</li>
+      <li>Permissions → Repository → <b>Contents: Read and write</b></li>
+    </ol>
+  </section>
+
+  <div id="adminView" class="hidden">
+    <section class="card">
+      <h2>증정품 추가</h2>
+      <p class="sub">부품번호나 상품명을 입력하세요. 메인 컬렉션에 있는 상품만 추가할 수 있고, 띄어쓰기는 달라도 됩니다. 여러 개는 쉼표(,)로 구분하세요.</p>
+      <div class="add-wrap">
+        <div class="row">
+          <input type="text" id="addInput" placeholder="예: MB6 7 96 0273" autocomplete="off">
+          <button class="btn btn-dark" type="button" id="addBtn">추가</button>
+        </div>
+        <div class="suggest" id="suggest"></div>
+      </div>
+      <div class="msg" id="addMsg"></div>
+    </section>
+
+    <section class="card">
+      <h2>증정 목록 <span id="totalCount" style="color:var(--muted);font-weight:500;"></span></h2>
+      <p class="sub">재고가 있는 상품만 증정 페이지에 보입니다. 품절되거나 메인 컬렉션에서 빠진 상품은 목록에 남아 있어도 자동으로 숨겨지고, 재입고되면 다시 나타납니다.</p>
+      <div class="toolbar">
+        <div class="chips" id="chips"></div>
+        <input type="text" id="listSearch" placeholder="목록에서 찾기">
+      </div>
+      <div class="list" id="list"></div>
+    </section>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  const OWNER = "jjongsseok728-ui";
+  const REPO = "motorone-goyang-acc";
+  const BRANCH = "master";
+  const PARTS_PATH = "gift_parts.json";
+  const TOKEN_KEY = "acc_admin_token";
+  const API = "https://api.github.com/repos/" + OWNER + "/" + REPO;
+
+  let token = "";
+  let products = [];           // 메인 컬렉션 (products.json)
+  let productByKey = {};       // 정규화된 부품번호 -> 상품
+  let parts = [];              // 증정 후보 부품번호 (gift_parts.json)
+  let partsSha = "";
+  let busy = false;
+  let listFilter = "all";
+
+  const $ = function(id){ return document.getElementById(id); };
+
+  /* ================= HELPERS ================= */
+  function storageGet(){ try { return localStorage.getItem(TOKEN_KEY) || ""; } catch(e){ return ""; } }
+  function storageSet(v){ try { if(v) localStorage.setItem(TOKEN_KEY, v); else localStorage.removeItem(TOKEN_KEY); } catch(e){} }
+
+  // 띄어쓰기/대소문자 차이를 무시하고 비교하기 위한 키
+  function keyOf(part){ return String(part).toUpperCase().replace(/\s+/g, ""); }
+
+  function escapeHtml(str){
+    return String(str).replace(/[&<>"']/g, function(ch){
+      return ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[ch];
+    });
+  }
+
+  function statusOf(part){
+    const p = productByKey[keyOf(part)];
+    if(!p) return {cls:"st-missing", label:"컬렉션에 없음", key:"missing"};
+    if(!(p.qty > 0)) return {cls:"st-soldout", label:"품절 · 숨김", key:"soldout"};
+    return {cls:"st-on", label:"노출중 · 재고 " + p.qty, key:"on"};
+  }
+
+  function thumbHtml(p){
+    return '<div class="thumb">' + (p && p.image ? '<img src="' + escapeHtml(p.image) + '" alt="" loading="lazy">' : '🎁') + '</div>';
+  }
+
+  let toastTimer = null;
+  function toast(text, isErr){
+    const t = $("toast");
+    t.textContent = text;
+    t.classList.toggle("err", !!isErr);
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove("show"); }, isErr ? 5000 : 3200);
+  }
+
+  function setMsg(id, text, kind){
+    const el = $(id);
+    el.textContent = text || "";
+    el.className = "msg" + (kind ? " " + kind : "");
+  }
+
+  /* ================= GITHUB API ================= */
+  function gh(path, opts){
+    opts = opts || {};
+    return fetch(API + path, {
+      method: opts.method || "GET",
+      cache: "no-store",
+      headers: {
+        "Authorization": "Bearer " + token,
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28"
+      },
+      body: opts.body ? JSON.stringify(opts.body) : undefined
+    });
+  }
+
+  function b64decodeUtf8(b64){
+    const bin = atob(b64.replace(/\s/g, ""));
+    const bytes = new Uint8Array(bin.length);
+    for(let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  }
+  function b64encodeUtf8(str){
+    const bytes = new TextEncoder().encode(str);
+    let bin = "";
+    bytes.forEach(function(b){ bin += String.fromCharCode(b); });
+    return btoa(bin);
+  }
+
+  function loadParts(){
+    return gh("/contents/" + PARTS_PATH + "?ref=" + BRANCH).then(function(r){
+      if(!r.ok) throw new Error("증정 목록을 불러오지 못했습니다 (" + r.status + ")");
+      return r.json();
+    }).then(function(file){
+      partsSha = file.sha;
+      const data = JSON.parse(b64decodeUtf8(file.content).replace(/^﻿/, ""));
+      parts = (data.parts || []).map(function(p){ return String(p).trim(); });
+    });
+  }
+
+  // op(현재 목록) -> 새 목록. 다른 곳(자동 동기화 등)에서 먼저 커밋해 sha가 어긋나면 최신본에 한 번 더 적용한다.
+  function saveParts(op, message, retried){
+    const next = op(parts.slice());
+    const content = JSON.stringify({parts: next}, null, 2) + "\n";
+    return gh("/contents/" + PARTS_PATH, {
+      method: "PUT",
+      body: {message: message, content: b64encodeUtf8(content), sha: partsSha, branch: BRANCH}
+    }).then(function(r){
+      if((r.status === 409 || r.status === 422) && !retried){
+        return loadParts().then(function(){ return saveParts(op, message, true); });
+      }
+      if(!r.ok) throw new Error("저장 실패 (" + r.status + ")");
+      return r.json().then(function(res){
+        partsSha = res.content.sha;
+        parts = next;
+      });
+    });
+  }
+
+  function loadProducts(){
+    return fetch("products.json?t=" + Date.now(), {cache: "no-store"}).then(function(r){
+      if(!r.ok) throw new Error("메인 컬렉션을 불러오지 못했습니다 (" + r.status + ")");
+      return r.json();
+    }).then(function(list){
+      products = [].concat(list);
+      productByKey = {};
+      products.forEach(function(p){ productByKey[keyOf(p.part)] = p; });
+    });
+  }
+
+  /* ================= LOGIN ================= */
+  function tryLogin(t){
+    token = t.trim();
+    $("loginBtn").disabled = true;
+    setMsg("loginMsg", "확인 중...");
+    return gh("").then(function(r){
+      if(r.status === 401) throw new Error("토큰이 올바르지 않습니다.");
+      if(r.status === 404) throw new Error("이 토큰으로는 저장소에 접근할 수 없습니다.");
+      if(!r.ok) throw new Error("GitHub 확인 실패 (" + r.status + ")");
+      return r.json();
+    }).then(function(repo){
+      if(!repo.permissions || !repo.permissions.push) throw new Error("이 토큰에는 쓰기 권한이 없습니다.");
+      return Promise.all([loadProducts(), loadParts()]);
+    }).then(function(){
+      storageSet(token);
+      $("loginView").classList.add("hidden");
+      $("adminView").classList.remove("hidden");
+      $("logoutBtn").classList.remove("hidden");
+      setMsg("loginMsg", "");
+      renderList();
+      $("addInput").focus();
+    }).catch(function(err){
+      token = "";
+      storageSet("");
+      setMsg("loginMsg", err.message, "err");
+    }).then(function(){
+      $("loginBtn").disabled = false;
+    });
+  }
+
+  $("loginForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    tryLogin($("tokenInput").value);
+  });
+  $("logoutBtn").addEventListener("click", function(){
+    storageSet("");
+    location.reload();
+  });
+
+  /* ================= ADD ================= */
+  const addInput = $("addInput");
+  const suggestEl = $("suggest");
+  let suggestItems = [];
+  let suggestActive = -1;
+
+  function searchProducts(q){
+    const k = keyOf(q);
+    const lower = q.trim().toLowerCase();
+    if(!k) return [];
+    return products.filter(function(p){
+      return keyOf(p.part).indexOf(k) !== -1 || String(p.name).toLowerCase().indexOf(lower) !== -1;
+    }).slice(0, 10);
+  }
+
+  function renderSuggest(){
+    const q = addInput.value;
+    if(q.trim().length < 2 || /,/.test(q)){ closeSuggest(); return; }
+    suggestItems = searchProducts(q);
+    suggestActive = -1;
+    if(!suggestItems.length){
+      suggestEl.innerHTML = '<div class="sg-empty">메인 컬렉션에서 찾을 수 없습니다.</div>';
+    } else {
+      const inList = {};
+      parts.forEach(function(p){ inList[keyOf(p)] = true; });
+      suggestEl.innerHTML = suggestItems.map(function(p, i){
+        const already = inList[keyOf(p.part)];
+        return '<button type="button" class="sg-item" data-i="' + i + '"' + (already ? ' disabled' : '') + '>' +
+          thumbHtml(p) +
+          '<span class="nm"><b>' + escapeHtml(p.name) + '</b><small>' + escapeHtml(p.part) + ' · ' + escapeHtml(p.category || "-") + '</small></span>' +
+          '<span class="status ' + (already ? 'st-on' : (p.qty > 0 ? 'st-on' : 'st-soldout')) + '">' +
+            (already ? '등록됨' : (p.qty > 0 ? '재고 ' + p.qty : '품절')) + '</span>' +
+        '</button>';
+      }).join("");
+    }
+    suggestEl.classList.add("open");
+  }
+  function closeSuggest(){ suggestEl.classList.remove("open"); suggestItems = []; suggestActive = -1; }
+
+  function highlightSuggest(){
+    Array.prototype.forEach.call(suggestEl.querySelectorAll(".sg-item"), function(el, i){
+      el.classList.toggle("active", i === suggestActive);
+      if(i === suggestActive) el.scrollIntoView({block: "nearest"});
+    });
+  }
+
+  addInput.addEventListener("input", renderSuggest);
+  addInput.addEventListener("focus", renderSuggest);
+  addInput.addEventListener("keydown", function(e){
+    if(e.key === "ArrowDown" && suggestItems.length){
+      e.preventDefault(); suggestActive = Math.min(suggestActive + 1, suggestItems.length - 1); highlightSuggest();
+    } else if(e.key === "ArrowUp" && suggestItems.length){
+      e.preventDefault(); suggestActive = Math.max(suggestActive - 1, 0); highlightSuggest();
+    } else if(e.key === "Escape"){
+      closeSuggest();
+    } else if(e.key === "Enter"){
+      e.preventDefault();
+      if(suggestActive >= 0 && suggestItems[suggestActive]) addParts([suggestItems[suggestActive].part]);
+      else addFromInput();
+    }
+  });
+  suggestEl.addEventListener("mousedown", function(e){ e.preventDefault(); });
+  suggestEl.addEventListener("click", function(e){
+    const btn = e.target.closest(".sg-item");
+    if(!btn || btn.disabled) return;
+    addParts([suggestItems[+btn.getAttribute("data-i")].part]);
+  });
+  document.addEventListener("click", function(e){
+    if(!e.target.closest(".add-wrap")) closeSuggest();
+  });
+  $("addBtn").addEventListener("click", addFromInput);
+
+  // 입력값이 부품번호와 정확히 일치하면 그걸로, 아니면 검색 결과가 하나뿐일 때만 그걸로 추가
+  function addFromInput(){
+    const tokens = addInput.value.split(/[,;\n]+/).map(function(s){ return s.trim(); }).filter(Boolean);
+    if(!tokens.length) return;
+    const resolved = [];
+    const notFound = [];
+    tokens.forEach(function(t){
+      const exact = productByKey[keyOf(t)];
+      if(exact){ resolved.push(exact.part); return; }
+      const hits = searchProducts(t);
+      if(hits.length === 1) resolved.push(hits[0].part);
+      else notFound.push(t);
+    });
+    if(notFound.length){
+      setMsg("addMsg", "메인 컬렉션에서 찾을 수 없거나 여러 개가 검색됨: " + notFound.join(", ") + " — 목록에서 골라주세요.", "err");
+      if(!resolved.length){ renderSuggest(); return; }
+    }
+    addParts(resolved, notFound.length > 0);
+  }
+
+  function addParts(toAdd, keepMsg){
+    if(busy) return;
+    const existing = {};
+    parts.forEach(function(p){ existing[keyOf(p)] = true; });
+    const fresh = [];
+    toAdd.forEach(function(p){
+      if(!existing[keyOf(p)]){ existing[keyOf(p)] = true; fresh.push(p); }
+    });
+    if(!fresh.length){
+      setMsg("addMsg", "이미 증정 목록에 있는 상품입니다.", "err");
+      return;
+    }
+    const names = fresh.map(function(p){ return (productByKey[keyOf(p)] || {}).name || p; });
+    busy = true;
+    $("addBtn").disabled = true;
+    if(!keepMsg) setMsg("addMsg", "저장 중...");
+    saveParts(function(list){
+      const have = {};
+      list.forEach(function(p){ have[keyOf(p)] = true; });
+      return list.concat(fresh.filter(function(p){ return !have[keyOf(p)]; }));
+    }, "5 STAR GIFT 추가: " + fresh.join(", ")).then(function(){
+      addInput.value = "";
+      closeSuggest();
+      if(!keepMsg) setMsg("addMsg", "추가됨: " + names.join(", "), "ok");
+      toast("저장됨 · 1~2분 뒤 증정 페이지에 반영됩니다");
+      renderList();
+    }).catch(function(err){
+      setMsg("addMsg", err.message, "err");
+      toast(err.message, true);
+    }).then(function(){
+      busy = false;
+      $("addBtn").disabled = false;
+    });
+  }
+
+  /* ================= LIST ================= */
+  $("listSearch").addEventListener("input", renderList);
+  $("chips").addEventListener("click", function(e){
+    const c = e.target.closest(".chip");
+    if(!c) return;
+    listFilter = c.getAttribute("data-f");
+    renderList();
+  });
+  $("list").addEventListener("click", function(e){
+    const btn = e.target.closest(".del");
+    if(!btn || busy) return;
+    const part = btn.getAttribute("data-part");
+    const p = productByKey[keyOf(part)];
+    if(!confirm("증정 목록에서 삭제할까요?\n\n" + (p ? p.name + " (" + part + ")" : part))) return;
+    busy = true;
+    btn.disabled = true;
+    saveParts(function(list){
+      return list.filter(function(x){ return keyOf(x) !== keyOf(part); });
+    }, "5 STAR GIFT 삭제: " + part).then(function(){
+      toast("삭제됨 · 1~2분 뒤 증정 페이지에 반영됩니다");
+      renderList();
+    }).catch(function(err){
+      toast(err.message, true);
+      btn.disabled = false;
+    }).then(function(){
+      busy = false;
+    });
+  });
+
+  function renderList(){
+    const counts = {all: parts.length, on: 0, soldout: 0, missing: 0};
+    parts.forEach(function(p){ counts[statusOf(p).key]++; });
+    $("totalCount").textContent = "(" + parts.length + ")";
+
+    const chipDefs = [["all","전체"],["on","노출중"],["soldout","품절"],["missing","컬렉션에 없음"]];
+    $("chips").innerHTML = chipDefs.map(function(d){
+      return '<button type="button" class="chip' + (listFilter === d[0] ? ' active' : '') + '" data-f="' + d[0] + '">' +
+        d[1] + ' ' + counts[d[0]] + '</button>';
+    }).join("");
+
+    const q = $("listSearch").value.trim();
+    const k = keyOf(q);
+    const lower = q.toLowerCase();
+    // 최근에 추가한 게 위로 오도록 역순 표시
+    const rows = parts.slice().reverse().filter(function(part){
+      const st = statusOf(part);
+      if(listFilter !== "all" && st.key !== listFilter) return false;
+      if(!q) return true;
+      const p = productByKey[keyOf(part)];
+      return keyOf(part).indexOf(k) !== -1 || (p && String(p.name).toLowerCase().indexOf(lower) !== -1);
+    });
+
+    if(!rows.length){
+      $("list").innerHTML = '<div class="empty">표시할 상품이 없습니다.</div>';
+      return;
+    }
+    $("list").innerHTML = rows.map(function(part){
+      const p = productByKey[keyOf(part)];
+      const st = statusOf(part);
+      return '<div class="item">' +
+        thumbHtml(p) +
+        '<div class="info"><b>' + escapeHtml(p ? p.name : "(메인 컬렉션에 없음)") + '</b>' +
+          '<small>' + escapeHtml(part) + (p && p.category ? ' · ' + escapeHtml(p.category) : '') + '</small></div>' +
+        '<span class="status ' + st.cls + '">' + st.label + '</span>' +
+        '<button type="button" class="del" data-part="' + escapeHtml(part) + '">삭제</button>' +
+      '</div>';
+    }).join("");
+  }
+
+  /* ================= INIT ================= */
+  const saved = storageGet();
+  if(saved) tryLogin(saved);
+})();
+</script>
+</body>
+</html>
