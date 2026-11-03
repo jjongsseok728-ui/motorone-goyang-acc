@@ -98,7 +98,7 @@
     {
         "part":  "MB6 6 95 3080",
         "name":  "PIN",
-        "qty":  11,
+        "qty":  8,
         "price":  22000,
         "category":  "악세사리",
         "image":  "images/MB6-6-95-3080.png"
@@ -682,7 +682,7 @@
     {
         "part":  "MQALKRB82962401",
         "name":  "MINI TRAVEL BAG 2026 WHITE",
-        "qty":  14,
+        "qty":  13,
         "price":  47300,
         "category":  "가방",
         "image":  "images/MQALKRB82962401.png"
@@ -2342,5 +2342,29 @@
         "price":  134200,
         "category":  "방향제",
         "image":  "images/MA000-899-57-00.png"
+    },
+    {
+        "part":  "MQALKRBM5450801",
+        "name":  "U T HEAT QUILTING MUFFLER",
+        "qty":  3,
+        "price":  61600,
+        "category":  "옷",
+        "image":  "images/MQALKRBM5450801.png"
+    },
+    {
+        "part":  "MQALKRBM5460971",
+        "name":  "M HYBRID SWEATER JACKET",
+        "qty":  2,
+        "price":  553300,
+        "category":  "옷",
+        "image":  "images/MQALKRBM5460971.png"
+    },
+    {
+        "part":  "MQALKRBM5460972",
+        "name":  "M HYBRID SWEATER JACKET",
+        "qty":  2,
+        "price":  553300,
+        "category":  "옷",
+        "image":  "images/MQALKRBM5460972.png"
     }
 ]
