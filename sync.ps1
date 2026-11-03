@@ -476,11 +476,8 @@ try {
             git pull --rebase --autostash origin master 2>&1 | Out-Null
             git push origin master
             if ($LASTEXITCODE -ne 0) { throw "git push 실패 (exit code $LASTEXITCODE)" }
-            Write-Log "GitHub Pages에 배포 완료"
-
-            vercel --yes --prod
-            if ($LASTEXITCODE -ne 0) { throw "vercel 배포 실패 (exit code $LASTEXITCODE)" }
-            Write-Log "Vercel에 배포 완료"
+            # Vercel은 GitHub 저장소와 연결돼 있어 push하면 자동으로 배포된다 (2026-11-03 연결).
+            Write-Log "GitHub에 push 완료 (GitHub Pages / Vercel 자동 배포)"
         } else {
             Write-Log "반영할 변경사항 없음 (GitHub/Vercel 재배포 생략)"
         }
