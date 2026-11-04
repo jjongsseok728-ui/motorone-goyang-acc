@@ -276,7 +276,7 @@
         "name":  "Name Tag_Carbon look",
         "qty":  3,
         "price":  28600,
-        "category":  "네임택",
+        "category":  "지갑",
         "image":  "images/MQALKRB81201134.png"
     },
     {
@@ -506,7 +506,7 @@
     {
         "part":  "MQALKRBN9782801",
         "name":  "CITY TECH BALL POUCH BG",
-        "qty":  2,
+        "qty":  1,
         "price":  40700,
         "category":  "골프",
         "image":  "images/MQALKRBN9782801.png"
@@ -994,7 +994,7 @@
     {
         "part":  "MB6 6 95 9213",
         "name":  "SHOPPER",
-        "qty":  1,
+        "qty":  4,
         "price":  89100,
         "category":  "가방",
         "image":  "images/MB6-6-95-9213.png"
@@ -2366,5 +2366,13 @@
         "price":  553300,
         "category":  "옷",
         "image":  "images/MQALKRBM5460972.png"
+    },
+    {
+        "part":  "MA000 899 67 00",
+        "name":  "FLACON",
+        "qty":  2,
+        "price":  134200,
+        "category":  "방향제",
+        "image":  "images/MA000-899-67-00.png"
     }
 ]
