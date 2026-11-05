@@ -66,7 +66,7 @@
     {
         "part":  "MB6 6 04 5751",
         "name":  "WEEKEND BAG",
-        "qty":  3,
+        "qty":  1,
         "price":  564300,
         "category":  "가방",
         "image":  "images/MB6-6-04-5751.png"
@@ -138,7 +138,7 @@
     {
         "part":  "MQALKRB81201143",
         "name":  "Bear Keyring_Pink",
-        "qty":  7,
+        "qty":  6,
         "price":  19800,
         "category":  "키링",
         "image":  "images/MQALKRB81201143.png"
@@ -346,7 +346,7 @@
     {
         "part":  "MQALKRB81201194",
         "name":  "KEY CASE GEN 6 ORANGE",
-        "qty":  2,
+        "qty":  1,
         "price":  33000,
         "category":  "키링",
         "image":  "images/MQALKRB81201194.png"
@@ -690,7 +690,7 @@
     {
         "part":  "MQALKRB82962402",
         "name":  "MINI TRAVEL BAG 2026 BLACK",
-        "qty":  9,
+        "qty":  8,
         "price":  47300,
         "category":  "가방",
         "image":  "images/MQALKRB82962402.png"
@@ -1418,7 +1418,7 @@
     {
         "part":  "MB6 6 95 8979",
         "name":  "FOLDING CHAIR",
-        "qty":  5,
+        "qty":  3,
         "price":  139700,
         "category":  "캠핑",
         "image":  "images/MB6-6-95-8979.png"
@@ -1680,6 +1680,14 @@
         "image":  "images/MNBV9463-401.png"
     },
     {
+        "part":  "MB6 6 04 1752",
+        "name":  "SHOPPER",
+        "qty":  1,
+        "price":  171600,
+        "category":  "가방",
+        "image":  "images/MB6-6-04-1752.png"
+    },
+    {
         "part":  "MA213 680 35 05/658U20",
         "name":  "FLOOR MAT",
         "qty":  1,
@@ -1926,14 +1934,6 @@
         "price":  209000,
         "category":  "키링",
         "image":  "images/MQALKRB81203046.png"
-    },
-    {
-        "part":  "MB6 6 96 2012",
-        "name":  "BOBBY BENZ",
-        "qty":  1,
-        "price":  259600,
-        "category":  "장난감",
-        "image":  "images/MB6-6-96-2012.png"
     },
     {
         "part":  "MB6 6 95 6089",
@@ -2374,5 +2374,13 @@
         "price":  134200,
         "category":  "방향제",
         "image":  "images/MA000-899-67-00.png"
+    },
+    {
+        "part":  "MQALKRBU2640901",
+        "name":  "CL LITE CART BAG WH",
+        "qty":  1,
+        "price":  382800,
+        "category":  "골프",
+        "image":  "images/MQALKRBU2640901.png"
     }
 ]
