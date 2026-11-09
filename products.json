@@ -66,7 +66,7 @@
     {
         "part":  "MB6 6 04 5751",
         "name":  "WEEKEND BAG",
-        "qty":  1,
+        "qty":  2,
         "price":  564300,
         "category":  "가방",
         "image":  "images/MB6-6-04-5751.png"
@@ -2345,7 +2345,7 @@
     },
     {
         "part":  "MQALKRBM5450801",
-        "name":  "U T HEAT QUILTING MUFFLER",
+        "name":  "TM U QUILTED MUFF BK",
         "qty":  3,
         "price":  61600,
         "category":  "옷",
@@ -2353,7 +2353,7 @@
     },
     {
         "part":  "MQALKRBM5460971",
-        "name":  "M HYBRID SWEATER JACKET",
+        "name":  "M SWEATER JK BK L",
         "qty":  2,
         "price":  553300,
         "category":  "옷",
@@ -2361,7 +2361,7 @@
     },
     {
         "part":  "MQALKRBM5460972",
-        "name":  "M HYBRID SWEATER JACKET",
+        "name":  "M SWEATER JK BK XL",
         "qty":  2,
         "price":  553300,
         "category":  "옷",
