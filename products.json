@@ -18,7 +18,7 @@
     {
         "part":  "MQALKRB81201151",
         "name":  "Car Air Freshener_Sea Breeze",
-        "qty":  4,
+        "qty":  3,
         "price":  9900,
         "category":  "방향제",
         "image":  "images/MQALKRB81201151.png"
@@ -34,7 +34,7 @@
     {
         "part":  "MQALKRB81201156",
         "name":  "Car Air Freshener_Aqua Dive",
-        "qty":  2,
+        "qty":  4,
         "price":  9900,
         "category":  "방향제",
         "image":  "images/MQALKRB81201156.png"
@@ -210,18 +210,10 @@
     {
         "part":  "MQALKRB81201150",
         "name":  "AIR FRESHENER SEA BREEZE",
-        "qty":  1,
+        "qty":  2,
         "price":  24200,
         "category":  "방향제",
         "image":  "images/MQALKRB81201150.png"
-    },
-    {
-        "part":  "MQALKRB81201159",
-        "name":  "AIR FRESHENER AQUA DIVE",
-        "qty":  1,
-        "price":  24200,
-        "category":  "방향제",
-        "image":  "images/MQALKRB81201159.png"
     },
     {
         "part":  "MB6 6 47 0200",
@@ -1022,14 +1014,6 @@
         "price":  90200,
         "category":  "모델카",
         "image":  "images/MB6-6-96-0660.png"
-    },
-    {
-        "part":  "MB6 6 04 2026",
-        "name":  "INSULATED MUG",
-        "qty":  1,
-        "price":  83600,
-        "category":  "텀블러",
-        "image":  "images/MB6-6-04-2026.png"
     },
     {
         "part":  "MB6 6 45 0361",
@@ -1934,6 +1918,14 @@
         "price":  209000,
         "category":  "키링",
         "image":  "images/MQALKRB81203046.png"
+    },
+    {
+        "part":  "MB6 6 96 2012",
+        "name":  "BOBBY BENZ",
+        "qty":  1,
+        "price":  259600,
+        "category":  "장난감",
+        "image":  "images/MB6-6-96-2012.png"
     },
     {
         "part":  "MB6 6 95 6089",
