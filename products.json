@@ -208,14 +208,6 @@
         "image":  "images/MQALKRB81201160.png"
     },
     {
-        "part":  "MQALKRB81201150",
-        "name":  "AIR FRESHENER SEA BREEZE",
-        "qty":  2,
-        "price":  24200,
-        "category":  "방향제",
-        "image":  "images/MQALKRB81201150.png"
-    },
-    {
         "part":  "MB6 6 47 0200",
         "name":  "HUB CAP TRIM",
         "qty":  1,
@@ -1050,7 +1042,7 @@
     {
         "part":  "MQALKRB81201163",
         "name":  "CAMPING TABLE",
-        "qty":  9,
+        "qty":  8,
         "price":  77000,
         "category":  "캠핑",
         "image":  "images/MQALKRB81201163.png"
@@ -1226,7 +1218,7 @@
     {
         "part":  "MQALKRB81201181",
         "name":  "TROLLEY BAG",
-        "qty":  2,
+        "qty":  1,
         "price":  84700,
         "category":  "가방",
         "image":  "images/MQALKRB81201181.png"
@@ -2034,7 +2026,7 @@
     {
         "part":  "MB6 7 99 6890",
         "name":  "CAGOULE XL",
-        "qty":  2,
+        "qty":  1,
         "price":  317900,
         "category":  "옷",
         "image":  "images/MB6-7-99-6890.png"
