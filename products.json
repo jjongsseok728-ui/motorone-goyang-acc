@@ -66,7 +66,7 @@
     {
         "part":  "MB6 6 04 5751",
         "name":  "WEEKEND BAG",
-        "qty":  2,
+        "qty":  5,
         "price":  564300,
         "category":  "가방",
         "image":  "images/MB6-6-04-5751.png"
@@ -210,7 +210,7 @@
     {
         "part":  "MQALKRB81201150",
         "name":  "AIR FRESHENER SEA BREEZE",
-        "qty":  1,
+        "qty":  3,
         "price":  24200,
         "category":  "방향제",
         "image":  "images/MQALKRB81201150.png"
@@ -280,14 +280,6 @@
         "image":  "images/MB6-6-95-9341.png"
     },
     {
-        "part":  "MQALKRB81201191",
-        "name":  "KEY CASE GEN 6 PINK",
-        "qty":  1,
-        "price":  33000,
-        "category":  "키링",
-        "image":  "images/MQALKRB81201191.png"
-    },
-    {
         "part":  "MQALKRB81201198",
         "name":  "KEY CASE GEN 8 GREEN",
         "qty":  6,
@@ -346,7 +338,7 @@
     {
         "part":  "MQALKRB81201196",
         "name":  "KEY CASE GEN 8 PINK",
-        "qty":  1,
+        "qty":  2,
         "price":  33000,
         "category":  "키링",
         "image":  "images/MQALKRB81201196.png"
@@ -674,7 +666,7 @@
     {
         "part":  "MQALKRB82962401",
         "name":  "MINI TRAVEL BAG 2026 WHITE",
-        "qty":  13,
+        "qty":  12,
         "price":  47300,
         "category":  "가방",
         "image":  "images/MQALKRB82962401.png"
@@ -1226,7 +1218,7 @@
     {
         "part":  "MQALKRB81201181",
         "name":  "TROLLEY BAG",
-        "qty":  1,
+        "qty":  8,
         "price":  84700,
         "category":  "가방",
         "image":  "images/MQALKRB81201181.png"
