@@ -66,7 +66,7 @@
     {
         "part":  "MB6 6 04 5751",
         "name":  "WEEKEND BAG",
-        "qty":  5,
+        "qty":  4,
         "price":  564300,
         "category":  "가방",
         "image":  "images/MB6-6-04-5751.png"
@@ -146,7 +146,7 @@
     {
         "part":  "MQALKRB81201186",
         "name":  "CAMPING CUP 4P",
-        "qty":  4,
+        "qty":  3,
         "price":  19800,
         "category":  "캠핑",
         "image":  "images/MQALKRB81201186.png"
@@ -154,7 +154,7 @@
     {
         "part":  "MQALKRB81201171",
         "name":  "STEEL TUMBLER NY",
-        "qty":  5,
+        "qty":  4,
         "price":  19800,
         "category":  "텀블러",
         "image":  "images/MQALKRB81201171.png"
@@ -1746,7 +1746,7 @@
     {
         "part":  "MB6 6 95 9655",
         "name":  "SPORTS BAG",
-        "qty":  2,
+        "qty":  1,
         "price":  238700,
         "category":  "가방",
         "image":  "images/MB6-6-95-9655.png"
@@ -2354,7 +2354,7 @@
     {
         "part":  "MA000 899 67 00",
         "name":  "FLACON",
-        "qty":  2,
+        "qty":  4,
         "price":  134200,
         "category":  "방향제",
         "image":  "images/MA000-899-67-00.png"
