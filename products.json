@@ -130,7 +130,7 @@
     {
         "part":  "MQALKRB81201142",
         "name":  "Bear Keyring_Mint",
-        "qty":  4,
+        "qty":  3,
         "price":  19800,
         "category":  "키링",
         "image":  "images/MQALKRB81201142.png"
@@ -138,7 +138,7 @@
     {
         "part":  "MQALKRB81201143",
         "name":  "Bear Keyring_Pink",
-        "qty":  5,
+        "qty":  4,
         "price":  19800,
         "category":  "키링",
         "image":  "images/MQALKRB81201143.png"
@@ -434,7 +434,7 @@
     {
         "part":  "MB6 6 95 9414",
         "name":  "SHOPPING BAG",
-        "qty":  2,
+        "qty":  3,
         "price":  42900,
         "category":  "가방",
         "image":  "images/MB6-6-95-9414.png"
@@ -666,7 +666,7 @@
     {
         "part":  "MQALKRB82962401",
         "name":  "MINI TRAVEL BAG 2026 WHITE",
-        "qty":  12,
+        "qty":  10,
         "price":  47300,
         "category":  "가방",
         "image":  "images/MQALKRB82962401.png"
@@ -1218,7 +1218,7 @@
     {
         "part":  "MQALKRB81201181",
         "name":  "TROLLEY BAG",
-        "qty":  8,
+        "qty":  7,
         "price":  84700,
         "category":  "가방",
         "image":  "images/MQALKRB81201181.png"
@@ -2322,7 +2322,7 @@
     {
         "part":  "MA000 899 57 00",
         "name":  "FLACON",
-        "qty":  1,
+        "qty":  3,
         "price":  134200,
         "category":  "방향제",
         "image":  "images/MA000-899-57-00.png"
@@ -2366,5 +2366,13 @@
         "price":  382800,
         "category":  "골프",
         "image":  "images/MQALKRBU2640901.png"
+    },
+    {
+        "part":  "MA000 899 56 00",
+        "name":  "FLACON",
+        "qty":  3,
+        "price":  134200,
+        "category":  "방향제",
+        "image":  "images/MA000-899-56-00.png"
     }
 ]
