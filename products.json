@@ -226,7 +226,7 @@
     {
         "part":  "MB6 6 95 3652",
         "name":  "PEN",
-        "qty":  3,
+        "qty":  2,
         "price":  34100,
         "category":  "볼펜",
         "image":  "images/MB6-6-95-3652.png"
@@ -650,7 +650,7 @@
     {
         "part":  "MB6 6 95 3713",
         "name":  "SHOPPER GLAM MB",
-        "qty":  3,
+        "qty":  2,
         "price":  73700,
         "category":  "가방",
         "image":  "images/MB6-6-95-3713.png"
@@ -1910,14 +1910,6 @@
         "price":  209000,
         "category":  "키링",
         "image":  "images/MQALKRB81203046.png"
-    },
-    {
-        "part":  "MB6 6 96 2012",
-        "name":  "BOBBY BENZ",
-        "qty":  1,
-        "price":  259600,
-        "category":  "장난감",
-        "image":  "images/MB6-6-96-2012.png"
     },
     {
         "part":  "MB6 6 95 6089",
