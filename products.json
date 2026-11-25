@@ -138,7 +138,7 @@
     {
         "part":  "MQALKRB81201143",
         "name":  "Bear Keyring_Pink",
-        "qty":  4,
+        "qty":  3,
         "price":  19800,
         "category":  "키링",
         "image":  "images/MQALKRB81201143.png"
@@ -338,7 +338,7 @@
     {
         "part":  "MQALKRB81201196",
         "name":  "KEY CASE GEN 8 PINK",
-        "qty":  2,
+        "qty":  1,
         "price":  33000,
         "category":  "키링",
         "image":  "images/MQALKRB81201196.png"
@@ -656,17 +656,9 @@
         "image":  "images/MB6-6-95-3713.png"
     },
     {
-        "part":  "MB6 6 04 1523",
-        "name":  "KEY RING",
-        "qty":  1,
-        "price":  64900,
-        "category":  "키링",
-        "image":  "images/MB6-6-04-1523.png"
-    },
-    {
         "part":  "MQALKRB82962401",
         "name":  "MINI TRAVEL BAG 2026 WHITE",
-        "qty":  10,
+        "qty":  9,
         "price":  47300,
         "category":  "가방",
         "image":  "images/MQALKRB82962401.png"
@@ -1338,7 +1330,7 @@
     {
         "part":  "MA000 899 02 88",
         "name":  "FLACON",
-        "qty":  3,
+        "qty":  2,
         "price":  134200,
         "category":  "방향제",
         "image":  "images/MA000-899-02-88.png"
@@ -1354,7 +1346,7 @@
     {
         "part":  "MA000 899 59 00",
         "name":  "FLACON",
-        "qty":  3,
+        "qty":  2,
         "price":  134200,
         "category":  "방향제",
         "image":  "images/MA000-899-59-00.png"
