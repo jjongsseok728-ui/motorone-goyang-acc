@@ -130,7 +130,7 @@
     {
         "part":  "MQALKRB81201142",
         "name":  "Bear Keyring_Mint",
-        "qty":  3,
+        "qty":  2,
         "price":  19800,
         "category":  "키링",
         "image":  "images/MQALKRB81201142.png"
@@ -138,7 +138,7 @@
     {
         "part":  "MQALKRB81201143",
         "name":  "Bear Keyring_Pink",
-        "qty":  3,
+        "qty":  2,
         "price":  19800,
         "category":  "키링",
         "image":  "images/MQALKRB81201143.png"
@@ -326,14 +326,6 @@
         "price":  33000,
         "category":  "키링",
         "image":  "images/MQALKRB81201193.png"
-    },
-    {
-        "part":  "MQALKRB81201194",
-        "name":  "KEY CASE GEN 6 ORANGE",
-        "qty":  1,
-        "price":  33000,
-        "category":  "키링",
-        "image":  "images/MQALKRB81201194.png"
     },
     {
         "part":  "MQALKRB81201196",
