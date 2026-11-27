@@ -138,7 +138,7 @@
     {
         "part":  "MQALKRB81201143",
         "name":  "Bear Keyring_Pink",
-        "qty":  2,
+        "qty":  5,
         "price":  19800,
         "category":  "키링",
         "image":  "images/MQALKRB81201143.png"
@@ -338,7 +338,7 @@
     {
         "part":  "MQALKRB81201176",
         "name":  "KEY CASE GEN 8 WHITE",
-        "qty":  2,
+        "qty":  1,
         "price":  33000,
         "category":  "키링",
         "image":  "images/MQALKRB81201176.png"
@@ -1242,7 +1242,7 @@
     {
         "part":  "MQALKRBU2626301",
         "name":  "TRAVEL POUCH",
-        "qty":  1,
+        "qty":  2,
         "price":  99000,
         "category":  "가방",
         "image":  "images/MQALKRBU2626301.png"
